@@ -1,7 +1,0 @@
-{
-  "main": "ktor-ktor-client-core.js",
-  "devDependencies": {},
-  "dependencies": {},
-  "name": "ktor-ktor-client-core",
-  "version": "1.2.3"
-}

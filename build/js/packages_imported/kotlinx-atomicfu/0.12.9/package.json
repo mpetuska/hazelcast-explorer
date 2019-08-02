@@ -1,7 +1,0 @@
-{
-  "main": "kotlinx-atomicfu.js",
-  "devDependencies": {},
-  "dependencies": {},
-  "name": "kotlinx-atomicfu",
-  "version": "0.12.9"
-}

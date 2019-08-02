@@ -1,7 +1,0 @@
-{
-  "main": "kotlinx-html-js.js",
-  "devDependencies": {},
-  "dependencies": {},
-  "name": "kotlinx-html-js",
-  "version": "0.6.12"
-}
