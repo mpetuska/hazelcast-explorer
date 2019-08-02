@@ -7,4 +7,4 @@ import lt.petuska.hazelcast.explorer.domain.common.*
 data class TypedValueDTO(
     val typeName: String,
     val valueAsJson: String
-) : DTO
+) : DTO()

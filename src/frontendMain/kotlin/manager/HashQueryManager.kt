@@ -1,69 +1,32 @@
 package lt.petuska.hazelcast.explorer.manager
 
-import kotlinx.coroutines.*
-import lt.petuska.hazelcast.explorer.*
-import lt.petuska.hazelcast.explorer.domain.enumerator.*
-import lt.petuska.hazelcast.explorer.redux.*
+import lt.petuska.hazelcast.explorer.domain.*
 import org.w3c.dom.url.*
 import kotlin.browser.*
 
-object HashQueryManager {
-  init {
-    window.addEventListener("hashchange", { loadStateFromHashQuery() }, null)
-    GlobalScope.launch {
-      delay(250)
-      loadStateFromHashQuery()
-      store.subscribe { updateHashQuery() }
-    }
+object HashQueryManager : PersistenceManager(listOf(
+    PersistentProperty.ENVIRONMENT,
+    PersistentProperty.TARGET,
+    PersistentProperty.EXPLORE_TYPE
+)) {
+  override fun setupSubscriptions() {
+    window.addEventListener("hashchange", { loadPersistedState() }, null)
+    super.setupSubscriptions()
   }
 
-  private fun loadStateFromHashQuery() {
-    val hashParams = URLSearchParams(window.location.hash.substringAfter("?"))
-    HashProperty.values().forEach {
-      hashParams.get(it.hashKey).let { hp ->
-        it.setAction.invoke(store.getState(), hp)?.let { a -> store.dispatch(a) }
+  override fun load(prop: PersistentProperty) = URLSearchParams(window.location.hash.substringAfter("?")).get(prop.key)
+
+  override fun save(key: String, value: String) {
+    URLSearchParams(window.location.hash.substringAfter("?")).apply {
+      set(key, value)
+    }.let { window.location.hash = "?$it" }
+  }
+
+  fun buildHashLink(vararg properties: Pair<PersistentProperty, String>): String {
+    return URLSearchParams(window.location.hash.substringAfter("?")).apply {
+      properties.forEach {
+        set(it.first.key, it.second)
       }
-    }
-  }
-
-  fun buildHashLink(vararg properties: Pair<HashProperty, String>): String {
-    val params = URLSearchParams(window.location.hash.substringAfter("?"))
-    properties.toMap().forEach {
-      params.set(it.key.hashKey, it.value)
-    }
-    return "#?$params"
-  }
-
-  private fun updateHashQuery() {
-    val state = store.getState()
-    val hashParams = URLSearchParams()
-    HashProperty.values().forEach {
-      it.selector.invoke(state)?.let { p -> hashParams.set(it.hashKey, p) }
-    }
-    window.location.hash = "?$hashParams"
-  }
-
-  enum class HashProperty(
-      val hashKey: String,
-      val selector: HZEState.() -> String?,
-      val setAction: HZEState.(String?) -> HZEAction?
-  ) {
-    ENVIRONMENT(
-        "env",
-        { selectedEnvironment?.name },
-        { HZEAction.SelectEnvironment(environments?.find { e -> e.name == it }) }),
-    TARGET(
-        "tar",
-        { selectedTarget?.name },
-        { HZEAction.SelectTarget(selectedEnvironment?.targets?.find { t -> t.name == it }) }),
-    EXPLORE_TYPE(
-        "exploreType",
-        { selectedExploreType?.name },
-        {
-          it?.let { p ->
-            HZEAction.SelectExploreType(ExploreType.valueOf(p))
-          }
-        }
-    )
+    }.let { "#?$it" }
   }
 }

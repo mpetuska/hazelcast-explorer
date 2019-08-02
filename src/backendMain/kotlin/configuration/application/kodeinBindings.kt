@@ -2,9 +2,12 @@ package lt.petuska.hazelcast.explorer.configuration.application
 
 import io.ktor.util.*
 import org.kodein.di.*
+import org.kodein.di.generic.*
+import service.route.*
 
 @KtorExperimentalAPI
 fun Kodein.Builder.registerBindings() {
+  bind<HzeConfigService>() with singleton { HzeConfigService(instance()) }
 
 //  bind<UserService>() with singleton { UserService(instance("main"), instance(), instance("rootUserName")) }
 //  bind<AccountService>() with singleton { AccountService(instance("main"), instance(), instance("rootAccountName")) }

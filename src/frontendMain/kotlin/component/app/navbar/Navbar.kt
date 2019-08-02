@@ -5,6 +5,7 @@ import kotlinx.html.*
 import lt.petuska.hazelcast.explorer.component.app.*
 import lt.petuska.hazelcast.explorer.component.app.navbar.logo.*
 import lt.petuska.hazelcast.explorer.component.app.navbar.themeToggle.*
+import lt.petuska.hazelcast.explorer.domain.*
 import lt.petuska.hazelcast.explorer.manager.*
 import react.*
 import react.dom.*
@@ -62,8 +63,8 @@ class Navbar(appProps: NavbarProps) : StatelessComponent<NavbarProps>(appProps) 
             env.targets.forEach { target ->
               a(
                   HashQueryManager.buildHashLink(
-                      HashQueryManager.HashProperty.ENVIRONMENT to env.name,
-                      HashQueryManager.HashProperty.TARGET to target.name
+                      PersistentProperty.ENVIRONMENT to env.name,
+                      PersistentProperty.TARGET to target.name
                   ), classes = "dropdown-item"
               ) {
                 +target.displayName

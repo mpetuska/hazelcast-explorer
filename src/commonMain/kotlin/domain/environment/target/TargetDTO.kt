@@ -12,4 +12,4 @@ data class TargetDTO(
     val readOnly: Boolean,
     val maps: List<MapDTO>?,
     val topics: List<TopicDTO>?
-) : DTO
+) : DTO()

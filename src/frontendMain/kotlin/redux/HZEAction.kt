@@ -9,7 +9,7 @@ import redux.*
 sealed class HZEAction : RAction {
   data class SetTitle(val title: String) : HZEAction()
   data class SetTheme(val theme: Theme) : HZEAction()
-  data class HZEConfigLoaded(val hzeConfig: HazelcastExplorerConfigDTO) : HZEAction()
+  data class HZEConfigLoaded(val hzeConfig: HzeConfigDTO) : HZEAction()
   data class SelectEnvironment(val environment: EnvironmentDTO?) : HZEAction()
   data class SelectTarget(val target: TargetDTO?) : HZEAction()
   data class SelectExploreType(val exploreType: ExploreType) : HZEAction()

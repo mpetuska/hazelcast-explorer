@@ -7,4 +7,4 @@ import lt.petuska.hazelcast.explorer.domain.common.*
 data class TypedListDTO(
     val typeName: String,
     val valuesAsJson: List<String>
-) : DTO
+) : DTO()

@@ -8,10 +8,12 @@ import io.ktor.serialization.*
 import kotlinx.serialization.json.*
 
 fun Application.setupFeatures() {
-  install(Compression)
+  install(Compression) {
+    gzip()
+  }
   install(DefaultHeaders)
   install(ContentNegotiation) {
-    serialization(json = Json.nonstrict)
+    serialization(ContentType.Application.Json, json = Json.nonstrict)
   }
   install(StatusPages) {
     exception<ContentTransformationException> { cause ->

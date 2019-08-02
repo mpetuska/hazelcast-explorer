@@ -6,6 +6,7 @@ import lt.petuska.hazelcast.explorer.*
 import lt.petuska.hazelcast.explorer.component.app.*
 import lt.petuska.hazelcast.explorer.component.app.workerPage.mapPage.*
 import lt.petuska.hazelcast.explorer.component.app.workerPage.topicPage.*
+import lt.petuska.hazelcast.explorer.domain.*
 import lt.petuska.hazelcast.explorer.domain.enumerator.*
 import lt.petuska.hazelcast.explorer.manager.*
 import lt.petuska.hazelcast.explorer.redux.*
@@ -44,7 +45,7 @@ class WorkerPage(props: WorkerPageProps) : StatelessComponent<WorkerPageProps>(p
     li("nav-item") {
       a(
           HashQueryManager.buildHashLink(
-              HashQueryManager.HashProperty.EXPLORE_TYPE to exploreType.name
+              PersistentProperty.EXPLORE_TYPE to exploreType.name
           ), classes = "nav-link ${if (active) "active" else ""}"
       ) {
         attrs.onClickFunction = {

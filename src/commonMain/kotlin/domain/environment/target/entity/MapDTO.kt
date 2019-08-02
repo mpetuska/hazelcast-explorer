@@ -12,4 +12,4 @@ data class MapDTO(
     val readOnly: Boolean,
     val keyType: String,
     val valueType: String
-) : DTO
+) : DTO()

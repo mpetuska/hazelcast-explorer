@@ -4,10 +4,10 @@ import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import lt.petuska.hazelcast.explorer.configuration.domain.*
-import lt.petuska.hazelcast.explorer.configuration.domain.descriptor.environment.*
-import lt.petuska.hazelcast.explorer.configuration.domain.descriptor.environment.target.*
-import lt.petuska.hazelcast.explorer.configuration.domain.descriptor.environment.target.entity.*
+import lt.petuska.hazelcast.explorer.dsl.*
+import lt.petuska.hazelcast.explorer.dsl.hzeConfig.descriptor.*
+import lt.petuska.hazelcast.explorer.dsl.hzeConfig.descriptor.target.*
+import lt.petuska.hazelcast.explorer.dsl.hzeConfig.descriptor.target.entity.*
 import org.slf4j.event.*
 
 fun Application.devServer() {

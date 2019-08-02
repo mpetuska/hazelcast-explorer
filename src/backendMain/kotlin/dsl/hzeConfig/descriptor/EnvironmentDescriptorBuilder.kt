@@ -1,7 +1,9 @@
-package lt.petuska.hazelcast.explorer.configuration.domain.descriptor.environment
+package lt.petuska.hazelcast.explorer.dsl.hzeConfig.descriptor
 
 import lt.petuska.hazelcast.explorer.configuration.domain.descriptor.*
+import lt.petuska.hazelcast.explorer.configuration.domain.descriptor.environment.*
 import lt.petuska.hazelcast.explorer.configuration.domain.descriptor.environment.target.*
+import lt.petuska.hazelcast.explorer.dsl.*
 
 class EnvironmentDescriptorBuilder(
     val name: String,
@@ -17,4 +19,18 @@ class EnvironmentDescriptorBuilder(
 
   override fun build(): EnvironmentDescriptor =
       EnvironmentDescriptor(name, displayName, readOnly, local, production, targets)
+}
+
+@HzeDsl
+fun HazelcastExplorerConfigBuilder.environment(
+    name: String,
+    displayName: String = name,
+    readOnly: Boolean = false,
+    local: Boolean = false,
+    production: Boolean = false,
+    builder: EnvironmentDescriptorBuilder.() -> Unit
+): EnvironmentDescriptor {
+  val factory = EnvironmentDescriptorBuilder(name, displayName, readOnly, local, production)
+  factory.builder()
+  return factory.build().also { addEnvironment(it) }
 }

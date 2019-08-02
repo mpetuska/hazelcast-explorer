@@ -154,6 +154,8 @@ kotlinFrontend {
     dependency("jquery", "3.3.1")
     dependency("popper.js")
     dependency("bootstrap-switch-button-react", "1.1.0")
+    dependency("bootstrap-notify", "3.1.3")
+    dependency("animate.css", "3.7.2")
 
     devDependency("style-loader")
     devDependency("css-loader")

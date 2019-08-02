@@ -1,3 +1,6 @@
 package lt.petuska.hazelcast.explorer.domain.common
 
-interface DTO
+import kotlinx.serialization.*
+
+@Serializable
+abstract class DTO

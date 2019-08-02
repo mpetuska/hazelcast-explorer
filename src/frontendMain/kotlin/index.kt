@@ -4,7 +4,8 @@ import kotlinext.js.*
 import lt.petuska.hazelcast.explorer.component.app.*
 import lt.petuska.hazelcast.explorer.manager.*
 import lt.petuska.hazelcast.explorer.redux.*
-import lt.petuska.hazelcast.explorer.service.*
+import lt.petuska.hazelcast.explorer.service.meta.*
+import lt.petuska.hazelcast.explorer.service.util.*
 import react.dom.*
 import react.redux.*
 import redux.*
@@ -22,15 +23,8 @@ val store = createStore<HZEState, RAction, dynamic>(
 )
 
 fun main() {
-  @Suppress("UnsafeCastFromDynamic")
-  require("css/global.css")
-  window.asDynamic().`$` = require("jquery")
-  require("bootstrap")
-  MetaService.fetchHZEConfig().then {
-    store.dispatch(HZEAction.HZEConfigLoaded(it))
-  }
-  HashQueryManager
-  LocalStorageManager
+  imports()
+  initialisation()
   window.onload = {
     render(document.getElementById("root")) {
       provider(store) {
@@ -38,4 +32,24 @@ fun main() {
       }
     }
   }
+}
+
+private fun imports() {
+  @Suppress("UnsafeCastFromDynamic")
+  require("css/global.css")
+  window.asDynamic().`$` = require("jquery")
+  require("bootstrap")
+  require("animate.css")
+  require("bootstrap-notify")
+}
+
+private fun initialisation() {
+  HzeConfigService.get().then {
+    store.dispatch(HZEAction.HZEConfigLoaded(it))
+  }.catch {
+    NotificationService.error("Unable to load the configuration from server")
+  }
+
+  HashQueryManager
+  LocalStorageManager
 }

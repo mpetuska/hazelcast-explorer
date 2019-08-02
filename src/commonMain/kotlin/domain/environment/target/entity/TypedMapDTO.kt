@@ -8,4 +8,4 @@ data class TypedMapDTO(
     val keyTypeName: String,
     val valueTypeName: String,
     val mapAsJson: Map<String, String>
-) : DTO
+) : DTO()
