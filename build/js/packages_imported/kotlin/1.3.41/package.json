@@ -1,0 +1,7 @@
+{
+  "main": "kotlin.js",
+  "devDependencies": {},
+  "dependencies": {},
+  "name": "kotlin",
+  "version": "1.3.41"
+}

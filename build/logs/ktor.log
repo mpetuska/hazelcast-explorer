@@ -1,0 +1,75 @@
+[2019-08-02 11:35:27,466]-[main] INFO  Application - Responding at http://0.0.0.0:8080
+[2019-08-02 11:35:27,471]-[main] INFO  Application - Responding at https://0.0.0.0:8443
+[2019-08-02 11:35:27,471]-[main] INFO  Application - Application started: io.ktor.application.Application@b016b4e
+[2019-08-02 11:38:35,286]-[nioEventLoopGroup-3-1] INFO  Application - Changes in application detected.
+[2019-08-02 11:38:35,487]-[nioEventLoopGroup-3-1] INFO  Application - Application stopping: io.ktor.application.Application@b016b4e
+[2019-08-02 11:38:35,489]-[nioEventLoopGroup-3-1] INFO  Application - Application stopped: io.ktor.application.Application@b016b4e
+[2019-08-02 11:38:35,521]-[nioEventLoopGroup-3-1] INFO  Application - Responding at http://0.0.0.0:8080
+[2019-08-02 11:38:35,521]-[nioEventLoopGroup-3-1] INFO  Application - Responding at https://0.0.0.0:8443
+[2019-08-02 11:38:35,521]-[nioEventLoopGroup-3-1] INFO  Application - Application started: io.ktor.application.Application@7c9697e2
+[2019-08-02 11:38:35,544]-[Thread-2] INFO  Application - Application stopping: io.ktor.application.Application@7c9697e2
+[2019-08-02 11:38:35,544]-[Thread-2] INFO  Application - Application stopped: io.ktor.application.Application@7c9697e2
+[2019-08-02 11:38:49,390]-[main] INFO  Application - Responding at http://0.0.0.0:8080
+[2019-08-02 11:38:49,391]-[main] INFO  Application - Responding at https://0.0.0.0:8443
+[2019-08-02 11:38:49,391]-[main] INFO  Application - Application started: io.ktor.application.Application@6e495b48
+[2019-08-02 11:39:45,742]-[nioEventLoopGroup-4-4] INFO  Application - 200 OK: GET - /api/meta
+[2019-08-02 11:39:46,341]-[nioEventLoopGroup-4-4] INFO  Application - 200 OK: GET - /favicon.ico
+[2019-08-02 11:39:48,591]-[nioEventLoopGroup-4-4] INFO  Application - 200 OK: GET - /
+[2019-08-02 11:39:48,633]-[nioEventLoopGroup-4-4] INFO  Application - 200 OK: GET - /css/theme/darkly.min.css
+[2019-08-02 11:39:48,648]-[nioEventLoopGroup-4-3] INFO  Application - 200 OK: GET - /css/theme/flatly.min.css
+[2019-08-02 11:39:49,475]-[nioEventLoopGroup-4-5] INFO  Application - 200 OK: GET - /main.bundle.js
+[2019-08-02 11:39:50,199]-[nioEventLoopGroup-4-3] INFO  Application - 200 OK: GET - /144dc4b102cac378e52c3a8f9506676e.svg
+[2019-08-02 11:39:50,200]-[nioEventLoopGroup-4-5] INFO  Application - 200 OK: GET - /5d5d9eefa31e5e13a6610d9fa7a283bb.svg
+[2019-08-02 11:39:50,202]-[nioEventLoopGroup-4-4] INFO  Application - 200 OK: GET - /b797c2a32b22d28ae7a37968e6b8c866.png
+[2019-08-02 11:39:50,303]-[nioEventLoopGroup-4-4] INFO  Application - 200 OK: GET - /api/meta
+[2019-08-02 11:39:50,347]-[nioEventLoopGroup-4-6] INFO  Application - 200 OK: GET - /manifest.json
+[2019-08-02 11:40:02,411]-[nioEventLoopGroup-4-7] INFO  Application - Unhandled: GET - /bad-request
+[2019-08-02 11:40:02,412]-[nioEventLoopGroup-4-8] INFO  Application - Unhandled: GET - /bad-request
+[2019-08-02 11:40:02,415]-[nioEventLoopGroup-4-1] INFO  Application - Unhandled: GET - /bad-request
+[2019-08-02 11:40:20,551]-[nioEventLoopGroup-4-2] INFO  Application - 200 OK: GET - /
+[2019-08-02 11:40:21,029]-[nioEventLoopGroup-4-7] INFO  Application - 200 OK: GET - /manifest.json
+[2019-08-02 11:40:46,500]-[nioEventLoopGroup-4-6] INFO  Application - Unhandled: GET - /bad-request
+[2019-08-02 11:40:46,513]-[nioEventLoopGroup-4-7] INFO  Application - Unhandled: GET - /bad-request
+[2019-08-02 11:40:46,514]-[nioEventLoopGroup-4-8] INFO  Application - Unhandled: GET - /bad-request
+[2019-08-02 11:41:21,541]-[nioEventLoopGroup-3-5] INFO  Application - Changes in application detected.
+[2019-08-02 11:41:21,742]-[nioEventLoopGroup-3-5] INFO  Application - Application stopping: io.ktor.application.Application@6e495b48
+[2019-08-02 11:41:21,743]-[nioEventLoopGroup-3-5] INFO  Application - Application stopped: io.ktor.application.Application@6e495b48
+[2019-08-02 11:41:21,784]-[nioEventLoopGroup-3-5] INFO  Application - Responding at http://0.0.0.0:8080
+[2019-08-02 11:41:21,784]-[nioEventLoopGroup-3-5] INFO  Application - Responding at https://0.0.0.0:8443
+[2019-08-02 11:41:21,784]-[nioEventLoopGroup-3-5] INFO  Application - Application started: io.ktor.application.Application@2e2df203
+[2019-08-02 11:41:21,786]-[nioEventLoopGroup-4-4] INFO  Application - 200 OK: GET - /
+[2019-08-02 11:41:21,833]-[nioEventLoopGroup-4-5] INFO  Application - 200 OK: GET - /css/theme/flatly.min.css
+[2019-08-02 11:41:21,843]-[nioEventLoopGroup-4-4] INFO  Application - 200 OK: GET - /css/theme/darkly.min.css
+[2019-08-02 11:41:21,872]-[nioEventLoopGroup-4-3] INFO  Application - 200 OK: GET - /main.bundle.js
+[2019-08-02 11:41:22,417]-[nioEventLoopGroup-4-6] INFO  Application - 200 OK: GET - /manifest.json
+[2019-08-02 11:41:33,489]-[nioEventLoopGroup-3-1] INFO  Application - Changes in application detected.
+[2019-08-02 11:41:33,691]-[nioEventLoopGroup-3-1] INFO  Application - Application stopping: io.ktor.application.Application@2e2df203
+[2019-08-02 11:41:33,691]-[nioEventLoopGroup-3-1] INFO  Application - Application stopped: io.ktor.application.Application@2e2df203
+[2019-08-02 11:41:33,725]-[nioEventLoopGroup-3-1] INFO  Application - Responding at http://0.0.0.0:8080
+[2019-08-02 11:41:33,725]-[nioEventLoopGroup-3-1] INFO  Application - Responding at https://0.0.0.0:8443
+[2019-08-02 11:41:33,725]-[nioEventLoopGroup-3-1] INFO  Application - Application started: io.ktor.application.Application@7f7cc997
+[2019-08-02 11:41:33,727]-[nioEventLoopGroup-4-3] INFO  Application - 200 OK: GET - /
+[2019-08-02 11:41:33,760]-[nioEventLoopGroup-4-3] INFO  Application - 200 OK: GET - /css/theme/darkly.min.css
+[2019-08-02 11:41:33,763]-[nioEventLoopGroup-4-4] INFO  Application - 200 OK: GET - /css/theme/flatly.min.css
+[2019-08-02 11:41:34,627]-[nioEventLoopGroup-4-5] INFO  Application - 200 OK: GET - /main.bundle.js
+[2019-08-02 11:41:35,995]-[nioEventLoopGroup-4-5] INFO  Application - 200 OK: GET - /5d5d9eefa31e5e13a6610d9fa7a283bb.svg
+[2019-08-02 11:41:35,996]-[nioEventLoopGroup-4-4] INFO  Application - 200 OK: GET - /b797c2a32b22d28ae7a37968e6b8c866.png
+[2019-08-02 11:41:35,997]-[nioEventLoopGroup-4-3] INFO  Application - 200 OK: GET - /144dc4b102cac378e52c3a8f9506676e.svg
+[2019-08-02 11:41:36,105]-[nioEventLoopGroup-4-3] INFO  Application - 200 OK: GET - /api/meta
+[2019-08-02 11:41:36,171]-[nioEventLoopGroup-4-6] INFO  Application - 200 OK: GET - /manifest.json
+[2019-08-02 12:47:00,029]-[nioEventLoopGroup-3-5] INFO  Application - Changes in application detected.
+[2019-08-02 12:47:00,232]-[nioEventLoopGroup-3-5] INFO  Application - Application stopping: io.ktor.application.Application@7f7cc997
+[2019-08-02 12:47:00,233]-[nioEventLoopGroup-3-5] INFO  Application - Application stopped: io.ktor.application.Application@7f7cc997
+[2019-08-02 12:48:24,217]-[main] INFO  Application - Responding at http://0.0.0.0:8080
+[2019-08-02 12:48:24,218]-[main] INFO  Application - Application started: io.ktor.application.Application@241a0c3a
+[2019-08-02 12:48:52,072]-[nioEventLoopGroup-4-4] INFO  Application - 200 OK: GET - /api/meta
+[2019-08-02 12:48:52,256]-[nioEventLoopGroup-4-4] INFO  Application - 200 OK: GET - /favicon.ico
+[2019-08-02 12:50:54,250]-[nioEventLoopGroup-4-4] INFO  Application - 200 OK: GET - /
+[2019-08-02 12:50:54,303]-[nioEventLoopGroup-4-4] INFO  Application - 200 OK: GET - /css/theme/darkly.min.css
+[2019-08-02 12:50:54,306]-[nioEventLoopGroup-4-5] INFO  Application - 200 OK: GET - /css/theme/flatly.min.css
+[2019-08-02 12:50:55,083]-[nioEventLoopGroup-4-6] INFO  Application - 200 OK: GET - /main.bundle.js
+[2019-08-02 12:50:55,740]-[nioEventLoopGroup-4-6] INFO  Application - 200 OK: GET - /api/meta
+[2019-08-02 12:50:55,788]-[nioEventLoopGroup-4-5] INFO  Application - 200 OK: GET - /144dc4b102cac378e52c3a8f9506676e.svg
+[2019-08-02 12:50:55,790]-[nioEventLoopGroup-4-4] INFO  Application - 200 OK: GET - /b797c2a32b22d28ae7a37968e6b8c866.png
+[2019-08-02 12:50:55,791]-[nioEventLoopGroup-4-6] INFO  Application - 200 OK: GET - /5d5d9eefa31e5e13a6610d9fa7a283bb.svg
+[2019-08-02 12:50:55,874]-[nioEventLoopGroup-4-7] INFO  Application - 200 OK: GET - /manifest.json

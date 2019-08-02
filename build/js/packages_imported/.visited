@@ -1,0 +1,233 @@
+{
+  "version": "8",
+  "byHash": {
+    "0fa9947f074781da105625dc711b8671": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.3.41/2ecf4aa059427d7186312fd1736afedf7972e7f7/kotlin-stdlib-common-1.3.41.jar"
+    },
+    "1888dfc6e82ac8bf6c8f6d6867cf6252": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-serialization-runtime-common/0.11.1/707097f1ac746e78e5bc7210c9fb397526144b5c/kotlinx-serialization-runtime-common-0.11.1.jar"
+    },
+    "0c685e6b082454cb4e24711450f6f317": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-js/1.3.41/55b92e441b0ea9cbf079c6452b41687f95571524/kotlin-stdlib-js-1.3.41.jar",
+      "target": "kotlin:1.3.41"
+    },
+    "25365028b0d5aa95fbd1ee6c33a08701": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-client-js/1.2.3/fe3413a23ea4be8174018b68e135c7185c4baaca/ktor-client-js-1.2.3.jar",
+      "target": "ktor-ktor-client-js:1.2.3"
+    },
+    "3542d10815394223c083b79fe548d5eb": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-client-core-js/1.2.3/a7af1966ff75a6b66c96c0593596efd87da79ec/ktor-client-core-js-1.2.3.jar",
+      "target": "ktor-ktor-client-core:1.2.3"
+    },
+    "aeb0a89bc32e4f987e4d859e155e5aad": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-http-cio-js/1.2.3/d7c8b7fbb81529b85188d5a352cae8dc61ba2e5f/ktor-http-cio-js-1.2.3.jar",
+      "target": "ktor-ktor-http-cio:1.2.3"
+    },
+    "d2504f04d9ba97b7e3972af0d796200c": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-http-js/1.2.3/b35330e22447bae86986388b7b69fb9cb7b9d308/ktor-http-js-1.2.3.jar",
+      "target": "ktor-ktor-http:1.2.3"
+    },
+    "c1ef94d040c0e53d5c99924780460014": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-utils-js/1.2.3/83a134f3bd3d4703c2b61575057f9f604edb1603/ktor-utils-js-1.2.3.jar",
+      "target": "ktor-ktor-utils:1.2.3"
+    },
+    "5eb23fdd57b440d3b60da91afd587d72": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-io-js/0.1.12/d7525fc90f509e8e10ae7806fbf3d1fca39eb7c3/kotlinx-coroutines-io-js-0.1.12.jar",
+      "target": "kotlinx-coroutines-io:0.1.12"
+    },
+    "273efae1d83c87a61e5578008dd744c6": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-core-js/1.2.2/40cc7e3ea0be44fdd492356956ded00a07176b10/kotlinx-coroutines-core-js-1.2.2.jar",
+      "target": "kotlinx-coroutines-core:1.2.2"
+    },
+    "42010f1534e56c8ff98e1461935701b2": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-io-js/0.1.12/ace19ee16b56921cec148b1ee061d0aaa235be6d/kotlinx-io-js-0.1.12.jar",
+      "target": "kotlinx-io:0.1.12"
+    },
+    "376f36a24ca9c9fb9befa2225826bc9c": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/atomicfu-js/0.12.9/b7d00e95c9e437c9003783901170b20783ce6b0f/atomicfu-js-0.12.9.jar",
+      "target": "kotlinx-atomicfu:0.12.9"
+    },
+    "0495d93169b4f535c54656460eaf5019": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-io/0.1.12/644622dd88fe0a69ccd349e19c1aa2ad43b62905/kotlinx-io-0.1.12.jar"
+    },
+    "3dea022f9ae0f5fafa4a914c702fd479": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/atomicfu-common/0.12.9/ba80bc10a440ea504b5cebd262becf9870e309c3/atomicfu-common-0.12.9.jar"
+    },
+    "231aa6a27af67e838242b1c4b36b81f9": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-io/0.1.12/c73db7c22ec420426fe12c3edadec90f10ae17cd/kotlinx-coroutines-io-0.1.12.jar"
+    },
+    "c453e69a16e6e94ccc7aeb7f449bd745": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-core-common/1.2.2/8b54928fbb813408684911eb27d6afeb23c92a4b/kotlinx-coroutines-core-common-1.2.2.jar"
+    },
+    "dacc98a4e8fd8b114c4cf427bc59dbb2": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-test-nodejs-runner/1.3.41/d8b047893af57b120f41b5c8176691a69263c0ac/kotlin-test-nodejs-runner-1.3.41.jar",
+      "target": "kotlin-test-nodejs-runner:1.3.41"
+    },
+    "cc909a7119541d29c4e3377a05cb035e": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-test-js/1.3.41/3e2fbf8ac392c8ec6da16cd1436378fdfd97230f/kotlin-test-js-1.3.41.jar",
+      "target": "kotlin-test:1.3.41"
+    },
+    "6841cc8fc165b71d223833706e951af7": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-test-common/1.3.41/744000c1a0ef654706ce3367a10543590dab9246/kotlin-test-common-1.3.41.jar"
+    },
+    "fee8054f66b8f8499787c4bdb38dbf45": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-test-annotations-common/1.3.41/f57e03dea3d1a81b5e1b3cdcf4eb2710a3fac173/kotlin-test-annotations-common-1.3.41.jar"
+    },
+    "17748b5d42f95e966c4c7ccdabe14ea1": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/atomicfu/0.12.9/5cee16643956d76c52c7ef345448b0990b6e1e04/atomicfu-0.12.9.jar"
+    },
+    "c6735131a76eea102a8b7dc1ec8d2a93": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.3.40/b8a521c687329303778548e2f09b0ba5b2665236/kotlin-stdlib-1.3.40.jar"
+    },
+    "72ac29dee68b63d11710f49a42861308": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar"
+    },
+    "a5ae6b56fdd9576a103cdbf71d1dc2a9": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-client-json-js/1.2.3/cbcfb783dcb5a15f40c2cbfd059cfbc15af138fc/ktor-client-json-js-1.2.3.jar",
+      "target": "ktor-ktor-client-json:1.2.3"
+    },
+    "df785c5495fee8dfdfed0447a6c69a13": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-client-serialization-js/1.2.3/e253c3dd1798377bdefb29b2783242b27d5601a3/ktor-client-serialization-js-1.2.3.jar",
+      "target": "ktor-ktor-client-serialization:1.2.3"
+    },
+    "ef8df5f25a11d88fab4f433280ef8fa7": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-serialization-runtime-js/0.11.1/5e75dff88b0c9717364a948119cb7435cd29e73/kotlinx-serialization-runtime-js-0.11.1.jar",
+      "target": "kotlinx-serialization-kotlinx-serialization-runtime:0.11.1"
+    },
+    "c025213b63f47d64759967367c00681d": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains/kotlin-react/16.8.6-pre.80-kotlin-1.3.41/1de096722672cf0d6f97a8408b96e15ae99c5f1d/kotlin-react-16.8.6-pre.80-kotlin-1.3.41.jar",
+      "target": "kotlin-react:16.8.6-pre.80-kotlin-1.3.41"
+    },
+    "d965341adcca53addc92ce64c111235d": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains/kotlin-extensions/1.0.1-pre.80-kotlin-1.3.41/b464e773c9c402b55ac9e277467323ad2217edd1/kotlin-extensions-1.0.1-pre.80-kotlin-1.3.41.jar",
+      "target": "kotlin-extensions:1.0.1-pre.80-kotlin-1.3.41"
+    },
+    "44b0b248f9d1ae326866abe15d862a55": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-html-js/0.6.12/b82af4aec43c6595f9e40e56443e908eabd37dde/kotlinx-html-js-0.6.12.jar",
+      "target": "kotlinx-html-js:0.6.12"
+    },
+    "d2ad3d8474e243355248dfe7cabb825c": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-html-common/0.6.12/81406c947ce1d7375e776a19c5aefaf850666627/kotlinx-html-common-0.6.12.jar"
+    },
+    "520c768ce0e1a655d4c314c54726cbdb": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-core/1.2.2/6ff48bdfc38a8c22e3fc37605b6a6afaed3b6dbd/kotlinx-coroutines-core-1.2.2.jar"
+    },
+    "ccb886510b8602611e4216fc66d0b464": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains/kotlin-react-dom/16.8.6-pre.80-kotlin-1.3.41/f4606f26ece99ae2038e5e5b04955724c32abc99/kotlin-react-dom-16.8.6-pre.80-kotlin-1.3.41.jar",
+      "target": "kotlin-react-dom:16.8.6-pre.80-kotlin-1.3.41"
+    },
+    "702596d2b6e1f0a584160e0fce8c4bc1": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains/kotlin-react-redux/5.0.7-pre.80-kotlin-1.3.41/8d29c708c53c098729be17a211740f5873fc87e6/kotlin-react-redux-5.0.7-pre.80-kotlin-1.3.41.jar",
+      "target": "kotlin-react-redux:5.0.7-pre.80-kotlin-1.3.41"
+    },
+    "f4b1769618d768f7f66a6fd93f653c45": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains/kotlin-redux/4.0.0-pre.80-kotlin-1.3.41/3a1ab20803511a32f62503c22aac83bc7dc2a211/kotlin-redux-4.0.0-pre.80-kotlin-1.3.41.jar",
+      "target": "kotlin-redux:4.0.0-pre.80-kotlin-1.3.41"
+    },
+    "7d0377c7cb5feb3e274bc982ff37d0dc": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains/kotlin-styled/1.0.0-pre.80-kotlin-1.3.41/75550dff15d938a6516a66b6b2126700de601f4a/kotlin-styled-1.0.0-pre.80-kotlin-1.3.41.jar",
+      "target": "kotlin-styled:1.0.0-pre.80-kotlin-1.3.41"
+    },
+    "1102fbb1905bfab16352c6939b8db899": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains/kotlin-css-js/1.0.0-pre.80-kotlin-1.3.41/1d40659f88ba80a5cf00808d347249aba9d5aed8/kotlin-css-js-1.0.0-pre.80-kotlin-1.3.41.jar",
+      "target": "kotlin-css-js:1.0.0-pre.80-kotlin-1.3.41"
+    },
+    "402011a4491747e6c9e0e50040f4ce63": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains/kotlin-css/1.0.0-pre.80-kotlin-1.3.41/a5499b41245009d7d08fbe435383295a77c009ca/kotlin-css-1.0.0-pre.80-kotlin-1.3.41.jar"
+    }
+  },
+  "byTarget": {
+    "kotlin:1.3.41": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-js/1.3.41/55b92e441b0ea9cbf079c6452b41687f95571524/kotlin-stdlib-js-1.3.41.jar",
+      "target": "kotlin:1.3.41"
+    },
+    "ktor-ktor-client-js:1.2.3": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-client-js/1.2.3/fe3413a23ea4be8174018b68e135c7185c4baaca/ktor-client-js-1.2.3.jar",
+      "target": "ktor-ktor-client-js:1.2.3"
+    },
+    "ktor-ktor-client-core:1.2.3": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-client-core-js/1.2.3/a7af1966ff75a6b66c96c0593596efd87da79ec/ktor-client-core-js-1.2.3.jar",
+      "target": "ktor-ktor-client-core:1.2.3"
+    },
+    "ktor-ktor-http-cio:1.2.3": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-http-cio-js/1.2.3/d7c8b7fbb81529b85188d5a352cae8dc61ba2e5f/ktor-http-cio-js-1.2.3.jar",
+      "target": "ktor-ktor-http-cio:1.2.3"
+    },
+    "ktor-ktor-http:1.2.3": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-http-js/1.2.3/b35330e22447bae86986388b7b69fb9cb7b9d308/ktor-http-js-1.2.3.jar",
+      "target": "ktor-ktor-http:1.2.3"
+    },
+    "ktor-ktor-utils:1.2.3": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-utils-js/1.2.3/83a134f3bd3d4703c2b61575057f9f604edb1603/ktor-utils-js-1.2.3.jar",
+      "target": "ktor-ktor-utils:1.2.3"
+    },
+    "kotlinx-coroutines-io:0.1.12": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-io-js/0.1.12/d7525fc90f509e8e10ae7806fbf3d1fca39eb7c3/kotlinx-coroutines-io-js-0.1.12.jar",
+      "target": "kotlinx-coroutines-io:0.1.12"
+    },
+    "kotlinx-coroutines-core:1.2.2": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-core-js/1.2.2/40cc7e3ea0be44fdd492356956ded00a07176b10/kotlinx-coroutines-core-js-1.2.2.jar",
+      "target": "kotlinx-coroutines-core:1.2.2"
+    },
+    "kotlinx-io:0.1.12": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-io-js/0.1.12/ace19ee16b56921cec148b1ee061d0aaa235be6d/kotlinx-io-js-0.1.12.jar",
+      "target": "kotlinx-io:0.1.12"
+    },
+    "kotlinx-atomicfu:0.12.9": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/atomicfu-js/0.12.9/b7d00e95c9e437c9003783901170b20783ce6b0f/atomicfu-js-0.12.9.jar",
+      "target": "kotlinx-atomicfu:0.12.9"
+    },
+    "kotlin-test-nodejs-runner:1.3.41": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-test-nodejs-runner/1.3.41/d8b047893af57b120f41b5c8176691a69263c0ac/kotlin-test-nodejs-runner-1.3.41.jar",
+      "target": "kotlin-test-nodejs-runner:1.3.41"
+    },
+    "kotlin-test:1.3.41": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-test-js/1.3.41/3e2fbf8ac392c8ec6da16cd1436378fdfd97230f/kotlin-test-js-1.3.41.jar",
+      "target": "kotlin-test:1.3.41"
+    },
+    "ktor-ktor-client-json:1.2.3": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-client-json-js/1.2.3/cbcfb783dcb5a15f40c2cbfd059cfbc15af138fc/ktor-client-json-js-1.2.3.jar",
+      "target": "ktor-ktor-client-json:1.2.3"
+    },
+    "ktor-ktor-client-serialization:1.2.3": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-client-serialization-js/1.2.3/e253c3dd1798377bdefb29b2783242b27d5601a3/ktor-client-serialization-js-1.2.3.jar",
+      "target": "ktor-ktor-client-serialization:1.2.3"
+    },
+    "kotlinx-serialization-kotlinx-serialization-runtime:0.11.1": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-serialization-runtime-js/0.11.1/5e75dff88b0c9717364a948119cb7435cd29e73/kotlinx-serialization-runtime-js-0.11.1.jar",
+      "target": "kotlinx-serialization-kotlinx-serialization-runtime:0.11.1"
+    },
+    "kotlin-react:16.8.6-pre.80-kotlin-1.3.41": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains/kotlin-react/16.8.6-pre.80-kotlin-1.3.41/1de096722672cf0d6f97a8408b96e15ae99c5f1d/kotlin-react-16.8.6-pre.80-kotlin-1.3.41.jar",
+      "target": "kotlin-react:16.8.6-pre.80-kotlin-1.3.41"
+    },
+    "kotlin-extensions:1.0.1-pre.80-kotlin-1.3.41": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains/kotlin-extensions/1.0.1-pre.80-kotlin-1.3.41/b464e773c9c402b55ac9e277467323ad2217edd1/kotlin-extensions-1.0.1-pre.80-kotlin-1.3.41.jar",
+      "target": "kotlin-extensions:1.0.1-pre.80-kotlin-1.3.41"
+    },
+    "kotlinx-html-js:0.6.12": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-html-js/0.6.12/b82af4aec43c6595f9e40e56443e908eabd37dde/kotlinx-html-js-0.6.12.jar",
+      "target": "kotlinx-html-js:0.6.12"
+    },
+    "kotlin-react-dom:16.8.6-pre.80-kotlin-1.3.41": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains/kotlin-react-dom/16.8.6-pre.80-kotlin-1.3.41/f4606f26ece99ae2038e5e5b04955724c32abc99/kotlin-react-dom-16.8.6-pre.80-kotlin-1.3.41.jar",
+      "target": "kotlin-react-dom:16.8.6-pre.80-kotlin-1.3.41"
+    },
+    "kotlin-react-redux:5.0.7-pre.80-kotlin-1.3.41": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains/kotlin-react-redux/5.0.7-pre.80-kotlin-1.3.41/8d29c708c53c098729be17a211740f5873fc87e6/kotlin-react-redux-5.0.7-pre.80-kotlin-1.3.41.jar",
+      "target": "kotlin-react-redux:5.0.7-pre.80-kotlin-1.3.41"
+    },
+    "kotlin-redux:4.0.0-pre.80-kotlin-1.3.41": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains/kotlin-redux/4.0.0-pre.80-kotlin-1.3.41/3a1ab20803511a32f62503c22aac83bc7dc2a211/kotlin-redux-4.0.0-pre.80-kotlin-1.3.41.jar",
+      "target": "kotlin-redux:4.0.0-pre.80-kotlin-1.3.41"
+    },
+    "kotlin-styled:1.0.0-pre.80-kotlin-1.3.41": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains/kotlin-styled/1.0.0-pre.80-kotlin-1.3.41/75550dff15d938a6516a66b6b2126700de601f4a/kotlin-styled-1.0.0-pre.80-kotlin-1.3.41.jar",
+      "target": "kotlin-styled:1.0.0-pre.80-kotlin-1.3.41"
+    },
+    "kotlin-css-js:1.0.0-pre.80-kotlin-1.3.41": {
+      "src": "/home/mpetuska/.gradle/caches/modules-2/files-2.1/org.jetbrains/kotlin-css-js/1.0.0-pre.80-kotlin-1.3.41/1d40659f88ba80a5cf00808d347249aba9d5aed8/kotlin-css-js-1.0.0-pre.80-kotlin-1.3.41.jar",
+      "target": "kotlin-css-js:1.0.0-pre.80-kotlin-1.3.41"
+    }
+  }
+}

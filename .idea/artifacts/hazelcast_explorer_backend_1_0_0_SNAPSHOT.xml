@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="hazelcast-explorer-backend-1.0.0-SNAPSHOT">
+    <output-path>$PROJECT_DIR$/build/libs</output-path>
+    <root id="archive" name="hazelcast-explorer-backend-1.0.0-SNAPSHOT.jar">
+      <element id="module-output" name="lt.petuska.hazelcast-explorer.backendMain" />
+    </root>
+  </artifact>
+</component>

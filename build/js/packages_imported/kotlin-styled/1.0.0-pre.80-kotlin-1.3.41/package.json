@@ -1,0 +1,7 @@
+{
+  "main": "kotlin-styled.js",
+  "devDependencies": {},
+  "dependencies": {},
+  "name": "kotlin-styled",
+  "version": "1.0.0-pre.80-kotlin-1.3.41"
+}

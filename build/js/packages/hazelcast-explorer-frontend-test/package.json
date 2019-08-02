@@ -1,0 +1,7 @@
+{
+  "main": "kotlin/hazelcast-explorer-frontend-test.js",
+  "devDependencies": {},
+  "dependencies": {},
+  "name": "hazelcast-explorer-frontend-test",
+  "version": "1.0.0-SNAPSHOT"
+}

@@ -1,0 +1,7 @@
+{
+  "main": "kotlinx-coroutines-core.js",
+  "devDependencies": {},
+  "dependencies": {},
+  "name": "kotlinx-coroutines-core",
+  "version": "1.2.2"
+}

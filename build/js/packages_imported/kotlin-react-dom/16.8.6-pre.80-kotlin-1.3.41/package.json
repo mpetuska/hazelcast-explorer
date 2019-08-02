@@ -1,0 +1,7 @@
+{
+  "main": "kotlin-react-dom.js",
+  "devDependencies": {},
+  "dependencies": {},
+  "name": "kotlin-react-dom",
+  "version": "16.8.6-pre.80-kotlin-1.3.41"
+}

@@ -1,0 +1,7 @@
+{
+  "main": "ktor-ktor-client-json.js",
+  "devDependencies": {},
+  "dependencies": {},
+  "name": "ktor-ktor-client-json",
+  "version": "1.2.2"
+}

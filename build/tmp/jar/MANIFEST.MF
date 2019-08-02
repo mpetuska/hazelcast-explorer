@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Implementation-Title: hazelcast-explorer
+Implementation-Version: 1.0.0-SNAPSHOT
+Implementation-Group: lt.petuska
+Timestamp: 1564739298451
+Main-Class: io.ktor.server.netty.EngineMain
+

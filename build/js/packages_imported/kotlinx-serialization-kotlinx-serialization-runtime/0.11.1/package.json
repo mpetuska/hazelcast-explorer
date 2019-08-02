@@ -1,0 +1,7 @@
+{
+  "main": "kotlinx-serialization-kotlinx-serialization-runtime.js",
+  "devDependencies": {},
+  "dependencies": {},
+  "name": "kotlinx-serialization-kotlinx-serialization-runtime",
+  "version": "0.11.1"
+}

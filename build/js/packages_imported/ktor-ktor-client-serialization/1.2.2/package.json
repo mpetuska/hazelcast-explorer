@@ -1,0 +1,7 @@
+{
+  "main": "ktor-ktor-client-serialization.js",
+  "devDependencies": {},
+  "dependencies": {},
+  "name": "ktor-ktor-client-serialization",
+  "version": "1.2.2"
+}

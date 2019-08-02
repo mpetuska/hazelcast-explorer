@@ -1,0 +1,7 @@
+{
+  "main": "kotlinx-io.js",
+  "devDependencies": {},
+  "dependencies": {},
+  "name": "kotlinx-io",
+  "version": "0.1.10"
+}

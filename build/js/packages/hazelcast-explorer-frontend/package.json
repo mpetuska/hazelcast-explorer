@@ -1,0 +1,31 @@
+{
+  "main": "kotlin/hazelcast-explorer-frontend.js",
+  "devDependencies": {},
+  "dependencies": {
+    "kotlin": "1.3.41",
+    "ktor-ktor-client-js": "1.2.3",
+    "ktor-ktor-client-core": "1.2.3",
+    "ktor-ktor-http-cio": "1.2.3",
+    "ktor-ktor-http": "1.2.3",
+    "ktor-ktor-utils": "1.2.3",
+    "kotlinx-coroutines-io": "0.1.12",
+    "kotlinx-coroutines-core": "1.2.2",
+    "kotlinx-io": "0.1.12",
+    "kotlinx-atomicfu": "0.12.9",
+    "kotlin-test-nodejs-runner": "1.3.41",
+    "kotlin-test": "1.3.41",
+    "ktor-ktor-client-json": "1.2.3",
+    "ktor-ktor-client-serialization": "1.2.3",
+    "kotlinx-serialization-kotlinx-serialization-runtime": "0.11.1",
+    "kotlin-react": "16.8.6-pre.80-kotlin-1.3.41",
+    "kotlin-extensions": "1.0.1-pre.80-kotlin-1.3.41",
+    "kotlinx-html-js": "0.6.12",
+    "kotlin-react-dom": "16.8.6-pre.80-kotlin-1.3.41",
+    "kotlin-react-redux": "5.0.7-pre.80-kotlin-1.3.41",
+    "kotlin-redux": "4.0.0-pre.80-kotlin-1.3.41",
+    "kotlin-styled": "1.0.0-pre.80-kotlin-1.3.41",
+    "kotlin-css-js": "1.0.0-pre.80-kotlin-1.3.41"
+  },
+  "name": "hazelcast-explorer-frontend",
+  "version": "1.0.0-SNAPSHOT"
+}

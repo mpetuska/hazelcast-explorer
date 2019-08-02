@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Implementation-Version: 0.6.12
+Archiver-Version: Plexus Archiver
+Built-By: teamcity
+Created-By: Apache Maven 3.2.5
+Build-Jdk: 1.8.0_181
+Implementation-Vendor: JetBrains s.r.o.
+
