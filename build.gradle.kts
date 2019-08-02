@@ -1,3 +1,9 @@
+import org.jetbrains.kotlin.gradle.frontend.*
+import org.jetbrains.kotlin.gradle.frontend.ktor.*
+import org.jetbrains.kotlin.gradle.frontend.npm.*
+import org.jetbrains.kotlin.gradle.frontend.webpack.*
+import org.jetbrains.kotlin.gradle.tasks.*
+
 buildscript {
   extra.set("production", (findProperty("prod") ?: findProperty("production") ?: "false") == "true")
 }
@@ -30,6 +36,7 @@ repositories {
   maven { url = uri("https://kotlin.bintray.com/js-externals") }
   mavenLocal()
 }
+project.ext["org.gradle.java.home"] = System.getenv("JAVA_HOME")
 
 // Versions
 val kotlinVersion: String by System.getProperties()
@@ -166,7 +173,7 @@ tasks {
   withType<Kotlin2JsCompile> {
     kotlinOptions {
       moduleKind = "commonjs"
-//      sourceMap = !isProductionBuild
+      sourceMap = !isProductionBuild
       metaInfo = true
       sourceMapEmbedSources = "always"
     }

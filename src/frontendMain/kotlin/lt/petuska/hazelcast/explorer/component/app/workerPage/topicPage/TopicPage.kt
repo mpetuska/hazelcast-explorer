@@ -12,7 +12,7 @@ class TopicPage(props: TopicPageProps) : StatelessComponent<TopicPageProps>(prop
     div("container") {
       synchronousButton {
         attrs {
-          text = "Test"
+          text = "Test Topic"
           type = BType.SUCCESS
           onClick = {
             GlobalScope.launch {

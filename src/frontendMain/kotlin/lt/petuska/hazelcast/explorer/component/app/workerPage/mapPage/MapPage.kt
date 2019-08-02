@@ -12,7 +12,7 @@ class MapPage(props: MapPageProps) : StatelessComponent<MapPageProps>(props) {
     div("container") {
       synchronousButton {
         attrs {
-          text = "Test"
+          text = "Test Map"
           type = BType.DANGER
           cancelable = true
           onClick = {
