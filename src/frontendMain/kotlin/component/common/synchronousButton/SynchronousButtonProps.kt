@@ -1,6 +1,6 @@
 package lt.petuska.hazelcast.explorer.component.common.synchronousButton
 
-import lt.petuska.hazelcast.explorer.domain.*
+import lt.petuska.hazelcast.explorer.domain.enumerator.*
 import react.*
 
 interface SynchronousButtonProps : RProps {

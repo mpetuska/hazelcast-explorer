@@ -28,7 +28,7 @@ fun buildStubConfig(startNodes: Boolean = false) = hazelcastExplorerConfig {
     val gridClient = LocalHazelcastProvider("local_grid").apply { if (startNodes) startNode() }
     target("M", "M Only", gridClient::getClient) {
       map("local_grid_map1", Long::class, String::class)
-      map("local_grid_map1", Long::class, String::class)
+      map("local_grid_map2", Long::class, String::class)
     }
     val clusterClient = LocalHazelcastProvider("local_cluster").apply { if (startNodes) startNode() }
     target("T", "T Only", clusterClient::getClient) {

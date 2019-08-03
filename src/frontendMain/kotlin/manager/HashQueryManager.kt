@@ -1,6 +1,7 @@
 package lt.petuska.hazelcast.explorer.manager
 
-import lt.petuska.hazelcast.explorer.domain.*
+import lt.petuska.hazelcast.explorer.domain.enumerator.*
+import lt.petuska.hazelcast.explorer.util.*
 import org.w3c.dom.url.*
 import kotlin.browser.*
 
@@ -11,14 +12,18 @@ object HashQueryManager : PersistenceManager(listOf(
 )) {
   override fun setupSubscriptions() {
     window.addEventListener("hashchange", { loadPersistedState() }, null)
-    super.setupSubscriptions()
+    delay(50) {
+      super.setupSubscriptions()
+    }
   }
 
   override fun load(prop: PersistentProperty) = URLSearchParams(window.location.hash.substringAfter("?")).get(prop.key)
 
-  override fun save(key: String, value: String) {
+  override fun save(key: String, value: String?) {
     URLSearchParams(window.location.hash.substringAfter("?")).apply {
-      set(key, value)
+      value?.let {
+        set(key, it)
+      } ?: delete(key)
     }.let { window.location.hash = "?$it" }
   }
 

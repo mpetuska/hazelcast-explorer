@@ -1,3 +1,5 @@
+@file:Suppress("UnsafeCastFromDynamic")
+
 package lt.petuska.hazelcast.explorer
 
 import kotlinext.js.*
@@ -12,15 +14,14 @@ import redux.*
 import kotlin.browser.*
 
 
-@Suppress("UnsafeCastFromDynamic")
-val store = createStore<HZEState, RAction, dynamic>(
-    combinedReducers(),
-    HZEState(),
+val store = createStore<HzeState, RAction, WrapperAction>(
+    HzeReducers(),
+    HzeState(),
     compose(
         rEnhancer(),
         js("if(window.__REDUX_DEVTOOLS_EXTENSION__ )window.__REDUX_DEVTOOLS_EXTENSION__ ();else(function(f){return f;});")
     )
-)
+).unsafeCast<Store<HzeState, HzeAction, WrapperAction>>()
 
 fun main() {
   imports()
@@ -35,7 +36,6 @@ fun main() {
 }
 
 private fun imports() {
-  @Suppress("UnsafeCastFromDynamic")
   require("css/global.css")
   window.asDynamic().`$` = require("jquery")
   require("bootstrap")
@@ -45,7 +45,7 @@ private fun imports() {
 
 private fun initialisation() {
   HzeConfigService.get().then {
-    store.dispatch(HZEAction.HZEConfigLoaded(it))
+    store.dispatch(HzeAction.HzeConfigLoaded(it))
   }.catch {
     NotificationService.error("Unable to load the configuration from server")
   }

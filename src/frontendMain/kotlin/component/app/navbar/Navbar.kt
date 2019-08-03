@@ -5,7 +5,7 @@ import kotlinx.html.*
 import lt.petuska.hazelcast.explorer.component.app.*
 import lt.petuska.hazelcast.explorer.component.app.navbar.logo.*
 import lt.petuska.hazelcast.explorer.component.app.navbar.themeToggle.*
-import lt.petuska.hazelcast.explorer.domain.*
+import lt.petuska.hazelcast.explorer.domain.enumerator.*
 import lt.petuska.hazelcast.explorer.manager.*
 import react.*
 import react.dom.*

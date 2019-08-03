@@ -1,4 +1,4 @@
-package lt.petuska.hazelcast.explorer.domain
+package lt.petuska.hazelcast.explorer.domain.enumerator
 
 enum class BType(val typeName: String) {
   PRIMARY("primary"),

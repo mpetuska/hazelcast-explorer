@@ -6,7 +6,6 @@ import lt.petuska.hazelcast.explorer.*
 import lt.petuska.hazelcast.explorer.component.app.*
 import lt.petuska.hazelcast.explorer.component.app.workerPage.mapPage.*
 import lt.petuska.hazelcast.explorer.component.app.workerPage.topicPage.*
-import lt.petuska.hazelcast.explorer.domain.*
 import lt.petuska.hazelcast.explorer.domain.enumerator.*
 import lt.petuska.hazelcast.explorer.manager.*
 import lt.petuska.hazelcast.explorer.redux.*
@@ -35,7 +34,7 @@ class WorkerPage(props: WorkerPageProps) : StatelessComponent<WorkerPageProps>(p
       }
       activeTab?.let { it {} }
           ?: availableExploreType?.let {
-            store.dispatch(HZEAction.SelectExploreType(it))
+            store.dispatch(HzeAction.SelectExploreType(it))
           }
     }
   }
@@ -49,11 +48,15 @@ class WorkerPage(props: WorkerPageProps) : StatelessComponent<WorkerPageProps>(p
           ), classes = "nav-link ${if (active) "active" else ""}"
       ) {
         attrs.onClickFunction = {
-          store.dispatch(HZEAction.SelectExploreType(exploreType))
+          store.dispatch(HzeAction.SelectExploreType(exploreType))
         }
         +"${exploreType.displayName} Explorer"
       }
     }
     return active
+  }
+
+  override fun componentWillUnmount() {
+    store.dispatch(HzeAction.SelectExploreType(null))
   }
 }
