@@ -12,18 +12,19 @@ abstract class PersistenceManager(private val props: List<PersistentProperty>) {
 
   private fun init() = setupSubscriptions()
 
-  protected open fun setupSubscriptions() {
-    delay(50) {
+  protected open fun setupSubscriptions(delay: Long = 50) {
+    delay(delay) {
       loadPersistedState()
       store.subscribe { persistState() }
     }
   }
 
+  protected open fun shouldLoad(): Boolean = true
   protected abstract fun load(prop: PersistentProperty): String?
   protected abstract fun save(key: String, value: String?)
 
   protected fun loadPersistedState() {
-    promise {
+    if (shouldLoad()) promise {
       delay(10)
       props.map { it to load(it) }.forEach {
         val prop = it.first

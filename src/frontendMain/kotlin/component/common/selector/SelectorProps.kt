@@ -10,4 +10,5 @@ interface SelectorProps : RProps {
   var selectedValue: String
   var required: Boolean
   var id: String
+  var classes: String
 }

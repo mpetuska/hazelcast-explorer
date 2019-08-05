@@ -3,7 +3,7 @@ package lt.petuska.hazelcast.explorer.component.app.workerPage
 import kotlinx.html.*
 import kotlinx.html.js.*
 import lt.petuska.hazelcast.explorer.*
-import lt.petuska.hazelcast.explorer.component.app.*
+import lt.petuska.hazelcast.explorer.component.*
 import lt.petuska.hazelcast.explorer.component.app.workerPage.mapPage.*
 import lt.petuska.hazelcast.explorer.component.app.workerPage.topicPage.*
 import lt.petuska.hazelcast.explorer.domain.enumerator.*
@@ -24,7 +24,6 @@ class WorkerPage(props: WorkerPageProps) : StatelessComponent<WorkerPageProps>(p
               availableExploreType = it
               if (addTab(it)) activeTab = mapPage
             }
-            //TODO Topics
             ExploreType.TOPIC -> if (!props.target?.topics.isNullOrEmpty()) {
               availableExploreType = it
               if (addTab(it)) activeTab = topicPage

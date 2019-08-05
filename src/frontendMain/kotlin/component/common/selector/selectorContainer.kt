@@ -12,6 +12,7 @@ interface ContainerProps : RProps {
   var selectedValue: String?
   var required: Boolean
   var id: String
+  var classes: String
 }
 
 val selector = connectClass<ContainerProps, SelectorProps, Selector, SelectorProps>(
@@ -20,8 +21,9 @@ val selector = connectClass<ContainerProps, SelectorProps, Selector, SelectorPro
       onDestroy = ownProps.onDestroy
       values = ownProps.values
       placeholderText = ownProps.placeholderText
-      selectedValue = ownProps.selectedValue ?: ""
+      selectedValue = ownProps.selectedValue.ifNullOrUndefined("")
       required = ownProps.required
       id = ownProps.id
+      classes = ownProps.classes
     }
 )

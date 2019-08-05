@@ -54,7 +54,7 @@ val hazelcastVersion: String by project
 // Custom Properties
 val webDir = file("src/frontendMain/web")
 val isProductionBuild = project.extra.get("production") as Boolean
-val mainClassName = "io.ktor.server.netty.EngineMain"
+val mainClassName = "io.ktor.server.cio.EngineMain"
 
 kotlin {
   jvm("backend") {
@@ -89,7 +89,7 @@ kotlin {
         implementation(kotlin("reflect"))
         implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serializationVersion")
         implementation("io.ktor:ktor-server-core:$ktorVersion")
-        implementation("io.ktor:ktor-server-netty:$ktorVersion")
+        implementation("io.ktor:ktor-server-cio:$ktorVersion")
         implementation("io.ktor:ktor-serialization:$ktorVersion")
         implementation("ch.qos.logback:logback-classic:$logbackVersion")
         implementation("org.kodein.di:kodein-di-generic-jvm:$kodeinVersion")
@@ -152,7 +152,7 @@ kotlinFrontend {
     dependency("text-encoding")
     dependency("bootstrap", "4.3.1")
     dependency("jquery", "3.3.1")
-    dependency("popper.js")
+    dependency("popper.js", "1.14.3")
     dependency("bootstrap-switch-button-react", "1.1.0")
     dependency("bootstrap-notify", "3.1.3")
     dependency("animate.css", "3.7.2")

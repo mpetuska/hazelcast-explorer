@@ -2,7 +2,7 @@ package lt.petuska.hazelcast.explorer.component.app.navbar.logo
 
 import kotlinext.js.*
 import kotlinx.css.*
-import lt.petuska.hazelcast.explorer.component.app.*
+import lt.petuska.hazelcast.explorer.component.*
 import react.*
 import react.dom.*
 import styled.*

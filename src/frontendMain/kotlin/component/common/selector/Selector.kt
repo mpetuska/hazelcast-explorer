@@ -2,14 +2,14 @@ package component.common.selector
 
 import kotlinx.html.*
 import kotlinx.html.js.*
-import lt.petuska.hazelcast.explorer.component.app.*
+import lt.petuska.hazelcast.explorer.component.*
 import org.w3c.dom.*
 import react.*
 import react.dom.*
 
 class Selector(props: SelectorProps) : StatelessComponent<SelectorProps>(props) {
   override fun RBuilder.render() {
-    select(classes = "form-control ml-1 mr-1") {
+    select(classes = "form-control ${props.classes}") {
       attrs {
         id = props.id
         multiple = false

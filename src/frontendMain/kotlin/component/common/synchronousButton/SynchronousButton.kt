@@ -18,9 +18,9 @@ class SynchronousButton(props: SynchronousButtonProps) :
   override fun RBuilder.render() {
     styledButton {
       css {
-        classes = "font-weight-bold btn btn-outline-${props.type} ${props.classes}".split(" ").toMutableList()
+        classes = "btn btn-outline-${props.type} ${props.classes} font-weight-bold".split(" ").toMutableList()
         if (state.isFetching) {
-          if (props.cancelable) {
+          if (props.onCancel != null) {
             opacity = 0.75
           }
           classes.add("pl-3 pr-3")
@@ -29,8 +29,8 @@ class SynchronousButton(props: SynchronousButtonProps) :
         }
       }
       attrs {
-        disabled = state.isFetching && !props.cancelable
-        css
+        key = props.key
+        disabled = props.disabled == true || (state.isFetching && props.onCancel == null)
         onClickFunction = {
           if (state.isFetching) {
             setState {
@@ -44,7 +44,7 @@ class SynchronousButton(props: SynchronousButtonProps) :
               isFetching = true
               currentRequestTimestamp = ts
             }
-            props.onClick { _, _ ->
+            props.onClick {
               if (state.currentRequestTimestamp == ts) {
                 setState {
                   isFetching = false

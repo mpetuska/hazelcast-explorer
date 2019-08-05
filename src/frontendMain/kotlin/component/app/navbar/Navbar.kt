@@ -2,7 +2,7 @@ package lt.petuska.hazelcast.explorer.component.app.navbar
 
 import kotlinx.css.*
 import kotlinx.html.*
-import lt.petuska.hazelcast.explorer.component.app.*
+import lt.petuska.hazelcast.explorer.component.*
 import lt.petuska.hazelcast.explorer.component.app.navbar.logo.*
 import lt.petuska.hazelcast.explorer.component.app.navbar.themeToggle.*
 import lt.petuska.hazelcast.explorer.domain.enumerator.*

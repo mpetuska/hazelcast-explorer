@@ -1,12 +1,14 @@
-package lt.petuska.hazelcast.explorer.component.app.workerPage.mapPage
+package component.app.workerPage.mapPage.control
 
 import io.ktor.http.*
+import lt.petuska.hazelcast.explorer.domain.enumerator.*
 import lt.petuska.hazelcast.explorer.domain.environment.target.*
 import lt.petuska.hazelcast.explorer.domain.environment.target.entity.*
 import react.*
 
-interface MapPageProps : RProps {
+interface MapPageControlProps : RProps {
   var target: TargetDTO?
+  var theme: Theme
   var selectedHttpMethod: HttpMethod
   var selectedMap: MapDTO?
   var insertedKey: String?

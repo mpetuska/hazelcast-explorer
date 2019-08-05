@@ -10,12 +10,14 @@ object HashQueryManager : PersistenceManager(listOf(
     PersistentProperty.TARGET,
     PersistentProperty.EXPLORE_TYPE
 )) {
-  override fun setupSubscriptions() {
+  override fun setupSubscriptions(delay: Long) {
     window.addEventListener("hashchange", { loadPersistedState() }, null)
-    delay(50) {
+    delay(100) {
       super.setupSubscriptions()
     }
   }
+
+  override fun shouldLoad() = window.location.hash.substringAfter("?").isNotBlank()
 
   override fun load(prop: PersistentProperty) = URLSearchParams(window.location.hash.substringAfter("?")).get(prop.key)
 

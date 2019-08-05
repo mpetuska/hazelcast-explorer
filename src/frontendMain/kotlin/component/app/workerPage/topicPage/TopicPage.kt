@@ -1,7 +1,7 @@
 package lt.petuska.hazelcast.explorer.component.app.workerPage.topicPage
 
 import kotlinx.coroutines.*
-import lt.petuska.hazelcast.explorer.component.app.*
+import lt.petuska.hazelcast.explorer.component.*
 import lt.petuska.hazelcast.explorer.component.common.synchronousButton.*
 import lt.petuska.hazelcast.explorer.domain.enumerator.*
 import react.*
@@ -17,7 +17,7 @@ class TopicPage(props: TopicPageProps) : StatelessComponent<TopicPageProps>(prop
           onClick = {
             GlobalScope.launch {
               delay(50000)
-              it(200, null)
+              it()
             }
           }
           onCancel = {

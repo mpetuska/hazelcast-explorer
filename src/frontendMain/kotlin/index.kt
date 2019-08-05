@@ -4,15 +4,11 @@ package lt.petuska.hazelcast.explorer
 
 import kotlinext.js.*
 import lt.petuska.hazelcast.explorer.component.app.*
-import lt.petuska.hazelcast.explorer.manager.*
 import lt.petuska.hazelcast.explorer.redux.*
-import lt.petuska.hazelcast.explorer.service.meta.*
-import lt.petuska.hazelcast.explorer.service.util.*
 import react.dom.*
 import react.redux.*
 import redux.*
 import kotlin.browser.*
-
 
 val store = createStore<HzeState, RAction, WrapperAction>(
     HzeReducers(),
@@ -44,12 +40,5 @@ private fun imports() {
 }
 
 private fun initialisation() {
-  HzeConfigService.get().then {
-    store.dispatch(HzeAction.HzeConfigLoaded(it))
-  }.catch {
-    NotificationService.error("Unable to load the configuration from server")
-  }
-
-  HashQueryManager
-  LocalStorageManager
+  store.dispatch(HzeAction.LoadHzeConfig)
 }

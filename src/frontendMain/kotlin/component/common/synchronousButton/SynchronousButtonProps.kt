@@ -4,10 +4,11 @@ import lt.petuska.hazelcast.explorer.domain.enumerator.*
 import react.*
 
 interface SynchronousButtonProps : RProps {
-  var onClick: (cb: (httpStatusCode: Int, message: String?) -> Unit) -> Unit
+  var onClick: (cb: () -> Unit) -> Unit
   var onCancel: (() -> Unit)?
   var text: String
   var type: BType
-  var cancelable: Boolean
   var classes: String
+  var disabled: Boolean
+  var key: String
 }
