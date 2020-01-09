@@ -1,24 +1,32 @@
-import org.jetbrains.kotlin.gradle.frontend.*
-import org.jetbrains.kotlin.gradle.frontend.ktor.*
-import org.jetbrains.kotlin.gradle.frontend.npm.*
-import org.jetbrains.kotlin.gradle.frontend.webpack.*
+import org.jetbrains.kotlin.gradle.targets.js.webpack.*
 import org.jetbrains.kotlin.gradle.tasks.*
 
-buildscript {
-  extra.set("production", (findProperty("prod") ?: findProperty("production") ?: "false") == "true")
-}
-
 plugins {
-  val kotlinVersion: String by System.getProperties()
-  id("kotlinx-serialization") version kotlinVersion
-  id("kotlin-multiplatform") version kotlinVersion
-  id("kotlin-dce-js") version kotlinVersion
-  kotlin("frontend") version System.getProperty("frontendPluginVersion")
+  kotlin("multiplatform") version System.getProperty("kotlinVersion")
+  id("kotlinx-serialization") version System.getProperty("kotlinVersion")
+  id("kotlin-dce-js") version System.getProperty("kotlinVersion")
   idea
 }
 
-version = "1.0.0-SNAPSHOT"
 group = "lt.petuska"
+version = "1.0.0-SNAPSHOT"
+
+repositories {
+  mavenLocal()
+  jcenter()
+  maven { url = uri("https://dl.bintray.com/kotlin/ktor") }
+  maven { url = uri("https://dl.bintray.com/kotlin/kotlinx") }
+  maven { url = uri("https://dl.bintray.com/kotlin/kotlin-js-wrappers") }
+  maven { url = uri("https://dl.bintray.com/kotlin/kotlin-eap") }
+  maven { url = uri("https://kotlin.bintray.com/js-externals") }
+  maven {
+    url = uri("http://slpv-grp-maven1.ad.sis.tv:8082/nexus/content/repositories/releases/")
+    credentials {
+      username = "DDaubaras"
+      password = "Windowsor2017"
+    }
+  }
+}
 
 idea {
   module {
@@ -27,33 +35,9 @@ idea {
   }
 }
 
-repositories {
-  jcenter()
-  maven { url = uri("https://dl.bintray.com/kotlin/ktor") }
-  maven { url = uri("https://dl.bintray.com/kotlin/kotlinx") }
-  maven { url = uri("https://dl.bintray.com/kotlin/kotlin-js-wrappers") }
-  maven { url = uri("https://dl.bintray.com/kotlin/kotlin-eap") }
-  maven { url = uri("https://kotlin.bintray.com/js-externals") }
-  mavenLocal()
-}
-project.ext["org.gradle.java.home"] = System.getenv("JAVA_HOME")
-
-// Versions
-val kotlinVersion: String by System.getProperties()
-val kotlinxPreVersion: String by project
-val reactVersion: String by project
-val reduxVersion: String by project
-val kotlinStyledVersion: String by project
-
-val ktorVersion: String by project
-val logbackVersion: String by project
-val kodeinVersion: String by project
-val serializationVersion: String by project
-val hazelcastVersion: String by project
-
 // Custom Properties
-val webDir = file("src/frontendMain/web")
-val isProductionBuild = project.extra.get("production") as Boolean
+val isProductionBuild = project.hasProperty("prod") || project.hasProperty("production")
+val webDir = file("$projectDir/src/frontendMain/web")
 val mainClassName = "io.ktor.server.cio.EngineMain"
 
 kotlin {
@@ -67,7 +51,7 @@ kotlin {
   js("frontend") {
     compilations.all {
       kotlinOptions {
-        moduleKind = "umd"
+        moduleKind = "commonjs"
         sourceMap = !isProductionBuild
         metaInfo = true
         if (!isProductionBuild) {
@@ -75,175 +59,175 @@ kotlin {
         }
       }
     }
+    browser {
+      runTask {
+        devServer = devServer?.copy(
+            port = 3000,
+            proxy = mapOf(
+                "/api" to "http://localhost:8080"
+            )
+        )
+      }
+      webpackTask {
+        val compileKotlinFrontend by tasks.getting(Kotlin2JsCompile::class)
+        val runDceFrontendKotlin by tasks.getting(KotlinJsDce::class)
+        dependsOn(runDceFrontendKotlin)
+        inputs.property("production", isProductionBuild)
+
+        val prodConfigFile = file("webpack.config.d/production.js")
+        doFirst {
+          if (isProductionBuild) {
+            prodConfigFile.run {
+              parentFile.mkdirs()
+              writeText("config.mode = 'production'")
+            }
+            copy {
+              from(runDceFrontendKotlin.destinationDir)
+              into("${compileKotlinFrontend.destinationDir}")
+              include("${project.name}*")
+            }
+            copy {
+              from(runDceFrontendKotlin.destinationDir)
+              into("${compileKotlinFrontend.destinationDir}/node_modules")
+              exclude("${project.name}*")
+            }
+          }
+        }
+        doLast {
+          prodConfigFile.delete()
+          copy {
+            from(webDir) {
+              include("index.html")
+              expand(project.properties)
+            }
+            from(webDir) {
+              exclude("index.html")
+            }
+            into(destinationDirectory!!)
+          }
+        }
+      }
+    }
   }
   sourceSets {
-    getByName("commonMain") {
+    val commonMain by getting {
       dependencies {
         implementation(kotlin("stdlib-common"))
-        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:$serializationVersion")
+        implementation("io.ktor:ktor-client-serialization:1.2.4")
       }
     }
-    getByName("backendMain") {
+    val backendMain by getting {
       dependencies {
         implementation(kotlin("stdlib-jdk8"))
-        implementation(kotlin("reflect"))
-        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serializationVersion")
-        implementation("io.ktor:ktor-server-core:$ktorVersion")
-        implementation("io.ktor:ktor-server-cio:$ktorVersion")
-        implementation("io.ktor:ktor-serialization:$ktorVersion")
-        implementation("ch.qos.logback:logback-classic:$logbackVersion")
-        implementation("org.kodein.di:kodein-di-generic-jvm:$kodeinVersion")
-        implementation("org.kodein.di:kodein-di-framework-ktor-server-jvm:$kodeinVersion")
-        implementation("com.hazelcast:hazelcast-client:$hazelcastVersion")
-      }
-      languageSettings.apply {
-        useExperimentalAnnotation("io.ktor.util.KtorExperimentalAPI")
-        useExperimentalAnnotation("kotlinx.serialization.UnstableDefault")
+        implementation("io.ktor:ktor-server-cio:1.2.4")
+        implementation("io.ktor:ktor-gson:1.2.4")
+        implementation("io.ktor:ktor-serialization:1.2.4")
+        implementation("ch.qos.logback:logback-classic:1.2.3")
+        implementation("org.kodein.di:kodein-di-generic-jvm:6.3.3")
+        implementation("org.kodein.di:kodein-di-framework-ktor-server-jvm:6.3.3")
+        implementation("com.hazelcast:hazelcast-client:3.8.6")
       }
     }
-    getByName("backendTest") {
+    val backendTest by getting {
       dependencies {
         implementation(kotlin("test"))
         implementation(kotlin("test-junit"))
-      }
-      languageSettings.apply {
-        useExperimentalAnnotation("io.ktor.util.KtorExperimentalAPI")
+        implementation("tv.sis.datagrid:datagrid-client-racing:6.3.27")
+        implementation("tv.sis.channelautomation.common:channelautomation-common:6.2.1")
       }
     }
-    getByName("frontendMain") {
+    val frontendMain by getting {
       resources.srcDir(webDir)
       dependencies {
-        implementation(kotlin("stdlib-js"))
-        implementation("io.ktor:ktor-client-js:$ktorVersion")
-        implementation("io.ktor:ktor-client-json-js:$ktorVersion")
-        implementation("io.ktor:ktor-client-serialization-js:$ktorVersion")
-        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:$serializationVersion")
-        implementation("org.jetbrains:kotlin-react:$reactVersion-pre.$kotlinxPreVersion-kotlin-$kotlinVersion")
-        implementation("org.jetbrains:kotlin-react-dom:$reactVersion-pre.$kotlinxPreVersion-kotlin-$kotlinVersion")
-        implementation("org.jetbrains:kotlin-react-redux:$reduxVersion-pre.$kotlinxPreVersion-kotlin-$kotlinVersion")
-        implementation("org.jetbrains:kotlin-styled:$kotlinStyledVersion-pre.$kotlinxPreVersion-kotlin-$kotlinVersion")
+        implementation("io.ktor:ktor-client-serialization-js:1.2.4")
+        implementation("org.jetbrains:kotlin-react-redux:5.0.7-pre.83-kotlin-1.3.50")
+        implementation("org.jetbrains:kotlin-react-dom:16.9.0-pre.83-kotlin-1.3.50")
+        implementation("org.jetbrains:kotlin-styled:1.0.0-pre.83-kotlin-1.3.50")
+        implementation(npm("core-js"))
+        implementation(npm("react"))
+        implementation(npm("react-dom"))
+        implementation(npm("redux"))
+        implementation(npm("react-redux"))
+        implementation(npm("styled-components"))
+        implementation(npm("inline-style-prefixer"))
+        implementation(npm("react-json-editor-ajrm"))
+        implementation(npm("text-encoding"))
+        implementation(npm("jquery", "3.3.1"))
+        implementation(npm("bootstrap", "4.3.1"))
+        implementation(npm("popper.js", "1.14.3"))
+        implementation(npm("bootstrap-switch-button-react"))
+        implementation(npm("bootstrap-notify"))
+        implementation(npm("animate.css"))
+
+        //Dev
+        implementation(npm("style-loader"))
+        implementation(npm("css-loader"))
+        implementation(npm("file-loader"))
       }
     }
     all {
       languageSettings.apply {
         useExperimentalAnnotation("kotlinx.coroutines.ExperimentalCoroutinesApi")
+        useExperimentalAnnotation("kotlinx.serialization.UnstableDefault")
+        useExperimentalAnnotation("kotlinx.serialization.ImplicitReflectionSerializer")
+        useExperimentalAnnotation("io.ktor.util.KtorExperimentalAPI")
       }
     }
   }
 }
 
-ktor {
-  port = 8080
-  mainClass = mainClassName
-  jvmOptions = arrayOf()
-  workDir = buildDir
-}
-
-kotlinFrontend {
-  npm {
-    dependency("redux")
-    dependency("react-redux")
-    dependency("react")
-    dependency("react-dom")
-    dependency("styled-components")
-    dependency("inline-style-prefixer")
-    dependency("react-json-editor-ajrm")
-    dependency("core-js")
-    dependency("text-encoding")
-    dependency("bootstrap", "4.3.1")
-    dependency("jquery", "3.3.1")
-    dependency("popper.js", "1.14.3")
-    dependency("bootstrap-switch-button-react", "1.1.0")
-    dependency("bootstrap-notify", "3.1.3")
-    dependency("animate.css", "3.7.2")
-
-    devDependency("style-loader")
-    devDependency("css-loader")
-    devDependency("file-loader")
-  }
-  webpackBundle {
-    bundleName = "main"
-    sourceMapEnabled = false
-    port = 3000
-    proxyUrl = "http://localhost:8080"
-    contentPath = webDir
-    mode = if (isProductionBuild) "production" else "development"
-  }
-}
+//    dependency("bootstrap", "4.3.1")
+//    dependency("jquery", "3.3.1")
+//    dependency("popper.js", "1.14.3")
+//    dependency("bootstrap-switch-button-react")
+//    dependency("bootstrap-notify")
+//    dependency("animate.css")
+//
+//    devDependency("style-loader")
+//    devDependency("css-loader")
+//    devDependency("file-loader")
 
 tasks {
-  withType<Kotlin2JsCompile> {
-    kotlinOptions {
-      moduleKind = "commonjs"
-      sourceMap = !isProductionBuild
-      metaInfo = true
-      sourceMapEmbedSources = "always"
-    }
-  }
   withType<KotlinJsDce> {
+    enabled = isProductionBuild
     dceOptions {
       devMode = !isProductionBuild
     }
     inputs.property("production", isProductionBuild)
   }
+  val frontendProcessResources by getting(Copy::class) {
+    from("$webDir/index.html") {
+      expand(project.properties)
+    }
+  }
 }
 afterEvaluate {
   tasks {
-    create("copyFrontendResources", Copy::class) {
+    val backendMainClasses by getting
+    val frontendBrowserWebpack by getting(KotlinWebpack::class) {
       dependsOn("frontendProcessResources")
-      from((project.tasks["frontendProcessResources"] as Copy).destinationDir)
-      into((project.tasks["processResources"] as Copy).destinationDir)
     }
-    getByName("webpack-run", WebPackRunTask::class) {
-      dependsOn("copyFrontendResources")
-    }
-    getByName("webpack-bundle") {
-      dependsOn("copyFrontendResources")
-    }
-
-    val explodedFrontendJarDir = file("$buildDir/exploded/frontend")
-    getByName("frontendJar", Jar::class) {
-      dependsOn("webpack-bundle")
-      group = "package"
-      val from = project.tasks["webpack-bundle"].outputs.files + webDir
-      into("assets") {
-        from(from)
-      }
-      inputs.files(from)
-
-      manifest {
-        attributes(
-            mapOf(
-                "Implementation-Title" to rootProject.name,
-                "Implementation-Group" to rootProject.group,
-                "Implementation-Version" to rootProject.version,
-                "Timestamp" to System.currentTimeMillis()
-            )
-        )
-      }
-      doLast {
-        explodedFrontendJarDir.mkdirs()
+    val backendRun by creating(JavaExec::class) {
+      dependsOn(frontendBrowserWebpack, kotlin.targets["backend"].compilations["main"].compileKotlinTaskName, kotlin.targets["backend"].compilations["test"].compileKotlinTask)
+      main = mainClassName
+      val assetTmpDir = file("$temporaryDir/WEB-INF")
+      classpath += kotlin.targets["backend"].compilations["main"].output.allOutputs +
+          kotlin.targets["backend"].compilations["test"].output.allOutputs +
+          project.configurations["backendRuntimeClasspath"] +
+          project.configurations["backendTestRuntimeClasspath"] +
+          files(assetTmpDir.parentFile)
+      doFirst {
         copy {
-          from(zipTree(archiveFile))
-          into(explodedFrontendJarDir)
+          from(frontendBrowserWebpack.destinationDirectory)
+          into(assetTmpDir)
         }
       }
     }
-    getByName("build").dependsOn("frontendJar")
-    create("frontendZip", Zip::class) {
-      dependsOn("webpack-bundle")
-      group = "package"
-      archiveAppendix.set("frontend")
-      destinationDirectory.set(file("$buildDir/libs"))
-      val from = project.tasks["webpack-bundle"].outputs.files + webDir
-      from(from)
-      inputs.files(from)
-      outputs.file(archiveFile)
-    }
-    getByName("backendJar").group = "package"
-    getByName("jar", Jar::class) {
-      dependsOn("frontendJar", "backendJar")
-      group = "package"
+    val fatJar by creating(Jar::class) {
+      group = "build"
+      archiveAppendix.set("fat")
+      dependsOn(frontendBrowserWebpack, kotlin.targets["backend"].compilations["main"].compileKotlinTaskName, kotlin.targets["backend"].compilations["test"].compileKotlinTask)
+      dependsOn("backendTestProcessResources")
       manifest {
         attributes(
             mapOf(
@@ -255,39 +239,25 @@ afterEvaluate {
             )
         )
       }
-      val dependencies = configurations["backendRuntimeClasspath"].filter { it.name.endsWith(".jar") } +
-          project.tasks["backendJar"].outputs.files +
-          project.tasks["frontendJar"].outputs.files
-      dependencies.forEach {
-        if (it.isDirectory) from(it) else from(zipTree(it))
-      }
+      val assetTmpDir = file("$temporaryDir/WEB-INF")
+      from(assetTmpDir.parentFile)
+      from((project.configurations["backendRuntimeClasspath"] +
+          project.configurations["backendTestRuntimeClasspath"] +
+          kotlin.targets["backend"].compilations["main"].output.allOutputs +
+          kotlin.targets["backend"].compilations["test"].output.allOutputs).map {
+        if (!it.isDirectory && it.extension == "jar") {
+          zipTree(it)
+        } else {
+          it
+        }
+      })
       exclude("META-INF/*.RSA", "META-INF/*.SF", "META-INF/*.DSA")
-      inputs.files(dependencies)
-      outputs.file(archiveFile)
-    }
-    getByName("ktor-run", KtorStartStopTask::class) {
-      dependsOn("backendTestClasses", "frontendJar")
       doFirst {
-        val testClassPath = kotlin.targets["backend"].compilations["main"].output.allOutputs.files +
-            kotlin.targets["backend"].compilations["test"].output.allOutputs.files +
-            project.configurations["backendRuntimeClasspath"] +
-            project.configurations["backendTestRuntimeClasspath"] +
-            explodedFrontendJarDir
-
-        testClassPath.distinct().joinToString(File.pathSeparator) { it.absolutePath }
-        ktor {
-          jvmOptions = arrayOf(
-              "-cp",
-              testClassPath.distinct().joinToString(File.pathSeparator) { it.absolutePath },
-              "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
-          )
+        copy {
+          from(frontendBrowserWebpack.destinationDirectory)
+          into(assetTmpDir)
         }
       }
     }
   }
 }
-
-fun KotlinFrontendExtension.webpackBundle(block: WebPackExtension.() -> Unit) =
-    bundle("webpack", delegateClosureOf(block))
-
-fun KotlinFrontendExtension.npm(block: NpmExtension.() -> Unit) = configure(block)

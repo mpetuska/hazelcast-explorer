@@ -12,4 +12,6 @@ data class EnvironmentDTO(
     val local: Boolean,
     val production: Boolean,
     val targets: List<TargetDTO>
-) : DTO()
+) : DTO() {
+  fun idString() = "[$name]"
+}

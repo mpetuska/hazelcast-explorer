@@ -1,9 +1,9 @@
 package component.app.workerPage.mapPage.control
 
 import component.app.workerPage.mapPage.control.getComboButton.*
+import io.ktor.client.response.*
 import io.ktor.http.*
 import kotlinext.js.*
-import kotlinx.coroutines.*
 import kotlinx.html.*
 import kotlinx.html.js.*
 import lt.petuska.hazelcast.explorer.*
@@ -12,7 +12,10 @@ import lt.petuska.hazelcast.explorer.component.common.selector.*
 import lt.petuska.hazelcast.explorer.component.common.synchronousButton.*
 import lt.petuska.hazelcast.explorer.domain.enumerator.*
 import lt.petuska.hazelcast.explorer.redux.*
+import lt.petuska.hazelcast.explorer.service.entity.*
+import lt.petuska.hazelcast.explorer.service.util.*
 import lt.petuska.hazelcast.explorer.types.jsonInput.*
+import lt.petuska.hazelcast.explorer.util.*
 import org.w3c.dom.*
 import react.*
 import react.dom.*
@@ -73,73 +76,102 @@ class MapPageControl(props: MapPageControlProps) : StatelessComponent<MapPageCon
 
   private fun RBuilder.actionButton() {
     when (props.selectedHttpMethod) {
-      HttpMethod.Get -> getMapButton {}
+      HttpMethod.Get -> getMapButton {
+        attrs.key = "${HttpMethod.Get.value}-${props.target?.environment}-${props.target?.name}"
+      }
       HttpMethod.Delete -> synchronousButton {
         attrs {
-          key = HttpMethod.Delete.value
+          key = "${HttpMethod.Delete.value}-${props.target?.environment}-${props.target?.name}"
           disabled = !inputValid()
           classes = "m-1"
           text = "Delete Value"
           type = BType.DANGER
           onClick = {
-            GlobalScope.launch {
-              delay(50000)
+            store.dispatch(HzeAction.ResetMapServerResponse)
+            MapService.deleteValue(props.selectedMap, props.insertedKey).then {
+              launch {
+                it()
+                store.dispatch(HzeAction.SetMapServerResponseStatus(it.status))
+                store.dispatch(HzeAction.SetMapServerResponseJson(it.content.readText()))
+                if (it.status == HttpStatusCode.NoContent) {
+                  NotificationService.success("Deleted Value ${props.selectedMap?.idString()}[${props.insertedKey}]")
+                } else {
+                  NotificationService.error("Error Deleting Value ${props.selectedMap?.idString()}[${props.insertedKey}]")
+                }
+              }
+            }.catch {
               it()
+              NotificationService.warning("Error Deleting Value ${props.selectedMap?.idString()}[${props.insertedKey}]")
             }
-          }
-          onCancel = {
-            println("cancelled!")
           }
         }
       }
       HttpMethod.Post -> synchronousButton {
         attrs {
-          key = HttpMethod.Post.value
+          key = "${HttpMethod.Post.value}-${props.target?.environment}-${props.target?.name}"
           disabled = !inputValid()
           classes = "m-1"
           text = "Create Value"
           type = BType.WARNING
           onClick = {
-            GlobalScope.launch {
-              delay(50000)
+            store.dispatch(HzeAction.ResetMapServerResponse)
+            MapService.createValue(props.selectedMap, props.insertedKey, props.insertedJson!!).then {
+              launch {
+                it()
+                store.dispatch(HzeAction.SetMapServerResponseStatus(it.status))
+                store.dispatch(HzeAction.SetMapServerResponseJson(it.content.readText()))
+                if (it.status == HttpStatusCode.Created) {
+                  NotificationService.success("Created Value ${props.selectedMap?.idString()}[${props.insertedKey}]")
+                } else {
+                  NotificationService.error("Error Creating Value ${props.selectedMap?.idString()}[${props.insertedKey}]")
+                }
+              }
+            }.catch {
               it()
+              NotificationService.warning("Error Creating Value ${props.selectedMap?.idString()}[${props.insertedKey}]")
             }
-          }
-          onCancel = {
-            println("cancelled!")
           }
         }
       }
       HttpMethod.Put -> synchronousButton {
         attrs {
-          key = HttpMethod.Put.value
+          key = "${HttpMethod.Put.value}-${props.target?.environment}-${props.target?.name}"
           disabled = !inputValid()
           classes = "m-1"
           text = "Update Value"
           type = BType.INFO
           onClick = {
-            GlobalScope.launch {
-              delay(50000)
+            store.dispatch(HzeAction.ResetMapServerResponse)
+            MapService.replaceValue(props.selectedMap, props.insertedKey, props.insertedJson!!).then {
+              launch {
+                it()
+                store.dispatch(HzeAction.SetMapServerResponseStatus(it.status))
+                store.dispatch(HzeAction.SetMapServerResponseJson(it.content.readText()))
+                if (it.status == HttpStatusCode.NoContent) {
+                  NotificationService.success("Replaced Value ${props.selectedMap?.idString()}[${props.insertedKey}]")
+                } else {
+                  NotificationService.error("Error Replacing Value ${props.selectedMap?.idString()}[${props.insertedKey}]")
+                }
+              }
+            }.catch {
               it()
+              NotificationService.warning("Error Replacing Value ${props.selectedMap?.idString()}[${props.insertedKey}]")
             }
-          }
-          onCancel = {
-            println("cancelled!")
           }
         }
       }
     }
   }
 
-  private fun RBuilder.jsonInput() = div {
+  private fun RBuilder.jsonInput() = div("border rounded m-1 h-50") {
     JSONInput {
       attrs {
         key = props.theme.themeName
         props.insertedJson?.let { placeholder = JSON.parse<JsObject>(it) }
         locale = LocaleEN
         width = "100%"
-        height = "500px"
-        confirmGood = true
+        height = "400px"
+        confirmGood = false
         reset = false
         colors = if (props.theme == Theme.DARK) IntelliJDarculaColors else IntelliJColors
         waitAfterKeyPress = 500

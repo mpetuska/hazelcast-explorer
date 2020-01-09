@@ -8,13 +8,14 @@ import kotlin.browser.*
 object HashQueryManager : PersistenceManager(listOf(
     PersistentProperty.ENVIRONMENT,
     PersistentProperty.TARGET,
-    PersistentProperty.EXPLORE_TYPE
+    PersistentProperty.EXPLORE_TYPE,
+    PersistentProperty.HTTP_METHOD,
+    PersistentProperty.SELECTED_MAP,
+    PersistentProperty.INSERTED_KEY
 )) {
   override fun setupSubscriptions(delay: Long) {
     window.addEventListener("hashchange", { loadPersistedState() }, null)
-    delay(100) {
       super.setupSubscriptions()
-    }
   }
 
   override fun shouldLoad() = window.location.hash.substringAfter("?").isNotBlank()

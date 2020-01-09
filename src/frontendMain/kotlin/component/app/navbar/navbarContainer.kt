@@ -10,5 +10,6 @@ val navbar = connectClass<Navbar, NavbarProps>(
       selectedEnvironment = state.selectedEnvironment
       selectedTarget = state.selectedTarget
       selectedExploreType = state.selectedExploreType
+      selectedMethod = state.mapMageState.selectedRestMethod
     }
 )

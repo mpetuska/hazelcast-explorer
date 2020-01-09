@@ -12,6 +12,11 @@ package lt.petuska.hazelcast.explorer.types
 
 import react.*
 
+external interface BootstrapSwitchButtonState : RState {
+  var checked:Boolean
+  var disabled:Boolean
+}
+
 external interface BootstrapSwitchButtonProps : RProps {
   var onChange: ((checked: Boolean) -> Unit)? get() = definedExternally; set(value) = definedExternally
   var checked: Boolean? get() = definedExternally; set(value) = definedExternally
@@ -28,4 +33,6 @@ external interface BootstrapSwitchButtonProps : RProps {
  * https://stackoverflow.com/questions/51431848/how-to-import-node-module-in-react-kotlin
  */
 @JsName("default")
-external val bootstrapSwitchButton: RClass<BootstrapSwitchButtonProps>
+external class BootstrapSwitchButton: Component<BootstrapSwitchButtonProps, BootstrapSwitchButtonState> {
+  override fun render() = definedExternally
+}

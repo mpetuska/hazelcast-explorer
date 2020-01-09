@@ -1,5 +1,6 @@
 package lt.petuska.hazelcast.explorer.component.app.navbar
 
+import io.ktor.http.*
 import lt.petuska.hazelcast.explorer.domain.enumerator.*
 import lt.petuska.hazelcast.explorer.domain.environment.*
 import lt.petuska.hazelcast.explorer.domain.environment.target.*
@@ -12,4 +13,5 @@ interface NavbarProps : RProps {
   var selectedEnvironment: EnvironmentDTO?
   var selectedTarget: TargetDTO?
   var selectedExploreType: ExploreType?
+  var selectedMethod: HttpMethod
 }

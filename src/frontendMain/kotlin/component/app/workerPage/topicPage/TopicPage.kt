@@ -20,9 +20,6 @@ class TopicPage(props: TopicPageProps) : StatelessComponent<TopicPageProps>(prop
               it()
             }
           }
-          onCancel = {
-            println("cancelled!")
-          }
         }
       }
     }

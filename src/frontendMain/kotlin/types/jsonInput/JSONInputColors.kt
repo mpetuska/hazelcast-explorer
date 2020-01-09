@@ -14,20 +14,19 @@ class JSONInputColors(
     var background_warning: String? = null
 )
 
-//TODO
 val IntelliJColors = JSONInputColors(
     default = "#A7B6C6",
 
     string = "#008000",
-    number = "#008000",
-    colon = "#FFFFFF",
+    number = "#0000FF",
+    colon = "#000080",
     keys = "#660E7A",
+    keys_whiteSpace = "#660E7A",
+    primitive = "#000080",
 
-    keys_whiteSpace = "#9876AA",
-    primitive = "#CC7832",
     error = "#FF0000",
-    background = "#FFFFFF",
-    background_warning = "#313335"
+    background = "#F0F0F0",
+    background_warning = "#FFFFFF"
 )
 
 val IntelliJDarculaColors = JSONInputColors(

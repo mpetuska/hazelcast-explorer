@@ -8,19 +8,15 @@ import lt.petuska.hazelcast.explorer.dsl.*
 import lt.petuska.hazelcast.explorer.dsl.hzeConfig.descriptor.*
 import lt.petuska.hazelcast.explorer.dsl.hzeConfig.descriptor.target.*
 import lt.petuska.hazelcast.explorer.dsl.hzeConfig.descriptor.target.entity.*
+import lt.petuska.hazelcast.explorer.sis.*
 import org.slf4j.event.*
 
 fun Application.devServer() {
-  val hzeConfig = buildStubConfig()
   install(CallLogging) {
     level = Level.INFO
   }
-  hazelcastExplorer(hzeConfig)
-  routing {
-    get("/test") {
-      call.respond("OK")
-    }
-  }
+  println("=========================================================================================================")
+  hazelcastExplorer(sisHzeConfig)
 }
 
 fun buildStubConfig(startNodes: Boolean = false) = hazelcastExplorerConfig {

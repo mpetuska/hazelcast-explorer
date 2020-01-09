@@ -5,7 +5,6 @@ import react.*
 
 interface SynchronousButtonProps : RProps {
   var onClick: (cb: () -> Unit) -> Unit
-  var onCancel: (() -> Unit)?
   var text: String
   var type: BType
   var classes: String

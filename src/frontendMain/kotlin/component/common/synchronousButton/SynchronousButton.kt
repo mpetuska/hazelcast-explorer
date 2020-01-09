@@ -1,6 +1,5 @@
 package lt.petuska.hazelcast.explorer.component.common.synchronousButton
 
-import kotlinx.css.*
 import kotlinx.html.*
 import kotlinx.html.js.*
 import react.*
@@ -12,7 +11,6 @@ class SynchronousButton(props: SynchronousButtonProps) :
 
   override fun SynchronousButtonState.init() {
     isFetching = false
-    currentRequestTimestamp = null
   }
 
   override fun RBuilder.render() {
@@ -20,9 +18,6 @@ class SynchronousButton(props: SynchronousButtonProps) :
       css {
         classes = "btn btn-outline-${props.type} ${props.classes} font-weight-bold".split(" ").toMutableList()
         if (state.isFetching) {
-          if (props.onCancel != null) {
-            opacity = 0.75
-          }
           classes.add("pl-3 pr-3")
         } else {
           classes.add("pl-4 pr-4")
@@ -30,27 +25,14 @@ class SynchronousButton(props: SynchronousButtonProps) :
       }
       attrs {
         key = props.key
-        disabled = props.disabled == true || (state.isFetching && props.onCancel == null)
+        disabled = props.disabled == true || state.isFetching
         onClickFunction = {
-          if (state.isFetching) {
+          setState {
+            isFetching = true
+          }
+          props.onClick {
             setState {
               isFetching = false
-              currentRequestTimestamp = null
-            }
-            props.onCancel?.invoke()
-          } else {
-            val ts = currentTimeMillis()
-            setState {
-              isFetching = true
-              currentRequestTimestamp = ts
-            }
-            props.onClick {
-              if (state.currentRequestTimestamp == ts) {
-                setState {
-                  isFetching = false
-                  currentRequestTimestamp = null
-                }
-              }
             }
           }
         }
@@ -63,12 +45,6 @@ class SynchronousButton(props: SynchronousButtonProps) :
         }
       }
       +props.text
-    }
-  }
-
-  override fun componentWillUnmount() {
-    if (state.isFetching) {
-      props.onCancel?.invoke()
     }
   }
 }

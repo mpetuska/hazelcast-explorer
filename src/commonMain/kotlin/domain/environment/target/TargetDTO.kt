@@ -12,4 +12,6 @@ data class TargetDTO(
     val readOnly: Boolean,
     val maps: List<MapDTO>?,
     val topics: List<TopicDTO>?
-) : DTO()
+) : DTO() {
+  fun idString() = "[$environment][$name]"
+}

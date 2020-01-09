@@ -5,29 +5,29 @@ import io.ktor.http.content.*
 import io.ktor.routing.*
 import lt.petuska.hazelcast.explorer.configuration.application.*
 import lt.petuska.hazelcast.explorer.configuration.domain.*
-import lt.petuska.hazelcast.explorer.service.route.*
-import org.kodein.di.generic.*
+import lt.petuska.hazelcast.explorer.route.entity.*
+import lt.petuska.hazelcast.explorer.route.meta.*
 import org.kodein.di.ktor.*
-import service.route.*
 
 fun Application.hazelcastExplorer(hzeConfig: HzeConfig) {
   setupFeatures()
   kodein {
-    bind<HzeConfig>() with singleton { hzeConfig }
-    registerBindings()
+    registerBindings(hzeConfig)
   }
 
   routing {
-    applyRemoteService<HzeConfigService>()
+    route("/api") {
+      route("/meta") {
+        hzeConfigRoute()
+      }
+      route("/entity/{environment}/{target}") {
+        mapRoute()
+      }
+    }
 
     static {
-      resources("assets")
-      defaultResource("assets/index.html")
+      resources("WEB-INF")
+      defaultResource("WEB-INF/index.html")
     }
   }
-}
-
-private inline fun <reified T : RouteService<*>> Routing.applyRemoteService() = apply {
-  val tmp: T by kodein().instance()
-  this + tmp
 }

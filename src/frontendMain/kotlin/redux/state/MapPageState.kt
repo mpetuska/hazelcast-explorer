@@ -1,6 +1,7 @@
 package lt.petuska.hazelcast.explorer.redux.state
 
 import io.ktor.http.*
+import kotlinext.js.*
 import lt.petuska.hazelcast.explorer.domain.environment.target.entity.*
 
 data class MapPageState(
@@ -10,5 +11,6 @@ data class MapPageState(
     val insertedJson: String? = null,
 
     val currentRequestTimestamp: Long? = null,
-    val serverResponseStatus: HttpStatusCode? = null
+    val serverResponseStatus: HttpStatusCode? = null,
+    val serverResponseJson: JsObject? = null
 )

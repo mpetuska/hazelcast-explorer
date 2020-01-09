@@ -4,6 +4,7 @@ import lt.petuska.hazelcast.explorer.util.*
 
 val mapPage = connectClass<MapPage, MapPageProps>(
     mapStateToProps = { state ->
+      theme = state.theme
       target = state.selectedTarget
       selectedHttpMethod = state.mapMageState.selectedRestMethod
       selectedMap = state.mapMageState.selectedMap
@@ -11,5 +12,6 @@ val mapPage = connectClass<MapPage, MapPageProps>(
       insertedJson = state.mapMageState.insertedJson
       currentRequestTimestamp = state.mapMageState.currentRequestTimestamp
       serverResponseStatus = state.mapMageState.serverResponseStatus
+      serverResponseJson = state.mapMageState.serverResponseJson
     }
 )

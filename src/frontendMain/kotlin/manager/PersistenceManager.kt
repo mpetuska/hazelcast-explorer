@@ -1,6 +1,5 @@
 package lt.petuska.hazelcast.explorer.manager
 
-import kotlinx.coroutines.*
 import lt.petuska.hazelcast.explorer.*
 import lt.petuska.hazelcast.explorer.domain.enumerator.*
 import lt.petuska.hazelcast.explorer.util.*
@@ -24,8 +23,7 @@ abstract class PersistenceManager(private val props: List<PersistentProperty>) {
   protected abstract fun save(key: String, value: String?)
 
   protected fun loadPersistedState() {
-    if (shouldLoad()) promise {
-      delay(10)
+    if (shouldLoad()) {
       props.map { it to load(it) }.forEach {
         val prop = it.first
         val value = it.second

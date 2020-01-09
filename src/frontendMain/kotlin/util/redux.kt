@@ -95,3 +95,5 @@ inline fun <reified T : RComponent<P, out RState>, P : RProps> connectClass(
   }
   return connectClass<RProps, T, P>(mstp, options)
 }
+
+fun <S, A, R> Store<S, A, R>.asyncDispatch(action: A, delayMs: Long = 5) = delay(delayMs) { dispatch(action) }

@@ -8,7 +8,6 @@ val synchronousButton = connectClass<SynchronousButton, SynchronousButtonProps>(
       text = ownProps.text
       type = ownProps.type
       onClick = ownProps.onClick
-      onCancel = ownProps.onCancel
       classes = ownProps.classes.ifUndefined("")
       disabled = ownProps.disabled.ifUndefined(false)
       key = ownProps.key

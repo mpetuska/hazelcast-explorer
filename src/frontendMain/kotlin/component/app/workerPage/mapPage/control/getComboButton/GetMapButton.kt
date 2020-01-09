@@ -1,9 +1,17 @@
 package component.app.workerPage.mapPage.control.getComboButton
 
+import io.ktor.http.*
 import kotlinx.html.js.*
+import lt.petuska.hazelcast.explorer.*
 import lt.petuska.hazelcast.explorer.component.common.synchronousButton.*
+import lt.petuska.hazelcast.explorer.redux.*
+import lt.petuska.hazelcast.explorer.service.entity.*
+import lt.petuska.hazelcast.explorer.service.util.*
+import lt.petuska.hazelcast.explorer.util.*
+import org.w3c.dom.*
 import react.*
 import react.dom.*
+import kotlin.browser.*
 
 class GetMapButton(props: GetMapButtonProps) : RComponent<GetMapButtonProps, GetMapButtonState>(props) {
 
@@ -11,7 +19,7 @@ class GetMapButton(props: GetMapButtonProps) : RComponent<GetMapButtonProps, Get
     val stateSnap = tmpState ?: state
     val mapSelected = props.selectedMap != null
     val keyInserted = !props.insertedKey.isNullOrBlank()
-    if (stateSnap.selected == getOptions[0]) {
+    if (stateSnap.selected.key == "get-value") {
       mapSelected && keyInserted
     } else {
       mapSelected
@@ -37,7 +45,6 @@ class GetMapButton(props: GetMapButtonProps) : RComponent<GetMapButtonProps, Get
           text = state.selected.text
           type = props.type
           onClick = state.selected.onClick
-          onCancel = state.selected.onCancel
           disabled = !props.validateInputs()
         }
       }
@@ -57,6 +64,9 @@ class GetMapButton(props: GetMapButtonProps) : RComponent<GetMapButtonProps, Get
                 setState {
                   selected = option
                 }
+                if (option.key != "get-value") {
+                  option.onClick {}
+                }
               }
             }
             +option.text
@@ -66,32 +76,55 @@ class GetMapButton(props: GetMapButtonProps) : RComponent<GetMapButtonProps, Get
     }
   }
 
-  companion object {
-    private val getOptions = listOf(
-        DropdownButtonOption("get-value", "Get Value",
-            {
-              //TODO
-              println("Getting Value")
+  private val getOptions
+    get() = listOf(
+        DropdownButtonOption("get-value", "Get Value") {
+          store.dispatch(HzeAction.ResetMapServerResponse)
+          MapService.getValue(props.selectedMap, props.insertedKey).then {
+            launch {
               it()
-            },
-            onCancel = { println("cancelled") }
-        ),
-        DropdownButtonOption("get-keys", "Get All Keys",
-            {
-              //TODO
-              println("Getting All Keys")
+              store.dispatch(HzeAction.SetMapServerResponseStatus(it.status))
+              store.dispatch(HzeAction.SetMapServerResponseJson(it.content.readText()))
+              if (it.status == HttpStatusCode.OK) {
+                NotificationService.success("Retrieved Value ${props.selectedMap?.idString()}[${props.insertedKey}]\"")
+              } else {
+                NotificationService.error("Error Retrieving Value  ${props.selectedMap?.idString()}[${props.insertedKey}]")
+              }
+            }
+          }.catch {
+            it()
+            NotificationService.warning("Error Retrieving Value  ${props.selectedMap?.idString()}[${props.insertedKey}]")
+          }
+        },
+        DropdownButtonOption("get-keys", "Get All Keys") {
+          store.dispatch(HzeAction.ResetMapServerResponse)
+          MapService.getAllKeys(props.selectedMap).then {
+            launch {
               it()
-            },
-            onCancel = { println("cancelled") }
-        ),
-        DropdownButtonOption("get-values", "Get All Values",
-            {
-              //TODO
-              println("Getting All Values")
-              it()
-            },
-            onCancel = { println("cancelled") }
-        )
+              store.dispatch(HzeAction.SetMapServerResponseStatus(it.status))
+              store.dispatch(HzeAction.SetMapServerResponseJson(it.content.readText()))
+              if (it.status == HttpStatusCode.OK) {
+                NotificationService.success("Retrieved Map Keys From ${props.selectedMap?.idString()}")
+              } else {
+                NotificationService.error("Error Retrieving Map Keys From  ${props.selectedMap?.idString()}")
+              }
+            }
+          }.catch {
+            it()
+            NotificationService.warning("Error Retrieving Map Keys From  ${props.selectedMap?.idString()}")
+          }
+        },
+        DropdownButtonOption("download-values", "Download All Values") {
+          val el = document.createElement("a") as HTMLAnchorElement
+          el.href = "/api/entity/${props.target?.environment}/${props.target?.name}/map/${props.selectedMap?.name}/value"
+          el.target = "_self"
+          el.hidden = true
+          el.setAttribute("style", "position: 'absolute', left: '-9999px'")
+          document.body?.appendChild(el)
+          el.click()
+          document.body?.removeChild(el)
+          NotificationService.info("Started ${props.selectedMap?.idString()} values download")
+          it()
+        }
     )
-  }
 }

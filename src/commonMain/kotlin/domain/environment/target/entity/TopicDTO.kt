@@ -11,4 +11,6 @@ data class TopicDTO(
     val displayName: String,
     val readOnly: Boolean,
     val valueType: String
-) : DTO()
+) : DTO() {
+  fun idString() = "[$environment][$target][$name]"
+}

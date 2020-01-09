@@ -11,7 +11,6 @@ import redux.*
 sealed class HzeAction : RAction {
   data class SetTitle(val title: String) : HzeAction()
   data class SetTheme(val theme: Theme) : HzeAction()
-  object LoadHzeConfig : HzeAction()
   data class HzeConfigLoaded(val hzeConfig: HzeConfigDTO) : HzeAction()
   data class SelectEnvironment(val environment: EnvironmentDTO?) : HzeAction()
   data class SelectTarget(val target: TargetDTO?) : HzeAction()
@@ -23,6 +22,8 @@ sealed class HzeAction : RAction {
   data class SetMapInsertedJson(val insertedJson: String?) : HzeAction()
   data class SetMapCurrentRequestTimestamp(val timestamp: Long?) : HzeAction()
   data class SetMapServerResponseStatus(val status: HttpStatusCode?) : HzeAction()
+  data class SetMapServerResponseJson(val json: String?) : HzeAction()
+  object ResetMapServerResponse : HzeAction()
 
   data class SelectTopic(val topic: TopicDTO?) : HzeAction()
 }

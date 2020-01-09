@@ -6,6 +6,7 @@ import lt.petuska.hazelcast.explorer.component.*
 import lt.petuska.hazelcast.explorer.domain.enumerator.*
 import lt.petuska.hazelcast.explorer.redux.*
 import lt.petuska.hazelcast.explorer.types.*
+import lt.petuska.hazelcast.explorer.util.*
 import org.w3c.dom.*
 import react.*
 import react.dom.*
@@ -25,15 +26,20 @@ class ThemeToggle(props: ThemeToggleProps) : StatelessComponent<ThemeToggleProps
           }
         }
       }
-      bootstrapSwitchButton {
+      val isDark = props.theme == Theme.DARK
+      child(BootstrapSwitchButton::class){
         attrs {
+          //          key = "theme-toggle-${props.theme}"
           width = 60
           size = "xs"
-          onstyle = "dark"
+          onstyle = BType.DARK.typeName
           onlabel = "Dark"
           offlabel = "Light"
-          checked = props.theme == Theme.DARK
+          checked = isDark
           onChange = {
+            setState {
+              checked = it
+            }
             store.dispatch(HzeAction.SetTheme(if (it) Theme.DARK else Theme.LIGHT))
           }
         }

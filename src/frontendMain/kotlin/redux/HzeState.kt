@@ -6,6 +6,7 @@ import lt.petuska.hazelcast.explorer.domain.environment.target.*
 import lt.petuska.hazelcast.explorer.redux.state.*
 
 data class HzeState(
+    val loaded: Boolean = false,
     val title: String = "Hazelcast Explorer",
     val theme: Theme = Theme.DARK,
     val environments: List<EnvironmentDTO>? = null,
