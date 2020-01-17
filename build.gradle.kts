@@ -1,5 +1,6 @@
-import org.jetbrains.kotlin.gradle.targets.js.webpack.*
-import org.jetbrains.kotlin.gradle.tasks.*
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpack
+import org.jetbrains.kotlin.gradle.tasks.Kotlin2JsCompile
+import org.jetbrains.kotlin.gradle.tasks.KotlinJsDce
 
 plugins {
   kotlin("multiplatform") version System.getProperty("kotlinVersion")
@@ -62,10 +63,10 @@ kotlin {
     browser {
       runTask {
         devServer = devServer?.copy(
-            port = 3000,
-            proxy = mapOf(
-                "/api" to "http://localhost:8080"
-            )
+          port = 3000,
+          proxy = mapOf(
+            "/api" to "http://localhost:8080"
+          )
         )
       }
       webpackTask {
@@ -73,7 +74,7 @@ kotlin {
         val runDceFrontendKotlin by tasks.getting(KotlinJsDce::class)
         dependsOn(runDceFrontendKotlin)
         inputs.property("production", isProductionBuild)
-
+  
         val prodConfigFile = file("webpack.config.d/production.js")
         doFirst {
           if (isProductionBuild) {
@@ -158,7 +159,7 @@ kotlin {
         implementation(npm("bootstrap-switch-button-react"))
         implementation(npm("bootstrap-notify"))
         implementation(npm("animate.css"))
-
+  
         //Dev
         implementation(npm("style-loader"))
         implementation(npm("css-loader"))
@@ -188,6 +189,9 @@ kotlin {
 //    devDependency("file-loader")
 
 tasks {
+  val wrapper by getting(Wrapper::class) {
+    gradleVersion = "6.1"
+  }
   withType<KotlinJsDce> {
     enabled = isProductionBuild
     dceOptions {
@@ -208,7 +212,11 @@ afterEvaluate {
       dependsOn("frontendProcessResources")
     }
     val backendRun by creating(JavaExec::class) {
-      dependsOn(frontendBrowserWebpack, kotlin.targets["backend"].compilations["main"].compileKotlinTaskName, kotlin.targets["backend"].compilations["test"].compileKotlinTask)
+      dependsOn(
+        frontendBrowserWebpack,
+        kotlin.targets["backend"].compilations["main"].compileKotlinTaskName,
+        kotlin.targets["backend"].compilations["test"].compileKotlinTask
+      )
       main = mainClassName
       val assetTmpDir = file("$temporaryDir/WEB-INF")
       classpath += kotlin.targets["backend"].compilations["main"].output.allOutputs +
@@ -226,17 +234,21 @@ afterEvaluate {
     val fatJar by creating(Jar::class) {
       group = "build"
       archiveAppendix.set("fat")
-      dependsOn(frontendBrowserWebpack, kotlin.targets["backend"].compilations["main"].compileKotlinTaskName, kotlin.targets["backend"].compilations["test"].compileKotlinTask)
+      dependsOn(
+        frontendBrowserWebpack,
+        kotlin.targets["backend"].compilations["main"].compileKotlinTaskName,
+        kotlin.targets["backend"].compilations["test"].compileKotlinTask
+      )
       dependsOn("backendTestProcessResources")
       manifest {
         attributes(
-            mapOf(
-                "Implementation-Title" to rootProject.name,
-                "Implementation-Group" to rootProject.group,
-                "Implementation-Version" to rootProject.version,
-                "Timestamp" to System.currentTimeMillis(),
-                "Main-Class" to mainClassName
-            )
+          mapOf(
+            "Implementation-Title" to rootProject.name,
+            "Implementation-Group" to rootProject.group,
+            "Implementation-Version" to rootProject.version,
+            "Timestamp" to System.currentTimeMillis(),
+            "Main-Class" to mainClassName
+          )
         )
       }
       val assetTmpDir = file("$temporaryDir/WEB-INF")
