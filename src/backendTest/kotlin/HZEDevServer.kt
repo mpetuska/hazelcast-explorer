@@ -1,21 +1,22 @@
 package lt.petuska.hazelcast.explorer
 
-import io.ktor.application.*
-import io.ktor.features.*
-import io.ktor.response.*
-import io.ktor.routing.*
-import lt.petuska.hazelcast.explorer.dsl.*
-import lt.petuska.hazelcast.explorer.dsl.hzeConfig.descriptor.*
-import lt.petuska.hazelcast.explorer.dsl.hzeConfig.descriptor.target.*
-import lt.petuska.hazelcast.explorer.dsl.hzeConfig.descriptor.target.entity.*
-import lt.petuska.hazelcast.explorer.sis.*
-import org.slf4j.event.*
+import io.ktor.application.Application
+import io.ktor.application.install
+import io.ktor.features.CallLogging
+import lt.petuska.hazelcast.explorer.dsl.hazelcastExplorerConfig
+import lt.petuska.hazelcast.explorer.dsl.hzeConfig.descriptor.environment
+import lt.petuska.hazelcast.explorer.dsl.hzeConfig.descriptor.target.entity.map
+import lt.petuska.hazelcast.explorer.dsl.hzeConfig.descriptor.target.entity.topic
+import lt.petuska.hazelcast.explorer.dsl.hzeConfig.descriptor.target.target
+import lt.petuska.hazelcast.explorer.sis.sisHzeConfig
+import org.slf4j.event.Level
 
 fun Application.devServer() {
   install(CallLogging) {
     level = Level.INFO
   }
   println("=========================================================================================================")
+//  hazelcastExplorer(buildStubConfig(false))
   hazelcastExplorer(sisHzeConfig)
 }
 

@@ -1,21 +1,34 @@
 package lt.petuska.hazelcast.explorer.route.entity
 
-import com.google.gson.*
-import io.ktor.application.*
-import io.ktor.features.*
-import io.ktor.http.*
-import io.ktor.request.*
-import io.ktor.response.*
-import io.ktor.routing.*
-import io.ktor.util.*
-import io.ktor.util.pipeline.*
-import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.*
-import lt.petuska.hazelcast.explorer.configuration.domain.*
-import lt.petuska.hazelcast.explorer.service.entity.map.*
-import org.kodein.di.generic.*
-import org.kodein.di.ktor.*
-import java.util.zip.*
+import com.google.gson.Gson
+import io.ktor.application.ApplicationCall
+import io.ktor.application.call
+import io.ktor.features.BadRequestException
+import io.ktor.features.NotFoundException
+import io.ktor.http.ContentDisposition
+import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpStatusCode
+import io.ktor.request.receive
+import io.ktor.response.header
+import io.ktor.response.respond
+import io.ktor.response.respondOutputStream
+import io.ktor.routing.Route
+import io.ktor.routing.delete
+import io.ktor.routing.get
+import io.ktor.routing.post
+import io.ktor.routing.put
+import io.ktor.routing.route
+import io.ktor.util.getOrFail
+import io.ktor.util.pipeline.PipelineContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.produce
+import kotlinx.coroutines.launch
+import lt.petuska.hazelcast.explorer.configuration.domain.HzeConfig
+import lt.petuska.hazelcast.explorer.service.entity.map.MapService
+import org.kodein.di.generic.instance
+import org.kodein.di.ktor.kodein
+import java.util.zip.ZipEntry
+import java.util.zip.ZipOutputStream
 
 private val PipelineContext<Unit, ApplicationCall>.env
   get() = call.parameters.getOrFail("environment").let {
@@ -29,7 +42,7 @@ private val PipelineContext<Unit, ApplicationCall>.target
 private val PipelineContext<Unit, ApplicationCall>.map
   get() = call.parameters.getOrFail("map-name").let {
     target.maps?.find { m -> m.name == it }
-        ?: throw NotFoundException("Map [${env.name}][${target.name}][$it] not found")
+      ?: throw NotFoundException("Map [${env.name}][${target.name}][$it] not found")
   }
 private val PipelineContext<Unit, ApplicationCall>.mapService
   get() = run {
@@ -51,7 +64,7 @@ private val PipelineContext<Unit, ApplicationCall>.prettyGson
   }
 
 fun Route.mapRoute() = route("map/{map-name}") {
-
+  
   get {
     call.respond(mapService.keys)
   }
@@ -61,12 +74,15 @@ fun Route.mapRoute() = route("map/{map-name}") {
         mapService.keys.forEach { send(it) }
       }
       call.response.header(
-          HttpHeaders.ContentDisposition,
-          ContentDisposition.Attachment.withParameter(ContentDisposition.Parameters.FileName, "${map.name}.zip").toString()
+        HttpHeaders.ContentDisposition,
+        ContentDisposition.Attachment.withParameter(
+          ContentDisposition.Parameters.FileName,
+          "${map.name}.zip"
+        ).toString()
       )
       call.respondOutputStream {
         val zos = ZipOutputStream(this@respondOutputStream)
-
+        
         launch(Dispatchers.IO) {
           for (key in keys) {
             try {
@@ -105,7 +121,8 @@ fun Route.mapRoute() = route("map/{map-name}") {
           val entity = call.receive(map.valueType)
           mapService.replace(mapEntityId, entity)
           call.respond(HttpStatusCode.NoContent)
-        } ?: throw BadRequestException("Map Entity [${env.name}][${target.name}][${map.name}][$mapEntityId] does not exist. Use POST to create it.")
+        }
+          ?: throw BadRequestException("Map Entity [${env.name}][${target.name}][${map.name}][$mapEntityId] does not exist. Use POST to create it.")
       }
       delete {
         mapService[mapEntityId]?.let {

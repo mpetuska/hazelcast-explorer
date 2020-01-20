@@ -1,13 +1,13 @@
 package lt.petuska.hazelcast.explorer.service.util
 
-import kotlinext.js.*
+import kotlinext.js.jsObject
 
 object NotificationService {
   fun info(message: String) = send(message, NotificationService.NotificationType.INFO)
   fun success(message: String) = send(message, NotificationService.NotificationType.SUCCESS)
   fun warning(message: String) = send(message, NotificationService.NotificationType.WARNING)
   fun error(message: String) = send(message, NotificationService.NotificationType.ERROR)
-
+  
   fun send(message: String, type: NotificationType) {
     val notificationOptions = jsObject<dynamic> {
       this.message = message
@@ -30,7 +30,7 @@ object NotificationService {
     }
     js("$").notify(notificationOptions, notificationSettings)
   }
-
+  
   enum class NotificationType(val value: String) {
     INFO("info"),
     SUCCESS("success"),

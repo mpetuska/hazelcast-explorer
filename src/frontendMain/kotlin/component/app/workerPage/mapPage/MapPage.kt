@@ -1,23 +1,29 @@
 package lt.petuska.hazelcast.explorer.component.app.workerPage.mapPage
 
-import kotlinx.html.*
-import lt.petuska.hazelcast.explorer.component.*
-import lt.petuska.hazelcast.explorer.component.app.workerPage.mapPage.control.*
-import lt.petuska.hazelcast.explorer.domain.enumerator.*
-import lt.petuska.hazelcast.explorer.types.jsonInput.*
-import lt.petuska.hazelcast.explorer.util.*
-import react.*
-import react.dom.*
+import kotlinx.html.hidden
+import kotlinx.html.title
+import lt.petuska.hazelcast.explorer.component.StatelessComponent
+import lt.petuska.hazelcast.explorer.component.app.workerPage.mapPage.control.mapPageControl
+import lt.petuska.hazelcast.explorer.domain.enumerator.Theme
+import lt.petuska.hazelcast.explorer.types.jsonInput.IntelliJColors
+import lt.petuska.hazelcast.explorer.types.jsonInput.IntelliJDarculaColors
+import lt.petuska.hazelcast.explorer.types.jsonInput.JSONInput
+import lt.petuska.hazelcast.explorer.types.jsonInput.LocaleEN
+import lt.petuska.hazelcast.explorer.util.bType
+import react.RBuilder
+import react.dom.div
+import react.dom.span
+import react.key
 
 class MapPage(props: MapPageProps) : StatelessComponent<MapPageProps>(props) {
-
+  
   override fun RBuilder.render() {
     div("container") {
       mapPageControl {}
       responsePanel()
     }
   }
-
+  
   private fun RBuilder.responsePanel() = div("border rounded m-1 mt-2 mb-2") {
     attrs.hidden = props.serverResponseStatus == null
     div("d-flex align-items-center p-2") {

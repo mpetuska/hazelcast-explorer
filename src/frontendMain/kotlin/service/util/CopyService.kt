@@ -1,7 +1,7 @@
 package lt.petuska.hazelcast.explorer.service.util
 
-import org.w3c.dom.*
-import kotlin.browser.*
+import org.w3c.dom.HTMLTextAreaElement
+import kotlin.browser.document
 
 object CopyService {
   fun copyTextToClipboard(text: String) {

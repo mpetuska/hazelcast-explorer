@@ -1,13 +1,14 @@
 package lt.petuska.hazelcast.explorer.redux.reducer
 
-import lt.petuska.hazelcast.explorer.redux.*
-import kotlin.reflect.*
+import lt.petuska.hazelcast.explorer.redux.HzeAction
+import lt.petuska.hazelcast.explorer.redux.HzeState
+import kotlin.reflect.KProperty1
 
 @Suppress("LeakingThis")
 abstract class HzeReducer<T>(private val prop: KProperty1<HzeState, T>, val defaultValue: T? = null) {
-
+  
   protected abstract fun reduce(state: T, action: HzeAction): T
-
+  
   private fun defaultReduce(state: T, action: HzeAction): T {
     val next = reduce(state, action)
     return if (next == undefined) {
@@ -16,9 +17,9 @@ abstract class HzeReducer<T>(private val prop: KProperty1<HzeState, T>, val defa
       next
     }
   }
-
+  
   operator fun invoke() = prop to this::defaultReduce
-
+  
   companion object {
     private val defaults = HzeState()
   }

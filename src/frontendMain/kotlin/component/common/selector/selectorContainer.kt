@@ -1,8 +1,10 @@
 package lt.petuska.hazelcast.explorer.component.common.selector
 
-import component.common.selector.*
-import lt.petuska.hazelcast.explorer.util.*
-import react.*
+import component.common.selector.Selector
+import component.common.selector.SelectorProps
+import lt.petuska.hazelcast.explorer.util.connectClass
+import lt.petuska.hazelcast.explorer.util.ifNullOrUndefined
+import react.RProps
 
 interface ContainerProps : RProps {
   var onSelectionChange: (String) -> Unit
@@ -13,17 +15,19 @@ interface ContainerProps : RProps {
   var required: Boolean
   var id: String
   var classes: String
+  var disabled: Boolean
 }
 
 val selector = connectClass<ContainerProps, SelectorProps, Selector, SelectorProps>(
-    mapStateToProps = { _, ownProps ->
-      onSelectionChange = ownProps.onSelectionChange
-      onDestroy = ownProps.onDestroy
-      values = ownProps.values
-      placeholderText = ownProps.placeholderText
-      selectedValue = ownProps.selectedValue.ifNullOrUndefined("")
-      required = ownProps.required
-      id = ownProps.id
-      classes = ownProps.classes
-    }
+  mapStateToProps = { _, ownProps ->
+    onSelectionChange = ownProps.onSelectionChange
+    onDestroy = ownProps.onDestroy
+    values = ownProps.values
+    placeholderText = ownProps.placeholderText
+    selectedValue = ownProps.selectedValue.ifNullOrUndefined("")
+    required = ownProps.required
+    id = ownProps.id
+    classes = ownProps.classes
+    disabled = ownProps.disabled
+  }
 )

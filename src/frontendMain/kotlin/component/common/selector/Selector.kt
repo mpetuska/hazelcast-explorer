@@ -1,17 +1,20 @@
 package component.common.selector
 
-import kotlinx.html.*
-import kotlinx.html.js.*
-import lt.petuska.hazelcast.explorer.component.*
-import org.w3c.dom.*
-import react.*
-import react.dom.*
+import kotlinx.html.hidden
+import kotlinx.html.id
+import kotlinx.html.js.onChangeFunction
+import lt.petuska.hazelcast.explorer.component.StatelessComponent
+import org.w3c.dom.HTMLSelectElement
+import react.RBuilder
+import react.dom.option
+import react.dom.select
 
 class Selector(props: SelectorProps) : StatelessComponent<SelectorProps>(props) {
   override fun RBuilder.render() {
     select(classes = "form-control ${props.classes}") {
       attrs {
         id = props.id
+        disabled = props.disabled
         multiple = false
         required = props.required
         value = props.selectedValue
@@ -41,7 +44,7 @@ class Selector(props: SelectorProps) : StatelessComponent<SelectorProps>(props) 
       }
     }
   }
-
+  
   override fun componentWillUnmount() {
     props.onDestroy?.let { it() }
   }

@@ -1,24 +1,33 @@
 package component.app.workerPage.mapPage.control
 
-import component.app.workerPage.mapPage.control.getComboButton.*
-import io.ktor.client.response.*
-import io.ktor.http.*
-import kotlinext.js.*
-import kotlinx.html.*
-import kotlinx.html.js.*
-import lt.petuska.hazelcast.explorer.*
-import lt.petuska.hazelcast.explorer.component.*
-import lt.petuska.hazelcast.explorer.component.common.selector.*
-import lt.petuska.hazelcast.explorer.component.common.synchronousButton.*
-import lt.petuska.hazelcast.explorer.domain.enumerator.*
-import lt.petuska.hazelcast.explorer.redux.*
-import lt.petuska.hazelcast.explorer.service.entity.*
-import lt.petuska.hazelcast.explorer.service.util.*
-import lt.petuska.hazelcast.explorer.types.jsonInput.*
-import lt.petuska.hazelcast.explorer.util.*
-import org.w3c.dom.*
-import react.*
-import react.dom.*
+import component.app.workerPage.mapPage.control.getComboButton.getMapButton
+import io.ktor.client.statement.readText
+import io.ktor.http.HttpMethod
+import io.ktor.http.HttpStatusCode
+import kotlinext.js.JsObject
+import kotlinx.html.InputType
+import kotlinx.html.js.onChangeFunction
+import lt.petuska.hazelcast.explorer.component.StatelessComponent
+import lt.petuska.hazelcast.explorer.component.common.selector.selector
+import lt.petuska.hazelcast.explorer.component.common.synchronousButton.synchronousButton
+import lt.petuska.hazelcast.explorer.domain.enumerator.BType
+import lt.petuska.hazelcast.explorer.domain.enumerator.Theme
+import lt.petuska.hazelcast.explorer.redux.HzeAction
+import lt.petuska.hazelcast.explorer.service.entity.MapService
+import lt.petuska.hazelcast.explorer.service.util.NotificationService
+import lt.petuska.hazelcast.explorer.store
+import lt.petuska.hazelcast.explorer.types.jsonInput.IntelliJColors
+import lt.petuska.hazelcast.explorer.types.jsonInput.IntelliJDarculaColors
+import lt.petuska.hazelcast.explorer.types.jsonInput.JSONInput
+import lt.petuska.hazelcast.explorer.types.jsonInput.LocaleEN
+import lt.petuska.hazelcast.explorer.util.launch
+import org.w3c.dom.HTMLInputElement
+import react.RBuilder
+import react.dom.div
+import react.dom.form
+import react.dom.input
+import react.dom.key
+import react.key
 
 class MapPageControl(props: MapPageControlProps) : StatelessComponent<MapPageControlProps>(props) {
   override fun RBuilder.render() {
@@ -33,7 +42,7 @@ class MapPageControl(props: MapPageControlProps) : StatelessComponent<MapPageCon
       HttpMethod.Put -> jsonInput()
     }
   }
-
+  
   private fun RBuilder.httpMethodSelector() = selector {
     attrs {
       classes = "m-1"
@@ -45,7 +54,7 @@ class MapPageControl(props: MapPageControlProps) : StatelessComponent<MapPageCon
       }
     }
   }
-
+  
   private fun RBuilder.mapSelector() = selector {
     attrs {
       classes = "m-1"
@@ -60,7 +69,7 @@ class MapPageControl(props: MapPageControlProps) : StatelessComponent<MapPageCon
       }
     }
   }
-
+  
   private fun RBuilder.keyInput() = input(InputType.text, classes = "form-control m-1") {
     attrs {
       key = props.target?.name ?: ""
@@ -73,7 +82,7 @@ class MapPageControl(props: MapPageControlProps) : StatelessComponent<MapPageCon
       }
     }
   }
-
+  
   private fun RBuilder.actionButton() {
     when (props.selectedHttpMethod) {
       HttpMethod.Get -> getMapButton {
@@ -88,12 +97,12 @@ class MapPageControl(props: MapPageControlProps) : StatelessComponent<MapPageCon
           type = BType.DANGER
           onClick = {
             store.dispatch(HzeAction.ResetMapServerResponse)
-            MapService.deleteValue(props.selectedMap, props.insertedKey).then {
+            MapService.deleteValue(props.selectedMap, props.insertedKey).then { httpResponse ->
               launch {
                 it()
-                store.dispatch(HzeAction.SetMapServerResponseStatus(it.status))
-                store.dispatch(HzeAction.SetMapServerResponseJson(it.content.readText()))
-                if (it.status == HttpStatusCode.NoContent) {
+                store.dispatch(HzeAction.SetMapServerResponseStatus(httpResponse.status))
+                store.dispatch(HzeAction.SetMapServerResponseJson(httpResponse.readText()))
+                if (httpResponse.status == HttpStatusCode.NoContent) {
                   NotificationService.success("Deleted Value ${props.selectedMap?.idString()}[${props.insertedKey}]")
                 } else {
                   NotificationService.error("Error Deleting Value ${props.selectedMap?.idString()}[${props.insertedKey}]")
@@ -119,7 +128,7 @@ class MapPageControl(props: MapPageControlProps) : StatelessComponent<MapPageCon
               launch {
                 it()
                 store.dispatch(HzeAction.SetMapServerResponseStatus(it.status))
-                store.dispatch(HzeAction.SetMapServerResponseJson(it.content.readText()))
+                store.dispatch(HzeAction.SetMapServerResponseJson(it.readText()))
                 if (it.status == HttpStatusCode.Created) {
                   NotificationService.success("Created Value ${props.selectedMap?.idString()}[${props.insertedKey}]")
                 } else {
@@ -146,7 +155,7 @@ class MapPageControl(props: MapPageControlProps) : StatelessComponent<MapPageCon
               launch {
                 it()
                 store.dispatch(HzeAction.SetMapServerResponseStatus(it.status))
-                store.dispatch(HzeAction.SetMapServerResponseJson(it.content.readText()))
+                store.dispatch(HzeAction.SetMapServerResponseJson(it.readText()))
                 if (it.status == HttpStatusCode.NoContent) {
                   NotificationService.success("Replaced Value ${props.selectedMap?.idString()}[${props.insertedKey}]")
                 } else {
@@ -162,7 +171,7 @@ class MapPageControl(props: MapPageControlProps) : StatelessComponent<MapPageCon
       }
     }
   }
-
+  
   private fun RBuilder.jsonInput() = div("border rounded m-1 h-50") {
     JSONInput {
       attrs {
@@ -181,7 +190,7 @@ class MapPageControl(props: MapPageControlProps) : StatelessComponent<MapPageCon
       }
     }
   }
-
+  
   private fun inputValid() = when (props.selectedHttpMethod) {
     HttpMethod.Get,
     HttpMethod.Delete -> props.insertedKey != null && props.selectedMap != null

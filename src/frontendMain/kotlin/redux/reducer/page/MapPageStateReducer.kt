@@ -1,11 +1,12 @@
 package lt.petuska.hazelcast.explorer.redux.reducer.page
 
-import kotlinext.js.*
-import lt.petuska.hazelcast.explorer.*
-import lt.petuska.hazelcast.explorer.redux.*
-import lt.petuska.hazelcast.explorer.redux.reducer.*
-import lt.petuska.hazelcast.explorer.redux.state.*
-import lt.petuska.hazelcast.explorer.util.*
+import kotlinext.js.JsObject
+import lt.petuska.hazelcast.explorer.redux.HzeAction
+import lt.petuska.hazelcast.explorer.redux.HzeState
+import lt.petuska.hazelcast.explorer.redux.reducer.HzeReducer
+import lt.petuska.hazelcast.explorer.redux.state.MapPageState
+import lt.petuska.hazelcast.explorer.store
+import lt.petuska.hazelcast.explorer.util.asyncDispatch
 
 
 object MapPageStateReducer : HzeReducer<MapPageState>(HzeState::mapMageState) {

@@ -1,21 +1,25 @@
 package lt.petuska.hazelcast.explorer.component.app.navbar.logo
 
-import kotlinext.js.*
-import kotlinx.css.*
-import lt.petuska.hazelcast.explorer.component.*
-import react.*
-import react.dom.*
-import styled.*
+import kotlinext.js.require
+import kotlinx.css.height
+import kotlinx.css.px
+import lt.petuska.hazelcast.explorer.component.StatelessComponent
+import react.RBuilder
+import react.RProps
+import react.dom.img
+import styled.css
+import styled.styledSpan
 
 class Logo : StatelessComponent<RProps>() {
-  private val reactSvgUri: String = require("img/react.svg") as String
-  private val kotlinSvgUri: String = require("img/kotlin.svg") as String
-  private val ktorPngUri: String = require("img/ktor.png") as String
-
+  private val reactSvgUri: String = require("img/react.svg").default
+  private val kotlinSvgUri: String = require("img/kotlin.svg").default
+  private val ktorPngUri: String = require("img/ktor.png").default
+  
   init {
+    println(reactSvgUri)
     require("css/logo.css")
   }
-
+  
   override fun RBuilder.render() {
     styledSpan {
       css {

@@ -1,13 +1,13 @@
 package lt.petuska.hazelcast.explorer.component.app
 
-import lt.petuska.hazelcast.explorer.util.*
+import lt.petuska.hazelcast.explorer.util.connectClass
 
 
 val app = connectClass<App, AppProps>(
-    mapStateToProps = { state ->
-      title = state.title
-      theme = state.theme
-      selectedEnvironment = state.selectedEnvironment
-      selectTarget = state.selectedTarget
-    }
+  mapStateToProps = { state ->
+    title = state.title
+    theme = state.theme
+    selectedEnvironment = state.selectedEnvironment
+    selectTarget = state.selectedTarget
+  }
 )

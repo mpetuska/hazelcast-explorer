@@ -1,10 +1,11 @@
 package lt.petuska.hazelcast.explorer.component.app
 
-import lt.petuska.hazelcast.explorer.component.*
-import lt.petuska.hazelcast.explorer.component.app.navbar.*
-import lt.petuska.hazelcast.explorer.component.app.workerPage.*
-import react.*
-import react.dom.*
+import lt.petuska.hazelcast.explorer.component.StatelessComponent
+import lt.petuska.hazelcast.explorer.component.app.navbar.navbar
+import lt.petuska.hazelcast.explorer.component.app.workerPage.workerPage
+import react.RBuilder
+import react.dom.div
+import react.dom.h4
 
 class App(appProps: AppProps) : StatelessComponent<AppProps>(appProps) {
   override fun RBuilder.render() {

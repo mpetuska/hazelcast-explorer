@@ -1,16 +1,18 @@
 package tv.sis.tools.grid.explorer.hazelcast
 
-import com.hazelcast.client.*
-import com.hazelcast.client.config.*
-import com.hazelcast.config.*
-import com.hazelcast.core.*
-import java.util.logging.*
+import com.hazelcast.client.HazelcastClient
+import com.hazelcast.client.config.ClientConfig
+import com.hazelcast.client.config.ClientNetworkConfig
+import com.hazelcast.config.GroupConfig
+import com.hazelcast.core.HazelcastInstance
+import java.util.logging.Logger
 
 object TraderGridClientBuilder : HazelcastClientBuilder {
   override fun getTopicValueMapping(): Map<String, Class<*>> = mapOf()
-
-  override fun getMapKeyValueMapping() = TraderGridMaps.values().map { it.mapName to Pair(it.keyType, it.valueType) }.toMap()
-
+  
+  override fun getMapKeyValueMapping() =
+    TraderGridMaps.values().map { it.mapName to Pair(it.keyType, it.valueType) }.toMap()
+  
   override fun build(environment: String): HazelcastInstance {
     val config = ClientConfig().apply clientConfig@{
       groupConfig = GroupConfig("hzTraderGroup_${environment}", "tr4d3r4pp_${environment}")
@@ -27,7 +29,7 @@ object TraderGridClientBuilder : HazelcastClientBuilder {
     }
     return HazelcastClient.newHazelcastClient(config)
   }
-
+  
   enum class TraderGridMaps(val mapName: String, val keyType: Class<*>, val valueType: Class<*>) {
     CUSTOMER_PRICING_INFO("customerPricingInfo", Long::class.java, MutableList::class.java)
   }

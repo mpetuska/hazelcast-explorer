@@ -1,20 +1,22 @@
 @file:Suppress(
-    "INTERFACE_WITH_SUPERCLASS",
-    "OVERRIDING_FINAL_MEMBER",
-    "RETURN_TYPE_MISMATCH_ON_OVERRIDE",
-    "CONFLICTING_OVERLOADS",
-    "EXTERNAL_DELEGATION"
+  "INTERFACE_WITH_SUPERCLASS",
+  "OVERRIDING_FINAL_MEMBER",
+  "RETURN_TYPE_MISMATCH_ON_OVERRIDE",
+  "CONFLICTING_OVERLOADS",
+  "EXTERNAL_DELEGATION"
 )
 @file:JsModule("bootstrap-switch-button-react")
 @file:JsNonModule
 
 package lt.petuska.hazelcast.explorer.types
 
-import react.*
+import react.Component
+import react.RProps
+import react.RState
 
 external interface BootstrapSwitchButtonState : RState {
-  var checked:Boolean
-  var disabled:Boolean
+  var checked: Boolean
+  var disabled: Boolean
 }
 
 external interface BootstrapSwitchButtonProps : RProps {
@@ -33,6 +35,6 @@ external interface BootstrapSwitchButtonProps : RProps {
  * https://stackoverflow.com/questions/51431848/how-to-import-node-module-in-react-kotlin
  */
 @JsName("default")
-external class BootstrapSwitchButton: Component<BootstrapSwitchButtonProps, BootstrapSwitchButtonState> {
+external class BootstrapSwitchButton : Component<BootstrapSwitchButtonProps, BootstrapSwitchButtonState> {
   override fun render() = definedExternally
 }

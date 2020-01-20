@@ -1,6 +1,6 @@
 package lt.petuska.hazelcast.explorer.domain
 
-import io.ktor.http.*
+import io.ktor.http.HttpStatusCode
 import kotlinx.serialization.Serializable
 
 @Serializable

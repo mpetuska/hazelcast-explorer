@@ -1,9 +1,9 @@
 package lt.petuska.hazelcast.explorer.component.app
 
-import lt.petuska.hazelcast.explorer.domain.enumerator.*
-import lt.petuska.hazelcast.explorer.domain.environment.*
-import lt.petuska.hazelcast.explorer.domain.environment.target.*
-import react.*
+import lt.petuska.hazelcast.explorer.domain.enumerator.Theme
+import lt.petuska.hazelcast.explorer.domain.environment.EnvironmentDTO
+import lt.petuska.hazelcast.explorer.domain.environment.target.TargetDTO
+import react.RProps
 
 interface AppProps : RProps {
   var title: String

@@ -20,30 +20,30 @@ import kotlin.reflect.jvm.isAccessible
  * </ul>
  */
 abstract class CommonExternalizableDomainBase : Externalizable {
-    companion object {
-        private val GSON = Gson()
+  companion object {
+    private val GSON = Gson()
+  }
+  
+  override fun writeExternal(objectOutput: ObjectOutput) {
+    objectOutput.writeUTF(this.toJson())
+  }
+  
+  @Override
+  override fun readExternal(objectInput: ObjectInput) {
+    val newObj = GSON.fromJson(objectInput.readUTF(), this::class.java)
+    newObj::class.memberProperties.filterIsInstance<KMutableProperty<*>>().forEach {
+      val accessibility = it.isAccessible
+      it.isAccessible = true
+      it.setter.call(this, it.getter.call(newObj))
+      it.isAccessible = accessibility
     }
-
-    override fun writeExternal(objectOutput: ObjectOutput) {
-        objectOutput.writeUTF(this.toJson())
-    }
-
-    @Override
-    override fun readExternal(objectInput: ObjectInput) {
-        val newObj = GSON.fromJson(objectInput.readUTF(), this::class.java)
-        newObj::class.memberProperties.filterIsInstance<KMutableProperty<*>>().forEach {
-            val accessibility = it.isAccessible
-            it.isAccessible = true
-            it.setter.call(this, it.getter.call(newObj))
-            it.isAccessible = accessibility
-        }
-    }
-
-    /**
-     * Parses this object into JSON via {@link Gson} library.
-     * @return a JSON string representing this object.
-     */
-    protected fun toJson(): String {
-        return GSON.toJson(this)
-    }
+  }
+  
+  /**
+   * Parses this object into JSON via {@link Gson} library.
+   * @return a JSON string representing this object.
+   */
+  protected fun toJson(): String {
+    return GSON.toJson(this)
+  }
 }

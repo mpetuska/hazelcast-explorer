@@ -1,20 +1,26 @@
 package component.app.workerPage.mapPage.control.getComboButton
 
-import io.ktor.http.*
-import kotlinx.html.js.*
-import lt.petuska.hazelcast.explorer.*
-import lt.petuska.hazelcast.explorer.component.common.synchronousButton.*
-import lt.petuska.hazelcast.explorer.redux.*
-import lt.petuska.hazelcast.explorer.service.entity.*
-import lt.petuska.hazelcast.explorer.service.util.*
-import lt.petuska.hazelcast.explorer.util.*
-import org.w3c.dom.*
-import react.*
-import react.dom.*
-import kotlin.browser.*
+import io.ktor.client.statement.readText
+import io.ktor.http.HttpStatusCode
+import kotlinx.html.js.onClickFunction
+import lt.petuska.hazelcast.explorer.component.common.synchronousButton.synchronousButton
+import lt.petuska.hazelcast.explorer.redux.HzeAction
+import lt.petuska.hazelcast.explorer.service.entity.MapService
+import lt.petuska.hazelcast.explorer.service.util.NotificationService
+import lt.petuska.hazelcast.explorer.store
+import lt.petuska.hazelcast.explorer.util.launch
+import org.w3c.dom.HTMLAnchorElement
+import react.RBuilder
+import react.RComponent
+import react.dom.a
+import react.dom.button
+import react.dom.div
+import react.dom.span
+import react.setState
+import kotlin.browser.document
 
 class GetMapButton(props: GetMapButtonProps) : RComponent<GetMapButtonProps, GetMapButtonState>(props) {
-
+  
   private fun GetMapButtonProps.validateInputs(tmpState: GetMapButtonState? = null) = run {
     val stateSnap = tmpState ?: state
     val mapSelected = props.selectedMap != null
@@ -25,18 +31,18 @@ class GetMapButton(props: GetMapButtonProps) : RComponent<GetMapButtonProps, Get
       mapSelected
     }
   }
-
+  
   override fun GetMapButtonState.init(props: GetMapButtonProps) {
     if (selected == undefined) {
       selected = getOptions[0]
     }
     validInput = props.validateInputs(this)
   }
-
+  
   override fun componentWillReceiveProps(nextProps: GetMapButtonProps) {
     state.init(props)
   }
-
+  
   override fun RBuilder.render() {
     div("btn-group m-1") {
       synchronousButton {
@@ -64,9 +70,6 @@ class GetMapButton(props: GetMapButtonProps) : RComponent<GetMapButtonProps, Get
                 setState {
                   selected = option
                 }
-                if (option.key != "get-value") {
-                  option.onClick {}
-                }
               }
             }
             +option.text
@@ -75,56 +78,56 @@ class GetMapButton(props: GetMapButtonProps) : RComponent<GetMapButtonProps, Get
       }
     }
   }
-
+  
   private val getOptions
     get() = listOf(
-        DropdownButtonOption("get-value", "Get Value") {
-          store.dispatch(HzeAction.ResetMapServerResponse)
-          MapService.getValue(props.selectedMap, props.insertedKey).then {
-            launch {
-              it()
-              store.dispatch(HzeAction.SetMapServerResponseStatus(it.status))
-              store.dispatch(HzeAction.SetMapServerResponseJson(it.content.readText()))
-              if (it.status == HttpStatusCode.OK) {
-                NotificationService.success("Retrieved Value ${props.selectedMap?.idString()}[${props.insertedKey}]\"")
-              } else {
-                NotificationService.error("Error Retrieving Value  ${props.selectedMap?.idString()}[${props.insertedKey}]")
-              }
-            }
-          }.catch {
+      DropdownButtonOption("get-value", "Get Value") {
+        store.dispatch(HzeAction.ResetMapServerResponse)
+        MapService.getValue(props.selectedMap, props.insertedKey).then {
+          launch {
             it()
-            NotificationService.warning("Error Retrieving Value  ${props.selectedMap?.idString()}[${props.insertedKey}]")
-          }
-        },
-        DropdownButtonOption("get-keys", "Get All Keys") {
-          store.dispatch(HzeAction.ResetMapServerResponse)
-          MapService.getAllKeys(props.selectedMap).then {
-            launch {
-              it()
-              store.dispatch(HzeAction.SetMapServerResponseStatus(it.status))
-              store.dispatch(HzeAction.SetMapServerResponseJson(it.content.readText()))
-              if (it.status == HttpStatusCode.OK) {
-                NotificationService.success("Retrieved Map Keys From ${props.selectedMap?.idString()}")
-              } else {
-                NotificationService.error("Error Retrieving Map Keys From  ${props.selectedMap?.idString()}")
-              }
+            store.dispatch(HzeAction.SetMapServerResponseStatus(it.status))
+            store.dispatch(HzeAction.SetMapServerResponseJson(it.readText()))
+            if (it.status == HttpStatusCode.OK) {
+              NotificationService.success("Retrieved Value ${props.selectedMap?.idString()}[${props.insertedKey}]\"")
+            } else {
+              NotificationService.error("Error Retrieving Value  ${props.selectedMap?.idString()}[${props.insertedKey}]")
             }
-          }.catch {
-            it()
-            NotificationService.warning("Error Retrieving Map Keys From  ${props.selectedMap?.idString()}")
           }
-        },
-        DropdownButtonOption("download-values", "Download All Values") {
-          val el = document.createElement("a") as HTMLAnchorElement
-          el.href = "/api/entity/${props.target?.environment}/${props.target?.name}/map/${props.selectedMap?.name}/value"
-          el.target = "_self"
-          el.hidden = true
-          el.setAttribute("style", "position: 'absolute', left: '-9999px'")
-          document.body?.appendChild(el)
-          el.click()
-          document.body?.removeChild(el)
-          NotificationService.info("Started ${props.selectedMap?.idString()} values download")
+        }.catch {
           it()
+          NotificationService.warning("Error Retrieving Value  ${props.selectedMap?.idString()}[${props.insertedKey}]")
         }
+      },
+      DropdownButtonOption("get-keys", "Get All Keys") {
+        store.dispatch(HzeAction.ResetMapServerResponse)
+        MapService.getAllKeys(props.selectedMap).then {
+          launch {
+            it()
+            store.dispatch(HzeAction.SetMapServerResponseStatus(it.status))
+            store.dispatch(HzeAction.SetMapServerResponseJson(it.readText()))
+            if (it.status == HttpStatusCode.OK) {
+              NotificationService.success("Retrieved Map Keys From ${props.selectedMap?.idString()}")
+            } else {
+              NotificationService.error("Error Retrieving Map Keys From  ${props.selectedMap?.idString()}")
+            }
+          }
+        }.catch {
+          it()
+          NotificationService.warning("Error Retrieving Map Keys From  ${props.selectedMap?.idString()}")
+        }
+      },
+      DropdownButtonOption("download-values", "Download All Values") {
+        val el = document.createElement("a") as HTMLAnchorElement
+        el.href = "/api/entity/${props.target?.environment}/${props.target?.name}/map/${props.selectedMap?.name}/value"
+        el.target = "_self"
+        el.hidden = true
+        el.setAttribute("style", "position: 'absolute', left: '-9999px'")
+        document.body?.appendChild(el)
+        el.click()
+        document.body?.removeChild(el)
+        NotificationService.info("Started ${props.selectedMap?.idString()} values download")
+        it()
+      }
     )
 }

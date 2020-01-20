@@ -1,16 +1,27 @@
 package lt.petuska.hazelcast.explorer.component.app.navbar
 
-import kotlinx.css.*
-import kotlinx.html.*
-import lt.petuska.hazelcast.explorer.component.*
-import lt.petuska.hazelcast.explorer.component.app.navbar.logo.*
-import lt.petuska.hazelcast.explorer.component.app.navbar.themeToggle.*
-import lt.petuska.hazelcast.explorer.domain.enumerator.*
-import lt.petuska.hazelcast.explorer.manager.*
-import react.*
-import react.dom.*
-import styled.*
-import kotlin.browser.*
+import kotlinx.css.Display
+import kotlinx.css.VerticalAlign
+import kotlinx.css.display
+import kotlinx.css.verticalAlign
+import kotlinx.html.classes
+import kotlinx.html.id
+import kotlinx.html.role
+import lt.petuska.hazelcast.explorer.component.StatelessComponent
+import lt.petuska.hazelcast.explorer.component.app.navbar.logo.logo
+import lt.petuska.hazelcast.explorer.component.app.navbar.themeToggle.themeToggle
+import lt.petuska.hazelcast.explorer.domain.enumerator.PersistentProperty
+import lt.petuska.hazelcast.explorer.manager.HashQueryManager
+import react.RBuilder
+import react.dom.a
+import react.dom.b
+import react.dom.button
+import react.dom.div
+import react.dom.nav
+import react.dom.span
+import styled.css
+import styled.styledH4
+import kotlin.browser.document
 
 class Navbar(appProps: NavbarProps) : StatelessComponent<NavbarProps>(appProps) {
   override fun RBuilder.render() {
@@ -25,7 +36,7 @@ class Navbar(appProps: NavbarProps) : StatelessComponent<NavbarProps>(appProps) 
       }
     }
   }
-
+  
   private fun RBuilder.statusIndicators() = div("navbar-text mr-4 d-flex flex-column justify-content-between p-0") {
     props.selectedEnvironment?.let {
       span("d-flex flex-row justify-content-between align-items-center") {
@@ -40,7 +51,7 @@ class Navbar(appProps: NavbarProps) : StatelessComponent<NavbarProps>(appProps) 
       }
     }
   }
-
+  
   private fun RBuilder.navigationLinks() = div("collapse navbar-collapse ml-3 p-1") {
     attrs.id = "navbarText"
     div("navbar-nav mr-auto") {
@@ -62,10 +73,10 @@ class Navbar(appProps: NavbarProps) : StatelessComponent<NavbarProps>(appProps) 
             }
             env.targets.forEach { target ->
               a(
-                  HashQueryManager.buildHashLink(
-                      PersistentProperty.ENVIRONMENT to env.name,
-                      PersistentProperty.TARGET to target.name
-                  ), classes = "dropdown-item"
+                HashQueryManager.buildHashLink(
+                  PersistentProperty.ENVIRONMENT to env.name,
+                  PersistentProperty.TARGET to target.name
+                ), classes = "dropdown-item"
               ) {
                 +target.displayName
               }
@@ -75,8 +86,8 @@ class Navbar(appProps: NavbarProps) : StatelessComponent<NavbarProps>(appProps) 
       }
     }
   }
-
-
+  
+  
   private fun RBuilder.navbarToggler() = button {
     attrs {
       classes = setOf("navbar-toggler")
@@ -88,7 +99,7 @@ class Navbar(appProps: NavbarProps) : StatelessComponent<NavbarProps>(appProps) 
     }
     span("navbar-toggler-icon") { }
   }
-
+  
   private fun RBuilder.brand() = a("#", "navbar-brand nav-link") {
     logo {}
     styledH4 {

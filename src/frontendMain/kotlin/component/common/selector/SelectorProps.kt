@@ -1,6 +1,6 @@
 package component.common.selector
 
-import react.*
+import react.RProps
 
 interface SelectorProps : RProps {
   var onSelectionChange: (String) -> Unit
@@ -11,4 +11,5 @@ interface SelectorProps : RProps {
   var required: Boolean
   var id: String
   var classes: String
+  var disabled: Boolean
 }

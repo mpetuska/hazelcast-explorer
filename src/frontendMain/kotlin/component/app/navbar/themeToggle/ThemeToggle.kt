@@ -1,16 +1,17 @@
 package lt.petuska.hazelcast.explorer.component.app.navbar.themeToggle
 
-import kotlinx.html.*
-import lt.petuska.hazelcast.explorer.*
-import lt.petuska.hazelcast.explorer.component.*
-import lt.petuska.hazelcast.explorer.domain.enumerator.*
-import lt.petuska.hazelcast.explorer.redux.*
-import lt.petuska.hazelcast.explorer.types.*
-import lt.petuska.hazelcast.explorer.util.*
-import org.w3c.dom.*
-import react.*
-import react.dom.*
-import kotlin.browser.*
+import kotlinx.html.role
+import lt.petuska.hazelcast.explorer.component.StatelessComponent
+import lt.petuska.hazelcast.explorer.domain.enumerator.BType
+import lt.petuska.hazelcast.explorer.domain.enumerator.Theme
+import lt.petuska.hazelcast.explorer.redux.HzeAction
+import lt.petuska.hazelcast.explorer.store
+import lt.petuska.hazelcast.explorer.types.BootstrapSwitchButton
+import org.w3c.dom.HTMLLinkElement
+import react.RBuilder
+import react.dom.div
+import react.setState
+import kotlin.browser.document
 
 class ThemeToggle(props: ThemeToggleProps) : StatelessComponent<ThemeToggleProps>(props) {
   override fun RBuilder.render() {
@@ -27,9 +28,8 @@ class ThemeToggle(props: ThemeToggleProps) : StatelessComponent<ThemeToggleProps
         }
       }
       val isDark = props.theme == Theme.DARK
-      child(BootstrapSwitchButton::class){
+      child(BootstrapSwitchButton::class) {
         attrs {
-          //          key = "theme-toggle-${props.theme}"
           width = 60
           size = "xs"
           onstyle = BType.DARK.typeName

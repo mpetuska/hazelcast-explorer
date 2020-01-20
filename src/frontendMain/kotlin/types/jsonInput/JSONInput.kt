@@ -3,8 +3,9 @@
 
 package lt.petuska.hazelcast.explorer.types.jsonInput
 
-import kotlinext.js.*
-import react.*
+import kotlinext.js.JsObject
+import react.RClass
+import react.RProps
 
 external interface JSONInputProps : RProps {
   var id: String?

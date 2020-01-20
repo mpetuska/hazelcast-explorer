@@ -1,23 +1,31 @@
 package lt.petuska.hazelcast.explorer
 
-import kotlinext.js.*
-import lt.petuska.hazelcast.explorer.component.app.*
-import lt.petuska.hazelcast.explorer.redux.*
-import lt.petuska.hazelcast.explorer.service.meta.*
-import lt.petuska.hazelcast.explorer.service.util.*
-import react.dom.*
-import react.redux.*
-import redux.*
-import kotlin.browser.*
+import kotlinext.js.require
+import lt.petuska.hazelcast.explorer.component.app.app
+import lt.petuska.hazelcast.explorer.redux.HzeAction
+import lt.petuska.hazelcast.explorer.redux.HzeReducers
+import lt.petuska.hazelcast.explorer.redux.HzeState
+import lt.petuska.hazelcast.explorer.service.meta.HzeConfigService
+import lt.petuska.hazelcast.explorer.service.util.NotificationService
+import react.dom.render
+import react.redux.provider
+import redux.RAction
+import redux.Store
+import redux.WrapperAction
+import redux.compose
+import redux.createStore
+import redux.rEnhancer
+import kotlin.browser.document
+import kotlin.browser.window
 
 val store = createStore<HzeState, RAction, WrapperAction>(
-    HzeReducers(),
-    HzeState(),
-    compose(
-        rEnhancer(),
-        @Suppress("UnsafeCastFromDynamic")
-        js("if(window.__REDUX_DEVTOOLS_EXTENSION__ )window.__REDUX_DEVTOOLS_EXTENSION__ ();else(function(f){return f;});")
-    )
+  HzeReducers(),
+  HzeState(),
+  compose(
+    rEnhancer(),
+    @Suppress("UnsafeCastFromDynamic")
+    js("if(window.__REDUX_DEVTOOLS_EXTENSION__ )window.__REDUX_DEVTOOLS_EXTENSION__ ();else(function(f){return f;});")
+  )
 ).unsafeCast<Store<HzeState, HzeAction, WrapperAction>>()
 
 fun main() {

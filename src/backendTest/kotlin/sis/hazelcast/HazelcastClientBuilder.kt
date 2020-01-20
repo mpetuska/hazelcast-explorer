@@ -1,6 +1,6 @@
 package tv.sis.tools.grid.explorer.hazelcast
 
-import com.hazelcast.core.*
+import com.hazelcast.core.HazelcastInstance
 
 interface HazelcastClientBuilder {
   fun build(environment: String): HazelcastInstance

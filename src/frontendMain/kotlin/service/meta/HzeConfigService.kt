@@ -1,16 +1,12 @@
 package lt.petuska.hazelcast.explorer.service.meta
 
-import io.ktor.client.call.*
-import io.ktor.client.request.*
-import kotlinx.coroutines.*
-import lt.petuska.hazelcast.explorer.domain.*
-import lt.petuska.hazelcast.explorer.service.*
-import lt.petuska.hazelcast.explorer.util.*
+import io.ktor.client.request.get
+import lt.petuska.hazelcast.explorer.domain.HzeConfigDTO
+import lt.petuska.hazelcast.explorer.service.FetchService
+import lt.petuska.hazelcast.explorer.util.promise
 
 object HzeConfigService : FetchService() {
   fun get() = promise {
-    val call = httpClient.call()
-
     httpClient.get<HzeConfigDTO>("/api/meta/hzeConfig")
   }
 }

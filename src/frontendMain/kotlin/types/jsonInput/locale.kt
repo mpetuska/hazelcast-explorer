@@ -3,7 +3,7 @@
 
 package lt.petuska.hazelcast.explorer.types.jsonInput
 
-import kotlinext.js.*
+import kotlinext.js.JsObject
 
 @JsName("default")
 external val LocaleEN: JsObject

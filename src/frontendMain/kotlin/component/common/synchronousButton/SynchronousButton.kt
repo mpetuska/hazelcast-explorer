@@ -1,18 +1,22 @@
 package lt.petuska.hazelcast.explorer.component.common.synchronousButton
 
-import kotlinx.html.*
-import kotlinx.html.js.*
-import react.*
-import react.dom.*
-import styled.*
+import kotlinx.html.js.onClickFunction
+import kotlinx.html.role
+import react.RBuilder
+import react.RComponent
+import react.dom.div
+import react.dom.key
+import react.setState
+import styled.css
+import styled.styledButton
 
 class SynchronousButton(props: SynchronousButtonProps) :
-    RComponent<SynchronousButtonProps, SynchronousButtonState>(props) {
-
+  RComponent<SynchronousButtonProps, SynchronousButtonState>(props) {
+  
   override fun SynchronousButtonState.init() {
     isFetching = false
   }
-
+  
   override fun RBuilder.render() {
     styledButton {
       css {

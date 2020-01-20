@@ -1,6 +1,6 @@
 package component.app.workerPage.mapPage.control.getComboButton
 
-import react.*
+import react.RState
 
 interface GetMapButtonState : RState {
   var selected: DropdownButtonOption

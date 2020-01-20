@@ -9,7 +9,7 @@ enum class BType(val typeName: String) {
   INFO("info"),
   LIGHT("light"),
   DARK("dark");
-
+  
   override fun toString(): String {
     return typeName
   }
