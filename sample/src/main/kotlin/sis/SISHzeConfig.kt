@@ -13,7 +13,7 @@ import tv.sis.tools.grid.explorer.hazelcast.CapGridClientBuilder
 import tv.sis.tools.grid.explorer.hazelcast.DataGridClientBuilder
 import tv.sis.tools.grid.explorer.hazelcast.TraderGridClientBuilder
 
-val sisHzeConfig = hazelcastExplorerConfig {
+val sisHzeConfig = hazelcastExplorerConfig(title = "SIS Explorer (Beta)") {
   environment(
     name = "LOCAL",
     displayName = "Local",

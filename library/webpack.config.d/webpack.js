@@ -1,7 +1,6 @@
 config.resolve.modules.push(
     config.output.path.substring(0, config.output.path.length - 13) +
     'processedResources/frontend/main');
-config.output.filename = 'main.bundle.js';
 if (!config.devServer && config.output) {
   config.mode = 'production';
   config.devtool = false;
@@ -13,6 +12,7 @@ if (!config.devServer && config.output) {
   config.output.filename = 'main.bundle.js';
 }
 if (config.devServer) {
+  config.output.filename = 'main.bundle.js';
   config.devServer.watchOptions = {
     aggregateTimeout: 1000,
     poll: 500,
