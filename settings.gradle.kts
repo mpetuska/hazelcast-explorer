@@ -19,3 +19,6 @@ pluginManagement {
   }
 }
 rootProject.name = "hazelcast-explorer"
+
+include(":library")
+include(":sample")
