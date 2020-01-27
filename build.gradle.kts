@@ -15,6 +15,11 @@ allprojects {
     }
   }
   
+  repositories {
+    jcenter()
+    mavenLocal()
+  }
+  
   group = "lt.petuska"
   version = "1.0.0-SNAPSHOT"
 }

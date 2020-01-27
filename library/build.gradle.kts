@@ -1,9 +1,8 @@
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpack
-import org.jetbrains.kotlin.gradle.tasks.Kotlin2JsCompile
 import org.jetbrains.kotlin.gradle.tasks.KotlinJsDce
 
 plugins {
-  id("kotlinx-serialization")
+  kotlin("plugin.serialization")
   kotlin("multiplatform")
   id("kotlin-dce-js")
   `maven-publish`
@@ -23,8 +22,11 @@ object Version {
   const val ktor = "1.3.0"
   const val logback = "1.2.3"
   const val kodein = "6.5.1"
-  const val hazelcast = "3.8.6"
 }
+
+val Version.hazelcast: String
+  get() = project.properties.getOrDefault("hazelcastVersion", "3.8.6").toString()
+version = "${rootProject.version}-hz-${Version.hazelcast}"
 
 // Custom Properties
 val isProductionBuild = project.hasProperty("prod") || project.hasProperty("production")
@@ -152,7 +154,6 @@ kotlin {
 afterEvaluate {
   tasks {
     val runDceFrontendKotlin by getting(KotlinJsDce::class)
-    val compileKotlinFrontend by getting(Kotlin2JsCompile::class)
     val frontendProcessResources by getting(Copy::class) {
       dependsOn(runDceFrontendKotlin)
       from("$webDir/index.html") {
