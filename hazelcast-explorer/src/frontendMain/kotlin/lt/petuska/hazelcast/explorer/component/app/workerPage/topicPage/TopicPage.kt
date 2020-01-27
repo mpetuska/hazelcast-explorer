@@ -63,9 +63,7 @@ class TopicPage(props: TopicPageProps) : StatelessComponent<TopicPageProps>(prop
       required = true
       values = props.target?.topics?.map { it.displayName }?.toSet() ?: setOf()
       placeholderText = "Select topic..."
-      selectedValue = props.target?.topics?.find { it == props.topic }.also {
-        store.dispatch(HzeAction.SelectTopic(it))
-      }?.displayName
+      selectedValue = props.topic?.displayName
       onSelectionChange = {
         store.dispatch(HzeAction.SelectTopic(props.target?.topics?.find { m -> it == m.displayName }))
       }

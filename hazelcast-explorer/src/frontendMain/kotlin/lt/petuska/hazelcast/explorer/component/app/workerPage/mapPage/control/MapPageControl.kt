@@ -64,11 +64,7 @@ class MapPageControl(props: MapPageControlProps) :
       required = true
       values = props.target?.maps?.map { it.displayName }?.toSet() ?: setOf()
       placeholderText = "Select map..."
-      selectedValue = props.target?.maps?.find { it == props.selectedMap }.also {
-        if (props.selectedMap != it) {
-          store.dispatch(HzeAction.SelectMap(it))
-        }
-      }?.displayName
+      selectedValue = props.selectedMap?.displayName
       onSelectionChange = {
         store.dispatch(HzeAction.SelectMap(props.target?.maps?.find { m -> it == m.displayName }))
       }
