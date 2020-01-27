@@ -1,0 +1,51 @@
+image: gradle:6.0.1-jdk8
+
+# Disable the Gradle daemon for Continuous Integration servers as correctness
+# is usually a priority over speed in CI environments. Using a fresh
+# runtime for each build is more reliable since the runtime is completely
+# isolated from any previous builds.
+variables:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+
+before_script:
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+
+build:
+  stage: build
+  script: gradle --build-cache assemble --stacktrace
+  only:
+    - master
+    - develop
+    - merge_requests
+  cache:
+    key: "$CI_PIPELINE_ID"
+    policy: push
+    paths:
+      - build
+      - .gradle
+
+test:
+  stage: test
+  script: gradle check
+  only:
+    - master
+    - develop
+    - merge_requests
+  cache:
+    key: "$CI_PIPELINE_ID"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+deploy:bintray:
+  stage: deploy
+  script: gradle publish -Ppublish=true -Poverride=false
+  only:
+    - master
+  cache:
+    key: "$CI_PIPELINE_ID"
+    policy: pull
+    paths:
+      - build
+      - .gradle

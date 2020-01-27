@@ -13,7 +13,7 @@ application {
 
 sourceSets["main"].withConvention(KotlinSourceSet::class) {
   dependencies {
-    implementation(project(":library"))
+    implementation(project(":hazelcast-explorer"))
   }
 }
 

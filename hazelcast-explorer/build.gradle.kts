@@ -5,7 +5,7 @@ plugins {
   kotlin("plugin.serialization")
   kotlin("multiplatform")
   id("kotlin-dce-js")
-  `maven-publish`
+  id("maven-publish")
 }
 
 repositories {
@@ -36,9 +36,7 @@ val mainClassName = "io.ktor.server.cio.EngineMain"
 kotlin {
   jvm("backend") {
     mavenPublication {
-      groupId = "${project.group}"
-      artifactId = rootProject.name
-      version = version
+      artifactId = project.name
       tasks.withType<AbstractPublishToMaven>().all {
         onlyIf { this.publication == this@mavenPublication }
       }
@@ -146,6 +144,69 @@ kotlin {
         useExperimentalAnnotation("kotlinx.serialization.UnstableDefault")
         useExperimentalAnnotation("kotlinx.serialization.ImplicitReflectionSerializer")
         useExperimentalAnnotation("io.ktor.util.KtorExperimentalAPI")
+      }
+    }
+  }
+}
+
+publishing {
+  publications.removeIf { !it.name.endsWith("backend") }
+  publications.withType<MavenPublication> {
+    pom {
+      val repoHost = "gitlab.com"
+      val repoPath = "${project.group}/${project.name}"
+      val repo = "$repoHost/$repoPath"
+      name.set(project.name)
+      url.set("https://$repo")
+      licenses {
+        license {
+          name.set("The Apache License, Version 2.0")
+          url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+          distribution.set("repo")
+        }
+      }
+      developers {
+        developer {
+          id.set("mpetuska")
+          name.set("Martynas Petuška")
+          email.set("martynas.petuska@gmail.com")
+        }
+      }
+      scm {
+        url.set("https://$repo")
+        connection.set("scm:git:https://$repo.git")
+        developerConnection.set("scm:git:git@$repoHost:$repoPath.git")
+      }
+    }
+    
+    tasks.create("${name}PostPublish", Exec::class) {
+      val publish by tasks.getting
+      group = publish.group!!
+      publish.dependsOn(this)
+      dependsOn("publishAllPublicationsToBintrayRepository")
+      
+      executable = "curl"
+      setArgs(
+        listOf(
+          "-u", "${System.getenv("BINTRAY_USER")}:${System.getenv("BINTRAY_KEY")}",
+          "-X", "DELETE",
+          "https://api.bintray.com/packages/${System.getenv("BINTRAY_USER")}/${project.group}/${project.name}/versions/$artifactId"
+        )
+      )
+    }
+  }
+  
+  repositories {
+    maven {
+      name = "bintray"
+      url = uri(
+        "https://api.bintray.com/maven/${System.getenv("BINTRAY_USER")}/${group}/${project.name}/" +
+            ";publish=${if ("true".equals(project.properties["publish"] as? String?, true)) 1 else 0}" +
+            ";override=${if ("true".equals(project.properties["override"] as? String?, true)) 1 else 0}"
+      )
+      credentials {
+        username = System.getenv("BINTRAY_USER")
+        password = System.getenv("BINTRAY_KEY")
       }
     }
   }
