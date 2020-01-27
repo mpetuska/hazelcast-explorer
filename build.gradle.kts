@@ -21,11 +21,11 @@ allprojects {
   }
   
   group = "lt.petuska"
-  version = "0.0.1"
+  version = "0.0.2"
 }
 
 tasks {
   val wrapper by getting(Wrapper::class) {
-    gradleVersion = "6.1"
+    gradleVersion = "6.0.1"
   }
 }
