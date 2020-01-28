@@ -16,7 +16,6 @@ import lt.petuska.hazelcast.explorer.types.jsonInput.IntelliJColors
 import lt.petuska.hazelcast.explorer.types.jsonInput.IntelliJDarculaColors
 import lt.petuska.hazelcast.explorer.types.jsonInput.JSONInput
 import lt.petuska.hazelcast.explorer.types.jsonInput.LocaleEN
-import lt.petuska.hazelcast.explorer.types.virtualList.VirtualList
 import react.RBuilder
 import react.dom.div
 import react.dom.form
