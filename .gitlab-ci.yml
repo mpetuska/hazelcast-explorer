@@ -26,7 +26,7 @@ test:
 
 release:bintray:
   stage: deploy
-  script: gradle release -Ppublish=true -Poverride=false -Pprod
+  script: gradle release -Ppublish=true -Poverride=false -Pprod --stacktrace
   only:
     - master
   cache:
