@@ -103,7 +103,7 @@ class Navbar(appProps: NavbarProps) : StatelessComponent<NavbarProps>(appProps) 
     span("navbar-toggler-icon") { }
   }
   
-  private fun RBuilder.brand() = a("?#?", "navbar-brand nav-link") {
+  private fun RBuilder.brand() = a("#?", "navbar-brand nav-link") {
     logo {}
     styledH4 {
       css {

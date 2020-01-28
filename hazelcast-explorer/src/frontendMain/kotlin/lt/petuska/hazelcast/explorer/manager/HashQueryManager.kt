@@ -37,6 +37,6 @@ object HashQueryManager : PersistenceManager(
       properties.forEach {
         set(it.first.key, it.second)
       }
-    }.let { "?#?$it" }
+    }.let { "#?$it" }
   }
 }
