@@ -24,7 +24,7 @@ test:
       - build
       - .gradle
 
-deploy:bintray:
+release:bintray:
   stage: deploy
   script: gradle release -Ppublish=true -Poverride=false -Pprod
   only:
