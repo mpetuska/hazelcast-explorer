@@ -2,6 +2,8 @@ package lt.petuska.hazelcast.explorer.component.app.workerPage.topicPage
 
 import kotlinx.html.hidden
 import lt.petuska.hazelcast.explorer.component.StatelessComponent
+import lt.petuska.hazelcast.explorer.component.common.copyButton
+import lt.petuska.hazelcast.explorer.component.common.labeledPillBox
 import lt.petuska.hazelcast.explorer.component.common.selector.selector
 import lt.petuska.hazelcast.explorer.component.common.synchronousButton.synchronousButton
 import lt.petuska.hazelcast.explorer.domain.enumerator.BType
@@ -28,7 +30,7 @@ class TopicPage(props: TopicPageProps) : StatelessComponent<TopicPageProps>(prop
   
   override fun RBuilder.render() {
     div("container") {
-      form(classes = "form-inline justify-content-center mb-2") {
+      form(classes = "form-inline justify-content-center") {
         topicSelector()
         synchronousButton {
           attrs {
@@ -52,6 +54,7 @@ class TopicPage(props: TopicPageProps) : StatelessComponent<TopicPageProps>(prop
           }
         }
       }
+      metadataPanel()
       responsePanel()
     }
   }
@@ -63,9 +66,7 @@ class TopicPage(props: TopicPageProps) : StatelessComponent<TopicPageProps>(prop
       required = true
       values = props.target?.topics?.map { it.displayName }?.toSet() ?: setOf()
       placeholderText = "Select topic..."
-      selectedValue = props.target?.topics?.find { it == props.topic }.also {
-        store.dispatch(HzeAction.SelectTopic(it))
-      }?.displayName
+      selectedValue = props.topic?.displayName
       onSelectionChange = {
         store.dispatch(HzeAction.SelectTopic(props.target?.topics?.find { m -> it == m.displayName }))
       }
@@ -82,7 +83,11 @@ class TopicPage(props: TopicPageProps) : StatelessComponent<TopicPageProps>(prop
         div("border-top overflow-auto") {
           div("d-flex align-items-center p-2") {
             span { +"Message #${props.messages.size - i}" }
-            div("ml-auto") {
+            div("d-flex-inline align-items-center ml-auto") {
+              copyButton(JSON.stringify(it.second)) {
+                NotificationService.info("Response copied to clipboard")
+              }
+              span("mr-2") {}
               span("mr-2") { +"Received at:" }
               span("badge badge-pill badge-${BType.INFO.typeName}") {
                 +"${it.first.toTimeString()} ${it.first.toDateString()}"
@@ -105,6 +110,12 @@ class TopicPage(props: TopicPageProps) : StatelessComponent<TopicPageProps>(prop
           }
         }
       }
+    }
+  }
+  
+  private fun RBuilder.metadataPanel() = props.topic?.valueType?.simpleName?.let { valueType ->
+    div("d-flex justify-content-center") {
+      labeledPillBox("Value Type:", if (props.topic?.readOnly == true) BType.WARNING else BType.INFO, valueType)
     }
   }
 }

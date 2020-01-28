@@ -32,7 +32,7 @@ class ThemeToggle(props: ThemeToggleProps) : StatelessComponent<ThemeToggleProps
         attrs {
           width = 60
           size = "xs"
-          onstyle = BType.DARK.typeName
+          onstyle = BType.SECONDARY.typeName
           onlabel = "Dark"
           offlabel = "Light"
           checked = isDark

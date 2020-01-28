@@ -7,4 +7,6 @@ import lt.petuska.hazelcast.explorer.domain.environment.Environment
 data class HzeConfig(
   val title: String,
   val environments: List<Environment>
-)
+) {
+  val version = "0.0.1"
+}

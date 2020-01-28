@@ -11,9 +11,9 @@ import redux.RAction
 import redux.Reducer
 import kotlin.js.Date
 
-private fun Environment?.findTarget(target: Target?) = this?.targets?.find { it.id == target?.id }
-private fun Target?.findMap(map: Map?) = this?.maps?.find { it.id == map?.id }
-private fun Target?.findTopic(topic: Topic?) = this?.topics?.find { it.id == topic?.id }
+private fun Environment?.findTarget(target: Target?) = this?.targets?.find { it.name == target?.name }
+private fun Target?.findMap(map: Map?) = this?.maps?.find { it.name == map?.name }
+private fun Target?.findTopic(topic: Topic?) = this?.topics?.find { it.name == topic?.name }
 
 val hzeReducer: Reducer<HzeState, RAction> = { state, action ->
   if (action !is HzeAction)
@@ -32,7 +32,7 @@ val hzeReducer: Reducer<HzeState, RAction> = { state, action ->
       }
       
       is HzeAction.SelectTarget -> with(state) {
-        val target = environment?.targets?.find { it.id == action.target?.id }
+        val target = action.target
         val map = target.findMap(map)
         val topic = target.findTopic(topic)
         val mapMethod = if (map.readOnly) HttpMethod.Get else mapMethod

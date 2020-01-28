@@ -13,6 +13,7 @@ import lt.petuska.hazelcast.explorer.component.app.navbar.themeToggle.themeToggl
 import lt.petuska.hazelcast.explorer.config
 import lt.petuska.hazelcast.explorer.domain.enumerator.BType
 import lt.petuska.hazelcast.explorer.domain.enumerator.PersistentProperty
+import lt.petuska.hazelcast.explorer.domain.enumerator.Theme
 import lt.petuska.hazelcast.explorer.manager.HashQueryManager
 import react.RBuilder
 import react.dom.a
@@ -28,7 +29,7 @@ import kotlin.browser.document
 class Navbar(appProps: NavbarProps) : StatelessComponent<NavbarProps>(appProps) {
   override fun RBuilder.render() {
     document.getElementById("title")?.firstChild?.nodeValue = config.title
-    nav("navbar navbar-expand-lg navbar-dark bg-primary p-2 mb-3") {
+    nav("navbar navbar-expand-lg navbar-dark ${if (props.theme == Theme.DARK) "bg-dark" else "bg-primary"} p-2 mb-3") {
       brand()
       navigationLinks()
       div("d-flex flex-row align-items-center") {
@@ -102,7 +103,7 @@ class Navbar(appProps: NavbarProps) : StatelessComponent<NavbarProps>(appProps) 
     span("navbar-toggler-icon") { }
   }
   
-  private fun RBuilder.brand() = a("#", "navbar-brand nav-link") {
+  private fun RBuilder.brand() = a("#?", "navbar-brand nav-link") {
     logo {}
     styledH4 {
       css {

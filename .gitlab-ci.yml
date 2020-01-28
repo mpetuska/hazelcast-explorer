@@ -40,7 +40,7 @@ test:
 
 deploy:bintray:
   stage: deploy
-  script: gradle publish -Ppublish=true -Poverride=false
+  script: gradle release -Ppublish=true -Poverride=false -Pprod
   only:
     - master
   cache:

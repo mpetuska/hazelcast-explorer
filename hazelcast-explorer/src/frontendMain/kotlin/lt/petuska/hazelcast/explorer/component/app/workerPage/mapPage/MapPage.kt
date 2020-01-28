@@ -4,7 +4,9 @@ import kotlinx.html.hidden
 import kotlinx.html.title
 import lt.petuska.hazelcast.explorer.component.StatelessComponent
 import lt.petuska.hazelcast.explorer.component.app.workerPage.mapPage.control.mapPageControl
+import lt.petuska.hazelcast.explorer.component.common.copyButton
 import lt.petuska.hazelcast.explorer.domain.enumerator.Theme
+import lt.petuska.hazelcast.explorer.service.util.NotificationService
 import lt.petuska.hazelcast.explorer.types.jsonInput.IntelliJColors
 import lt.petuska.hazelcast.explorer.types.jsonInput.IntelliJDarculaColors
 import lt.petuska.hazelcast.explorer.types.jsonInput.JSONInput
@@ -28,7 +30,13 @@ class MapPage(props: MapPageProps) : StatelessComponent<MapPageProps>(props) {
     attrs.hidden = props.serverResponseStatus == null
     div("d-flex align-items-center p-2") {
       span { +"Response" }
-      div("ml-auto") {
+      div("d-flex-inline align-items-center ml-auto") {
+        props.serverResponseJson?.let {
+          copyButton(JSON.stringify(it)) {
+            NotificationService.info("Response copied to clipboard")
+          }
+          span("mr-2") {}
+        }
         span("mr-2") { +"Status:" }
         span("badge badge-pill badge-${props.serverResponseStatus.bType().typeName}") {
           props.serverResponseStatus?.description?.let { attrs.title = it }

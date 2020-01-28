@@ -113,11 +113,9 @@ kotlin {
         implementation("org.jetbrains:kotlin-react-redux:5.0.7-pre.89-kotlin-1.3.60")
         implementation("org.jetbrains:kotlin-react-dom:16.9.0-pre.89-kotlin-1.3.60")
         implementation("org.jetbrains:kotlin-styled:1.0.0-pre.89-kotlin-1.3.60")
-        implementation("org.jetbrains:kotlin-react-router-dom:4.3.1-pre.89-kotlin-1.3.60")
         implementation(npm("core-js"))
         implementation(npm("react"))
         implementation(npm("react-dom"))
-        implementation(npm("react-router-dom"))
         implementation(npm("redux"))
         implementation(npm("react-redux"))
         implementation(npm("styled-components"))
@@ -224,6 +222,7 @@ afterEvaluate {
     withType<KotlinJsDce> {
       dceOptions {
         devMode = !isProductionBuild
+        keep("ktor-ktor-io.\$\$importsForInline\$\$.ktor-ktor-io.io.ktor.utils.io")
       }
       inputs.property("production", isProductionBuild)
       doFirst {
@@ -243,6 +242,39 @@ afterEvaluate {
       from(frontendBrowserWebpack.destinationDirectory!!) {
         into("WEB-INF")
       }
+    }
+    val publish by getting
+    val release by creating(Exec::class) {
+      group = publish.group!!
+      dependsOn(publish)
+      val body = """
+        {
+            "name": "Release v${project.version}",
+            "tag_name": "v${project.version}",
+            "ref": "master",
+            "assets": {
+                "links": [
+                    {
+                        "name": "${project.name}",
+                        "url": "https://bintray.com/${System.getenv("BINTRAY_USER")}/${project.group}/${project.name}/${project.version}"
+                    }
+                ]
+            },
+            "description": "TODO"
+        }
+      """.trimIndent()
+    
+      executable = "curl"
+      setArgs(
+        listOf(
+          "-u", "${System.getenv("BINTRAY_USER")}:${System.getenv("BINTRAY_KEY")}",
+          "-H", "PRIVATE-TOKEN: ${System.getenv("CI_JOB_TOKEN")}",
+          "-H", "Content-Type: application/json",
+          "-X", "POST",
+          "https://gitlab.com/api/v4/projects/${System.getenv("CI_PROJECT_ID")}/releases",
+          "-d", "'$body'"
+        )
+      )
     }
   }
 }

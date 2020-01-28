@@ -23,7 +23,7 @@ internal fun Application.setupFeatures() {
   }
   install(DefaultHeaders)
   install(ContentNegotiation) {
-    gson {}
+    gson()
   }
   install(WebSockets)
   install(StatusPages) {
