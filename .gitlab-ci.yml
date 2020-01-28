@@ -10,9 +10,9 @@ variables:
 before_script:
   - export GRADLE_USER_HOME=`pwd`/.gradle
 
-build:
-  stage: build
-  script: gradle --build-cache assemble --stacktrace
+test:
+  stage: test
+  script: gradle --build-cache check assemble --stacktrace
   only:
     - master
     - develop
@@ -20,20 +20,6 @@ build:
   cache:
     key: "$CI_PIPELINE_ID"
     policy: push
-    paths:
-      - build
-      - .gradle
-
-test:
-  stage: test
-  script: gradle check
-  only:
-    - master
-    - develop
-    - merge_requests
-  cache:
-    key: "$CI_PIPELINE_ID"
-    policy: pull
     paths:
       - build
       - .gradle
