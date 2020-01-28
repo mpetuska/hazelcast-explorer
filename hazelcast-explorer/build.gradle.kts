@@ -243,5 +243,38 @@ afterEvaluate {
         into("WEB-INF")
       }
     }
+    val publish by getting
+    val release by creating(Exec::class) {
+      group = publish.group!!
+      dependsOn(publish)
+      val body = """
+        {
+            "name": "Release v${project.version}",
+            "tag_name": "v${project.version}",
+            "ref": "master",
+            "assets": {
+                "links": [
+                    {
+                        "name": "${project.name}",
+                        "url": "https://bintray.com/${System.getenv("BINTRAY_USER")}/${project.group}/${project.name}/${project.version}"
+                    }
+                ]
+            },
+            "description": "TODO"
+        }
+      """.trimIndent()
+    
+      executable = "curl"
+      setArgs(
+        listOf(
+          "-u", "${System.getenv("BINTRAY_USER")}:${System.getenv("BINTRAY_KEY")}",
+          "-H", "PRIVATE-TOKEN: ${System.getenv("CI_JOB_TOKEN")}",
+          "-H", "Content-Type: application/json",
+          "-X", "POST",
+          "https://gitlab.com/api/v4/projects/${System.getenv("CI_PROJECT_ID")}/releases",
+          "-d", "'$body'"
+        )
+      )
+    }
   }
 }
