@@ -1,3 +1,4 @@
+import io.github.httpbuilderng.http.HttpTask
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpack
 import org.jetbrains.kotlin.gradle.tasks.KotlinJsDce
 
@@ -6,6 +7,7 @@ plugins {
   kotlin("multiplatform")
   id("kotlin-dce-js")
   id("maven-publish")
+  id("io.github.http-builder-ng.http-plugin") version "0.1.1"
 }
 
 repositories {
@@ -244,10 +246,18 @@ afterEvaluate {
       }
     }
     val publish by getting
-    val release by creating(Exec::class) {
+    val release by creating(HttpTask::class) {
       group = publish.group!!
       dependsOn(publish)
-      val body = """
+      config {
+        it.request.setUri("https://gitlab.com")
+      }
+      post {
+        it.request.uri.setPath("/api/v4/projects/${System.getenv("CI_PROJECT_ID")}/releases")
+        it.request.headers["Authorization"] = "Bearer ${System.getenv("PRIVATE_TOKEN")}"
+        it.request.setContentType("application/json")
+        it.request.setBody(
+          """
         {
             "name": "Release v${project.version}",
             "tag_name": "v${project.version}",
@@ -260,21 +270,11 @@ afterEvaluate {
                     }
                 ]
             },
-            "description": "TODO"
+            "description": "N/A"
         }
       """.trimIndent()
-    
-      executable = "curl"
-      setArgs(
-        listOf(
-          "-u", "${System.getenv("BINTRAY_USER")}:${System.getenv("BINTRAY_KEY")}",
-          "-H", "PRIVATE-TOKEN: ${System.getenv("PRIVATE_TOKEN")}",
-          "-H", "Content-Type: application/json",
-          "-X", "POST",
-          "https://gitlab.com/api/v4/projects/${System.getenv("CI_PROJECT_ID")}/releases",
-          "-d", "'$body'"
         )
-      )
+      }
     }
   }
 }
