@@ -270,7 +270,7 @@ afterEvaluate {
                     }
                 ]
             },
-            "description": "N/A"
+            "description": "## Changelog\n### Breaking Changes\nN/A\n\n### New Features\nN/A\n\n### Fixes\nN/A"
         }
       """.trimIndent()
         )
