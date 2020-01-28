@@ -8,6 +8,7 @@ import kotlinx.html.InputType
 import kotlinx.html.js.onChangeFunction
 import lt.petuska.hazelcast.explorer.component.StatelessComponent
 import lt.petuska.hazelcast.explorer.component.app.workerPage.mapPage.control.getComboButton.getMapButton
+import lt.petuska.hazelcast.explorer.component.common.labeledPillBox
 import lt.petuska.hazelcast.explorer.component.common.selector.selector
 import lt.petuska.hazelcast.explorer.component.common.synchronousButton.synchronousButton
 import lt.petuska.hazelcast.explorer.domain.enumerator.BType
@@ -34,17 +35,28 @@ class MapPageControl(props: MapPageControlProps) :
     props
   ) {
   override fun RBuilder.render() {
-    form(classes = "form-inline justify-content-center mb-2") {
+    form(classes = "form-inline justify-content-center") {
       httpMethodSelector()
       mapSelector()
       keyInput()
       actionButton()
     }
+    metadataPanel()
     when (props.selectedHttpMethod) {
       HttpMethod.Post,
       HttpMethod.Put -> jsonInput()
     }
   }
+  
+  private fun RBuilder.metadataPanel() =
+    div("d-flex justify-content-center") {
+      props.selectedMap?.keyType?.simpleName?.let { keyType ->
+        labeledPillBox("Key Type:", if (props.selectedMap?.readOnly == true) BType.WARNING else BType.INFO, keyType)
+      }
+      props.selectedMap?.valueType?.simpleName?.let { valueType ->
+        labeledPillBox("Value Type:", if (props.selectedMap?.readOnly == true) BType.WARNING else BType.INFO, valueType)
+      }
+    }
   
   private fun RBuilder.httpMethodSelector() = selector {
     attrs {

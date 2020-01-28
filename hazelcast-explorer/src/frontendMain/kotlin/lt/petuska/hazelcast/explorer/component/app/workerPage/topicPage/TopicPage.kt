@@ -2,6 +2,8 @@ package lt.petuska.hazelcast.explorer.component.app.workerPage.topicPage
 
 import kotlinx.html.hidden
 import lt.petuska.hazelcast.explorer.component.StatelessComponent
+import lt.petuska.hazelcast.explorer.component.common.copyButton
+import lt.petuska.hazelcast.explorer.component.common.labeledPillBox
 import lt.petuska.hazelcast.explorer.component.common.selector.selector
 import lt.petuska.hazelcast.explorer.component.common.synchronousButton.synchronousButton
 import lt.petuska.hazelcast.explorer.domain.enumerator.BType
@@ -14,6 +16,7 @@ import lt.petuska.hazelcast.explorer.types.jsonInput.IntelliJColors
 import lt.petuska.hazelcast.explorer.types.jsonInput.IntelliJDarculaColors
 import lt.petuska.hazelcast.explorer.types.jsonInput.JSONInput
 import lt.petuska.hazelcast.explorer.types.jsonInput.LocaleEN
+import lt.petuska.hazelcast.explorer.types.virtualList.VirtualList
 import react.RBuilder
 import react.dom.div
 import react.dom.form
@@ -28,7 +31,7 @@ class TopicPage(props: TopicPageProps) : StatelessComponent<TopicPageProps>(prop
   
   override fun RBuilder.render() {
     div("container") {
-      form(classes = "form-inline justify-content-center mb-2") {
+      form(classes = "form-inline justify-content-center") {
         topicSelector()
         synchronousButton {
           attrs {
@@ -52,6 +55,7 @@ class TopicPage(props: TopicPageProps) : StatelessComponent<TopicPageProps>(prop
           }
         }
       }
+      metadataPanel()
       responsePanel()
     }
   }
@@ -80,7 +84,11 @@ class TopicPage(props: TopicPageProps) : StatelessComponent<TopicPageProps>(prop
         div("border-top overflow-auto") {
           div("d-flex align-items-center p-2") {
             span { +"Message #${props.messages.size - i}" }
-            div("ml-auto") {
+            div("d-flex-inline align-items-center ml-auto") {
+              copyButton(JSON.stringify(it.second)) {
+                NotificationService.info("Response copied to clipboard")
+              }
+              span("mr-2") {}
               span("mr-2") { +"Received at:" }
               span("badge badge-pill badge-${BType.INFO.typeName}") {
                 +"${it.first.toTimeString()} ${it.first.toDateString()}"
@@ -103,6 +111,12 @@ class TopicPage(props: TopicPageProps) : StatelessComponent<TopicPageProps>(prop
           }
         }
       }
+    }
+  }
+  
+  private fun RBuilder.metadataPanel() = props.topic?.valueType?.simpleName?.let { valueType ->
+    div("d-flex justify-content-center") {
+      labeledPillBox("Value Type:", if (props.topic?.readOnly == true) BType.WARNING else BType.INFO, valueType)
     }
   }
 }

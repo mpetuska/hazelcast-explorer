@@ -11,9 +11,9 @@ import io.ktor.features.DefaultHeaders
 import io.ktor.features.NotFoundException
 import io.ktor.features.StatusPages
 import io.ktor.features.gzip
+import io.ktor.gson.gson
 import io.ktor.http.HttpStatusCode
 import io.ktor.response.respond
-import io.ktor.serialization.serialization
 import io.ktor.websocket.WebSockets
 import lt.petuska.hazelcast.explorer.domain.ErrorMessage
 
@@ -23,7 +23,7 @@ internal fun Application.setupFeatures() {
   }
   install(DefaultHeaders)
   install(ContentNegotiation) {
-    serialization()
+    gson()
   }
   install(WebSockets)
   install(StatusPages) {

@@ -42,7 +42,7 @@ private fun imports() {
 private fun initialisation() {
   HzeConfigService.get().then {
     config = it
-    val state = LocalStorageManager.load() ?: HzeState()
+    val state = LocalStorageManager.load(config) ?: HzeState()
     store = createStore<HzeState, RAction, WrapperAction>(
       hzeReducer,
       state,
