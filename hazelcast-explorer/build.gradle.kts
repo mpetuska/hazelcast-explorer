@@ -268,7 +268,7 @@ afterEvaluate {
       setArgs(
         listOf(
           "-u", "${System.getenv("BINTRAY_USER")}:${System.getenv("BINTRAY_KEY")}",
-          "-H", "PRIVATE-TOKEN: ${System.getenv("CI_JOB_TOKEN")}",
+          "-H", "PRIVATE-TOKEN: ${System.getenv("PRIVATE_TOKEN")}",
           "-H", "Content-Type: application/json",
           "-X", "POST",
           "https://gitlab.com/api/v4/projects/${System.getenv("CI_PROJECT_ID")}/releases",
