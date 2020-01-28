@@ -113,11 +113,9 @@ kotlin {
         implementation("org.jetbrains:kotlin-react-redux:5.0.7-pre.89-kotlin-1.3.60")
         implementation("org.jetbrains:kotlin-react-dom:16.9.0-pre.89-kotlin-1.3.60")
         implementation("org.jetbrains:kotlin-styled:1.0.0-pre.89-kotlin-1.3.60")
-        implementation("org.jetbrains:kotlin-react-router-dom:4.3.1-pre.89-kotlin-1.3.60")
         implementation(npm("core-js"))
         implementation(npm("react"))
         implementation(npm("react-dom"))
-        implementation(npm("react-router-dom"))
         implementation(npm("redux"))
         implementation(npm("react-redux"))
         implementation(npm("styled-components"))
@@ -224,6 +222,7 @@ afterEvaluate {
     withType<KotlinJsDce> {
       dceOptions {
         devMode = !isProductionBuild
+        keep("ktor-ktor-io.\$\$importsForInline\$\$.ktor-ktor-io.io.ktor.utils.io")
       }
       inputs.property("production", isProductionBuild)
       doFirst {
