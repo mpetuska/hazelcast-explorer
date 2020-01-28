@@ -8,5 +8,5 @@ data class HzeConfig(
   val title: String,
   val environments: List<Environment>
 ) {
-  val version = "0.0.1"
+  val version = "1.0.0"
 }
