@@ -23,7 +23,7 @@ abstract class FetchService {
       defaultRequest {
         accept(ContentType.Application.Json)
         host = window.location.hostname
-        port = window.location.port.toInt()
+        port = window.location.port.toIntOrNull() ?: 80
       }
     }
   }
