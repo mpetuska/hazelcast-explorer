@@ -1,4 +1,4 @@
-package lt.petuska.hazelcast.explorer
+package lt.sample
 
 import com.hazelcast.client.HazelcastClient
 import com.hazelcast.client.config.ClientConfig

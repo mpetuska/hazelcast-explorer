@@ -1,9 +1,7 @@
-package lt.petuska.hazelcast.explorer.public.dsl.config.environment
+package lt.petuska.hazelcast.explorer.public.dsl
 
 import lt.petuska.hazelcast.explorer.domain.environment.Environment
 import lt.petuska.hazelcast.explorer.domain.environment.target.Target
-import lt.petuska.hazelcast.explorer.public.dsl.HzeDsl
-import lt.petuska.hazelcast.explorer.public.dsl.config.HzeConfigBuilder
 
 class EnvironmentBuilder(
   val name: String,

@@ -1,11 +1,9 @@
-package lt.petuska.hazelcast.explorer.public.dsl.config.environment.target
+package lt.petuska.hazelcast.explorer.public.dsl
 
 import com.hazelcast.core.HazelcastInstance
 import lt.petuska.hazelcast.explorer.domain.environment.target.Target
 import lt.petuska.hazelcast.explorer.domain.environment.target.entity.Map
 import lt.petuska.hazelcast.explorer.domain.environment.target.entity.Topic
-import lt.petuska.hazelcast.explorer.public.dsl.HzeDsl
-import lt.petuska.hazelcast.explorer.public.dsl.config.environment.EnvironmentBuilder
 
 class TargetBuilder(
   environmentId: String,

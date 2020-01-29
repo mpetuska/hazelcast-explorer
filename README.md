@@ -34,12 +34,10 @@ kotlin {
 ```
 Alternatively for JVM-only projects:
 ```kotlin
-sourceSets["main"].withConvention(KotlinSourceSet::class) {
-  dependencies {
-    implementation("lt.petuska:hazelcast-explorer:<VERSION>")
-  }
+dependencies {
+  implementation("lt.petuska:hazelcast-explorer:<VERSION>")
 }
 ```
 
 ## Usage
-For basic setup, please refer to the [Wiki](https://gitlab.com/lt.petuska/hazelcast-explorer/-/wikis/Setup)
+For basic setup and usage documentation, please refer to the [Wiki](https://gitlab.com/lt.petuska/hazelcast-explorer/-/wikis)

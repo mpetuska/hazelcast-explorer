@@ -1,4 +1,4 @@
-package lt.petuska.hazelcast.explorer
+package lt.sample
 
 fun main() {
   buildStubConfig(true)

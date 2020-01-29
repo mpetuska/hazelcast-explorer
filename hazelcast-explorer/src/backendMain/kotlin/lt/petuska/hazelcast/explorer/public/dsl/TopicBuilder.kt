@@ -1,8 +1,6 @@
-package lt.petuska.hazelcast.explorer.public.dsl.config.environment.target.entity
+package lt.petuska.hazelcast.explorer.public.dsl
 
 import lt.petuska.hazelcast.explorer.domain.environment.target.entity.Topic
-import lt.petuska.hazelcast.explorer.public.dsl.HzeDsl
-import lt.petuska.hazelcast.explorer.public.dsl.config.environment.target.TargetBuilder
 import kotlin.reflect.KClass
 
 @HzeDsl

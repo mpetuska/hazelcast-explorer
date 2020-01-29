@@ -1,20 +1,20 @@
-package lt.petuska.hazelcast.explorer
+package lt.sample
 
 import io.ktor.application.Application
 import io.ktor.application.install
 import io.ktor.features.CallLogging
-import lt.petuska.hazelcast.explorer.public.dsl.config.environment.environment
-import lt.petuska.hazelcast.explorer.public.dsl.config.environment.target.entity.map
-import lt.petuska.hazelcast.explorer.public.dsl.config.environment.target.entity.topic
-import lt.petuska.hazelcast.explorer.public.dsl.config.environment.target.target
-import lt.petuska.hazelcast.explorer.public.dsl.config.hazelcastExplorerConfig
+import lt.petuska.hazelcast.explorer.public.dsl.environment
+import lt.petuska.hazelcast.explorer.public.dsl.hazelcastExplorerConfig
+import lt.petuska.hazelcast.explorer.public.dsl.map
+import lt.petuska.hazelcast.explorer.public.dsl.target
+import lt.petuska.hazelcast.explorer.public.dsl.topic
+import lt.petuska.hazelcast.explorer.public.hazelcastExplorer
 import org.slf4j.event.Level
 
-fun Application.devServer() {
+fun Application.mainModule() {
   install(CallLogging) {
     level = Level.INFO
   }
-  println("=========================================================================================================")
   hazelcastExplorer(buildStubConfig(true))
 }
 

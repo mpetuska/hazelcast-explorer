@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -11,10 +10,8 @@ application {
   mainClassName = "io.ktor.server.cio.EngineMain"
 }
 
-sourceSets["main"].withConvention(KotlinSourceSet::class) {
-  dependencies {
-    implementation(project(":hazelcast-explorer"))
-  }
+dependencies {
+  implementation(project(":hazelcast-explorer"))
 }
 
 tasks.withType<KotlinCompile>().configureEach {

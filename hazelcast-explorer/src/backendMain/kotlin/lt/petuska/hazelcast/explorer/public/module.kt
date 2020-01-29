@@ -1,4 +1,4 @@
-package lt.petuska.hazelcast.explorer
+package lt.petuska.hazelcast.explorer.public
 
 import io.ktor.application.Application
 import io.ktor.http.content.defaultResource

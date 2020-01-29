@@ -1,8 +1,7 @@
-package lt.petuska.hazelcast.explorer.public.dsl.config
+package lt.petuska.hazelcast.explorer.public.dsl
 
 import lt.petuska.hazelcast.explorer.domain.HzeConfig
 import lt.petuska.hazelcast.explorer.domain.environment.Environment
-import lt.petuska.hazelcast.explorer.public.dsl.HzeDsl
 
 
 class HzeConfigBuilder(
