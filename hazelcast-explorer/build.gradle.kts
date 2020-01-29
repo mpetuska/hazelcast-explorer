@@ -178,21 +178,20 @@ publishing {
         developerConnection.set("scm:git:git@$repoHost:$repoPath.git")
       }
     }
-    
-    tasks.create("${name}PostPublish", Exec::class) {
+  
+    tasks.create("${name}PostPublish", HttpTask::class) {
       val publish by tasks.getting
       group = publish.group!!
       publish.dependsOn(this)
-      dependsOn("publishAllPublicationsToBintrayRepository")
-      
-      executable = "curl"
-      setArgs(
-        listOf(
-          "-u", "${System.getenv("BINTRAY_USER")}:${System.getenv("BINTRAY_KEY")}",
-          "-X", "DELETE",
-          "https://api.bintray.com/packages/${System.getenv("BINTRAY_USER")}/${project.group}/${project.name}/versions/$artifactId"
-        )
-      )
+      dependsOn("publish${this@withType.name[0].toUpperCase() + this@withType.name.substring(1)}PublicationToBintrayRepository")
+    
+      config {
+        it.request.setUri("https://api.bintray.com")
+      }
+      delete {
+        it.request.uri.setPath("/packages/${System.getenv("BINTRAY_USER")}/${project.group}/${project.name}/versions/$artifactId")
+        it.request.auth.basic(System.getenv("BINTRAY_USER"), System.getenv("BINTRAY_KEY"))
+      }
     }
   }
   
