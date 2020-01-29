@@ -42,4 +42,4 @@ sourceSets["main"].withConvention(KotlinSourceSet::class) {
 ```
 
 ## Usage
-For basic setup, please refer to the [Wiki](https://gitlab.com/lt.petuska/hazelcast-explorer/-/wikis)
+For basic setup, please refer to the [Wiki](https://gitlab.com/lt.petuska/hazelcast-explorer/-/wikis/Setup)
