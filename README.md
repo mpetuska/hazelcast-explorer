@@ -6,7 +6,7 @@ all configured hazelcast targets via REST. On the backend it uses [Ktor server](
 yet is exported as one of its modules and leaves all the Ktor configuration for the consumer.
 
 ## Setup
-The project is published to [JCenter](http://jcenter.bintray.com), however it can also be obtained via its [Bintray repository](https://bintray.com/mpetuska/lt.petuska/kvdom).
+The project is published to [JCenter](https://bintray.com/bintray/jcenter), however it can also be obtained via its [Bintray repository](https://bintray.com/mpetuska/lt.petuska/kvdom).
 To be able to access them, include either to your repositories:
 ```kotlin
 repositories {
