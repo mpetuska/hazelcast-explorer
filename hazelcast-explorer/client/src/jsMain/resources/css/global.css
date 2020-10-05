@@ -1,0 +1,12 @@
+@import "logo.css";
+
+.cursor-pointer,
+.cursor-pointer * {
+    cursor: pointer;
+}
+
+body {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}

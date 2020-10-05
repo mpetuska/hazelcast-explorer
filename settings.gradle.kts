@@ -1,24 +1,17 @@
 pluginManagement {
-  repositories {
-    mavenCentral()
-    jcenter()
-    maven { url = uri("https://plugins.gradle.org/m2/") }
-    maven { url = uri("https://dl.bintray.com/kotlin/kotlin-eap") }
-    maven { url = uri("https://kotlin.bintray.com/kotlinx") }
-    mavenLocal()
-  }
-  resolutionStrategy {
-    eachPlugin {
-      when (requested.id.id) {
-        "kotlin-multiplatform" -> useModule("org.jetbrains.kotlin:kotlin-gradle-plugin:${requested.version}")
-        "kotlinx-serialization" -> useModule("org.jetbrains.kotlin:kotlin-serialization:${requested.version}")
-        "kotlin-dce-js" -> useModule("org.jetbrains.kotlin:kotlin-gradle-plugin:${requested.version}")
-      }
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven("https://dl.bintray.com/kotlin/kotlin-dev")
+        maven("https://dl.bintray.com/kotlin/kotlin-eap")
+        maven("https://kotlin.bintray.com/kotlinx")
+        gradlePluginPortal()
+        mavenLocal()
     }
-  }
 }
 
 rootProject.name = "hazelcast-explorer-root"
 
 include(":hazelcast-explorer")
+include(":hazelcast-explorer:client")
 include(":sample")
