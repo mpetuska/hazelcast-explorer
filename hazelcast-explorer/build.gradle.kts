@@ -19,8 +19,8 @@ val Version.hazelcast: String
 version = "${rootProject.version}-hz-${Version.hazelcast}"
 
 dependencies {
-    api(project("${project.path}:client")) {
-        // exclude("com.hazelcast")
+    implementation(project("${project.path}:client")) {
+        exclude("com.hazelcast")
     }
     api("io.ktor:ktor-server-cio:${Version.ktor}")
     api("io.ktor:ktor-websockets:${Version.ktor}")
@@ -29,7 +29,7 @@ dependencies {
     api("ch.qos.logback:logback-classic:${Version.logback}")
     api("org.kodein.di:kodein-di-generic-jvm:${Version.kodein}")
     api("org.kodein.di:kodein-di-framework-ktor-server-jvm:${Version.kodein}")
-    // api("com.hazelcast:hazelcast-client:${Version.hazelcast}")
+    api("com.hazelcast:hazelcast-client:${Version.hazelcast}")
 }
 
 kotlin {

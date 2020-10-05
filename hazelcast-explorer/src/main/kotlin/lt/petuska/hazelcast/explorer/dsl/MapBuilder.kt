@@ -1,4 +1,4 @@
-package lt.petuska.hazelcast.explorer.public.dsl
+package lt.petuska.hazelcast.explorer.dsl
 
 import lt.petuska.hazelcast.explorer.domain.entity.Map
 import kotlin.reflect.KClass

@@ -3,12 +3,12 @@ package lt.sample
 import io.ktor.application.Application
 import io.ktor.application.install
 import io.ktor.features.CallLogging
-import lt.petuska.hazelcast.explorer.public.dsl.environment
-import lt.petuska.hazelcast.explorer.public.dsl.hazelcastExplorerConfig
-import lt.petuska.hazelcast.explorer.public.dsl.map
-import lt.petuska.hazelcast.explorer.public.dsl.target
-import lt.petuska.hazelcast.explorer.public.dsl.topic
-import lt.petuska.hazelcast.explorer.public.hazelcastExplorer
+import lt.petuska.hazelcast.explorer.dsl.environment
+import lt.petuska.hazelcast.explorer.dsl.hazelcastExplorerConfig
+import lt.petuska.hazelcast.explorer.dsl.map
+import lt.petuska.hazelcast.explorer.dsl.target
+import lt.petuska.hazelcast.explorer.dsl.topic
+import lt.petuska.hazelcast.explorer.hazelcastExplorer
 import org.slf4j.event.Level
 
 fun Application.mainModule() {

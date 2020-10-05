@@ -1,5 +1,7 @@
 import io.github.httpbuilderng.http.HttpTask
+import kotlinx.validation.ApiValidationExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jlleitschuh.gradle.ktlint.KtlintCheckTask
 import java.io.ByteArrayOutputStream
 
 plugins {
@@ -9,6 +11,17 @@ plugins {
     id("io.github.http-builder-ng.http-plugin") version "0.1.1"
     `maven-publish`
     idea
+}
+
+buildscript {
+    dependencies {
+        classpath("org.jetbrains.kotlinx:binary-compatibility-validator:0.2.3")
+    }
+}
+apply(plugin = "binary-compatibility-validator")
+
+configure<ApiValidationExtension> {
+    ignoredProjects.addAll(listOf("client", "sample"))
 }
 
 allprojects {
@@ -35,6 +48,7 @@ allprojects {
         maven("https://dl.bintray.com/mpetuska/lt.petuska")
         maven("https://dl.bintray.com/kotlin/kotlin-eap")
         maven("https://dl.bintray.com/kotlin/kotlin-dev")
+        maven("https://kotlin.bintray.com/kotlinx")
         maven("https://maven.pkg.jetbrains.space/kotlin/p/dokka/dev")
     }
 
@@ -54,9 +68,8 @@ allprojects {
                 )
             }
         }
-        withType<Wrapper> {
-            gradleVersion = "6.6.1"
-            distributionType = Wrapper.DistributionType.ALL
+        withType<KtlintCheckTask> {
+            dependsOn("ktlintFormat")
         }
     }
 }
@@ -71,6 +84,10 @@ fun getCommitHash() = ByteArrayOutputStream().use { os ->
 
 afterEvaluate {
     tasks {
+        withType<Wrapper> {
+            gradleVersion = "6.6.1"
+            distributionType = Wrapper.DistributionType.ALL
+        }
         val lib = project(rootProject.name.removeSuffix("-root"))
         val publish by getting
         create<HttpTask>("gitLabRelease") {
@@ -84,11 +101,11 @@ afterEvaluate {
                 it.request.uri.setPath("/api/v4/projects/${System.getenv("CI_PROJECT_ID")}/releases")
                 it.request.headers["Authorization"] = "Bearer ${System.getenv("PRIVATE_TOKEN")}"
                 it.request.setContentType("application/json")
-                fun buildPackageLink(project: Project) =
+                fun buildPackageLink(prj: Project) =
                     """
         {
-          "name": "${lib.name}",
-          "url": "https://bintray.com/${System.getenv("BINTRAY_USER")}/${lib.group}/${lib.name}/${lib.version}",
+          "name": "${prj.name}",
+          "url": "https://bintray.com/${System.getenv("BINTRAY_USER")}/${prj.group}/${prj.name}/${prj.version}",
           "link_type": "package"
         }
                     """.trimIndent()
