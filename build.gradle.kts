@@ -109,6 +109,7 @@ afterEvaluate {
           "link_type": "package"
         }
                     """.trimIndent()
+
                 it.request.setBody(
                     """
         {

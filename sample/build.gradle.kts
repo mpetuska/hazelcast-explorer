@@ -10,4 +10,5 @@ application {
 
 dependencies {
     implementation(project(":hazelcast-explorer"))
+    implementation("com.hazelcast:hazelcast-client:+")
 }

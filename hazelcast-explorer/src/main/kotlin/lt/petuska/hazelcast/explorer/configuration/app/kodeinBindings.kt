@@ -1,4 +1,4 @@
-package lt.petuska.hazelcast.explorer.configuration.application
+package lt.petuska.hazelcast.explorer.configuration.app
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder

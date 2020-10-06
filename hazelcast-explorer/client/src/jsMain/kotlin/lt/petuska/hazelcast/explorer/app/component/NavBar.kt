@@ -85,7 +85,7 @@ private fun HtmlElements.navigationLinks() = div("collapse navbar-collapse ml-3 
               }
               attr("role", "button")
               +target.displayName
-              clicks.map { env.id to target.id } handledBy SelectionStore.selectTarget
+              clicks.map { env.name to target.name } handledBy SelectionStore.selectTarget
             }
           }
         }

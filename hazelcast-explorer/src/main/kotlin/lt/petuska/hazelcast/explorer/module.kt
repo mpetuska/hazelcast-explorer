@@ -6,8 +6,8 @@ import io.ktor.http.content.resources
 import io.ktor.http.content.static
 import io.ktor.routing.route
 import io.ktor.routing.routing
-import lt.petuska.hazelcast.explorer.configuration.application.registerBindings
-import lt.petuska.hazelcast.explorer.configuration.application.setupFeatures
+import lt.petuska.hazelcast.explorer.configuration.app.registerBindings
+import lt.petuska.hazelcast.explorer.configuration.app.setupFeatures
 import lt.petuska.hazelcast.explorer.domain.HzeConfig
 import lt.petuska.hazelcast.explorer.route.entity.mapRoute
 import lt.petuska.hazelcast.explorer.route.entity.topicRoute

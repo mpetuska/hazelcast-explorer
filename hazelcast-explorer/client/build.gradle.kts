@@ -83,6 +83,7 @@ tasks {
     getByName<Jar>("jvmJar") {
         dependsOn(jsBrowserProductionWebpack)
         from(jsBrowserProductionWebpack.destinationDirectory) {
+            exclude("*.map")
             into("WEB-INF")
         }
     }

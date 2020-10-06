@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import lt.petuska.hazelcast.explorer.app.router
 import lt.petuska.hazelcast.explorer.domain.enumerator.ExploreType
+import lt.petuska.hazelcast.explorer.domain.enumerator.HttpMethod
 import dev.fritz2.binding.Store as FStore
 
 internal object Store : RootStore<State>(State())
@@ -30,7 +31,22 @@ internal object SelectionStore : FStore<Selection> by Store.sub(buildLens("selec
     state.rebuild(topic = topic)
   }
   val selectExploreType = handle<ExploreType> { state, et ->
-    state.copy(exploreType = et)
+    val valid = ExploreType.values().filter {
+      when (it) {
+        ExploreType.MAP -> !state.target?.maps.isNullOrEmpty()
+        ExploreType.TOPIC -> !state.target?.topics.isNullOrEmpty()
+      }
+    }
+    val exT = if (et in valid) et else valid.first()
+    state.copy(exploreType = exT)
+  }
+  val selectHttpMethod = handle<String?> { state, it ->
+    val valid = HttpMethod.values().filter {
+      it.isValid(state.target, state.map)
+    }
+    val hm = it?.let(HttpMethod::valueOf) ?: valid.first()
+    val htM = if (hm in valid) hm else valid.first()
+    state.copy(httpMethod = htM)
   }
   val setMapKey = handle<String?> { state, key ->
     state.copy(insertedMapKey = key)

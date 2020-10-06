@@ -15,6 +15,7 @@ internal class Route : FRoute<Selection> {
     private const val topicKey = "t"
     private const val insertedMapKeyKey = "mKey"
     private const val exploreTypeKey = "et"
+    private const val httpMethodKey = "hm"
 
     private const val assignment = "="
     private const val divider = "&"
@@ -38,12 +39,13 @@ internal class Route : FRoute<Selection> {
 
   override fun marshal(route: Selection): String =
     mapOf(
-      envKey to route.environment?.id,
-      targetKey to route.target?.id,
-      mapKey to route.map?.id,
-      topicKey to route.topic?.id,
+      envKey to route.environment?.name,
+      targetKey to route.target?.name,
+      mapKey to route.map?.name,
+      topicKey to route.topic?.name,
       insertedMapKeyKey to route.insertedMapKey,
       exploreTypeKey to route.exploreType.name,
+      httpMethodKey to route.httpMethod.name,
     ).filterValues { it != null }.map { (key, value) -> "$key$assignment${encodeURIComponent(value!!)}" }
       .joinToString(separator = divider)
 
@@ -57,6 +59,7 @@ internal class Route : FRoute<Selection> {
         keys[topicKey],
         keys[insertedMapKeyKey],
         keys[exploreTypeKey],
+        keys[httpMethodKey],
       )
     } else {
       Selection()

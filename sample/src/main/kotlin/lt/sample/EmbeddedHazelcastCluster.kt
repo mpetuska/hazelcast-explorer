@@ -7,7 +7,7 @@ import com.hazelcast.config.GroupConfig
 import com.hazelcast.core.Hazelcast
 import com.hazelcast.core.HazelcastInstance
 
-class LocalHazelcastProvider(
+class EmbeddedHazelcastCluster(
   private val name: String,
   private val password: String = "${name}_superSecretPassword_$name",
   start: Boolean = false,
@@ -30,8 +30,8 @@ class LocalHazelcastProvider(
   }
 
   private fun buildGroupConfig() = GroupConfig().apply {
-    name = this@LocalHazelcastProvider.name
-    password = this@LocalHazelcastProvider.password
+    name = this@EmbeddedHazelcastCluster.name
+    password = this@EmbeddedHazelcastCluster.password
   }
 
   fun startNode(): HazelcastInstance = hazelcastNode ?: run {

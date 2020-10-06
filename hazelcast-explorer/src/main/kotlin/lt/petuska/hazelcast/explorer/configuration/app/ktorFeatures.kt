@@ -1,4 +1,4 @@
-package lt.petuska.hazelcast.explorer.configuration.application
+package lt.petuska.hazelcast.explorer.configuration.app
 
 import io.ktor.application.Application
 import io.ktor.application.call

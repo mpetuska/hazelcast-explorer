@@ -41,3 +41,5 @@ dependencies {
 
 ## Usage
 For basic setup and usage documentation, please refer to the [Wiki](https://gitlab.com/lt.petuska/hazelcast-explorer/-/wikis)
+The library is built on top of hazelcast-client v3.8.6, 
+however you can easily replace it with a newer/older version as this library is used in a very minimal way.

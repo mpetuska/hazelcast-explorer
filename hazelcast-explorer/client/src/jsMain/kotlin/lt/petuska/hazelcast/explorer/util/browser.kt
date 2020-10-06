@@ -6,6 +6,7 @@ internal external fun encodeURIComponent(str: String): String
 internal external fun encodeURI(str: String): String
 internal external fun decodeURIComponent(str: String): String
 internal external fun decodeURI(str: String): String
+internal external fun require(module: String): dynamic
 
 internal fun <T> T.ifUndefined(replacement: T) = if (this == undefined) replacement else this
 internal fun <T> T?.ifNullOrUndefined(replacement: T) = this ?: if (this == undefined) replacement else this
@@ -24,5 +25,3 @@ internal inline fun <T> jsObject(init: T.() -> Unit): T {
   init(o)
   return o
 }
-
-internal external fun require(module: String): dynamic
