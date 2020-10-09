@@ -11,7 +11,6 @@ plugins {
     kotlin("multiplatform") version "1.4.20-M1" apply false
     id("org.jetbrains.dokka") version "1.4.0" apply false
     id("org.jlleitschuh.gradle.ktlint") version "9.4.0"
-    id("io.github.http-builder-ng.http-plugin") version "0.1.1"
     `maven-publish`
     idea
 }
@@ -98,11 +97,11 @@ afterEvaluate {
             doFirst {
                 fun buildPackageLink(prj: Project) =
                     """
-          {
-            "name": "${prj.name}",
-            "url": "https://bintray.com/${System.getenv("BINTRAY_USER")!!}/${prj.group}/${prj.name}/${prj.version}",
-            "link_type": "package"
-          }
+{
+  "name": "${prj.name}",
+  "url": "https://bintray.com/${System.getenv("BINTRAY_USER")!!}/${prj.group}/${prj.name}/${prj.version}",
+  "link_type": "package"
+}
                     """.trimIndent()
 
                 val url = URL("https://gitlab.com/api/v4/projects/${System.getenv("CI_PROJECT_ID")!!}/releases")
@@ -118,18 +117,18 @@ afterEvaluate {
                     .replace("\n", "\\n")
                 con.outputStream.use {
                     it.write(
-                        """
-            {
-              "name": "Release v${lib.version}",
-              "tag_name": "v${lib.version}",
-              "ref": "$gitCommitHash",
-              "assets": {
-                  "links": [
-                      ${setOf(lib).joinToString(",", transform = ::buildPackageLink)}
-                  ]
-              },
-              "description": "$changelog"
-            }
+                      """
+{
+  "name": "Release v${lib.version}",
+  "tag_name": "v${lib.version}",
+  "ref": "$gitCommitHash",
+  "assets": {
+      "links": [
+          ${setOf(lib).joinToString(",", transform = ::buildPackageLink)}
+      ]
+  },
+  "description": "$changelog"
+}
                         """.trimIndent().toByteArray()
                     )
                 }
