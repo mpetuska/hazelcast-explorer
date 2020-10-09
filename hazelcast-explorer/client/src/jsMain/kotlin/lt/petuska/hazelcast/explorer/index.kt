@@ -2,12 +2,9 @@ package lt.petuska.hazelcast.explorer
 
 import dev.fritz2.dom.html.render
 import dev.fritz2.dom.mount
-import dev.fritz2.remote.getBody
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
-import lt.petuska.hazelcast.explorer.api.hzeConfigAPI
+import lt.petuska.hazelcast.explorer.api.HZEConfigAPI
 import lt.petuska.hazelcast.explorer.app.app
 import lt.petuska.hazelcast.explorer.domain.HzeConfig
 import lt.petuska.hazelcast.explorer.util.require
@@ -26,8 +23,7 @@ internal fun main() {
   require("bootstrap/dist/css/bootstrap.min.css")
 
   GlobalScope.launch {
-    val res = hzeConfigAPI.get().getBody()
-    config = Json.decodeFromString<HzeConfig>(res).trim()
+    config = HZEConfigAPI.get().trim()
     render {
       app()
     }.mount("root")
