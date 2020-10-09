@@ -67,7 +67,7 @@ publish:GitLab:
 
 release:gitLab:
   stage: release
-  script: gradle gitLabRelease -Ppublish=true -Poverride=false --stacktrace
+  script: gradle gitLabRelease --stacktrace
   only:
     - master
   cache:
