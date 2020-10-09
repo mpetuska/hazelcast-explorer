@@ -6,3 +6,4 @@ out/
 *.iws
 .gradle/
 logs/
+local.properties

@@ -1,279 +1,98 @@
-import io.github.httpbuilderng.http.HttpTask
-import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpack
-import org.jetbrains.kotlin.gradle.tasks.KotlinJsDce
+import org.jetbrains.dokka.utilities.cast
 
 plugins {
-  kotlin("plugin.serialization")
-  kotlin("multiplatform")
-  id("kotlin-dce-js")
-  id("maven-publish")
-  id("io.github.http-builder-ng.http-plugin") version "0.1.1"
-}
-
-repositories {
-  jcenter()
-  maven { url = uri("https://dl.bintray.com/kotlin/ktor") }
-  maven { url = uri("https://dl.bintray.com/kotlin/kotlinx") }
-  maven { url = uri("https://dl.bintray.com/kotlin/kotlin-js-wrappers") }
-  maven { url = uri("https://dl.bintray.com/kotlin/kotlin-eap") }
-  maven { url = uri("https://kotlin.bintray.com/js-externals") }
-  mavenLocal()
+    kotlin("jvm")
+    id("org.jetbrains.dokka")
+    kotlin("plugin.serialization") version "1.4.10"
+    `maven-publish`
 }
 
 object Version {
-  const val ktor = "1.3.0"
-  const val logback = "1.2.3"
-  const val kodein = "6.5.1"
+    const val ktor = "1.4.0"
+    const val logback = "1.2.3"
+    const val kodein = "6.5.5"
 }
 
 val Version.hazelcast: String
-  get() = project.properties.getOrDefault("hazelcastVersion", "3.8.6").toString()
-version = "${rootProject.version}-hz-${Version.hazelcast}"
+    get() = project.properties.getOrDefault("hazelcastVersion", "3.8.6").toString()
 
-// Custom Properties
-val isProductionBuild = project.hasProperty("prod") || project.hasProperty("production")
-val webDir = file("$projectDir/src/frontendMain/web")
-val mainClassName = "io.ktor.server.cio.EngineMain"
+dependencies {
+    implementation(project("${project.path}:client"))
+    api("io.ktor:ktor-server-cio:${Version.ktor}")
+    api("io.ktor:ktor-websockets:${Version.ktor}")
+    api("io.ktor:ktor-gson:${Version.ktor}")
+    api("io.ktor:ktor-serialization:${Version.ktor}")
+    api("ch.qos.logback:logback-classic:${Version.logback}")
+    api("org.kodein.di:kodein-di-generic-jvm:${Version.kodein}")
+    api("org.kodein.di:kodein-di-framework-ktor-server-jvm:${Version.kodein}")
+}
 
 kotlin {
-  jvm("backend") {
-    mavenPublication {
-      artifactId = project.name
-      tasks.withType<AbstractPublishToMaven>().all {
-        onlyIf { this.publication == this@mavenPublication }
-      }
-    }
-    compilations.all {
-      kotlinOptions {
-        jvmTarget = "1.8"
-      }
-    }
-  }
-  js("frontend") {
-    useCommonJs()
-    compilations.all {
-      kotlinOptions {
-        sourceMap = !isProductionBuild
-        metaInfo = !isProductionBuild
-        if (!isProductionBuild) {
-          sourceMapEmbedSources = "always"
+    explicitApi()
+    sourceSets.all {
+        languageSettings.apply {
+            useExperimentalAnnotation("kotlinx.coroutines.ExperimentalCoroutinesApi")
+            useExperimentalAnnotation("io.ktor.util.KtorExperimentalAPI")
         }
-      }
     }
-    browser {
-      runTask {
-        val frontendProcessResources by tasks.getting(Copy::class)
-        devServer = devServer?.copy(
-          port = 3000,
-          proxy = mapOf(
-            "/api" to "http://localhost:8080"
-          ),
-          open = false,
-          contentBase = listOf("${frontendProcessResources.destinationDir}")
-        )
-      }
-      webpackTask {
-        doLast {
-          copy {
-            from(webDir) {
-              include("index.html")
-              expand(project.properties)
-            }
-            from(webDir) {
-              exclude("index.html")
-            }
-            into(destinationDirectory!!)
-          }
-        }
-      }
-    }
-  }
-  sourceSets {
-    val commonMain by getting {
-      dependencies {
-        api(kotlin("stdlib-common"))
-        api("io.ktor:ktor-client-serialization:${Version.ktor}")
-      }
-    }
-    val backendMain by getting {
-      dependencies {
-        api(kotlin("stdlib-jdk8"))
-        api("io.ktor:ktor-server-cio:${Version.ktor}")
-        api("io.ktor:ktor-websockets:${Version.ktor}")
-        api("io.ktor:ktor-gson:${Version.ktor}")
-        api("io.ktor:ktor-serialization:${Version.ktor}")
-        api("ch.qos.logback:logback-classic:${Version.logback}")
-        api("org.kodein.di:kodein-di-generic-jvm:${Version.kodein}")
-        api("org.kodein.di:kodein-di-framework-ktor-server-jvm:${Version.kodein}")
-        api("com.hazelcast:hazelcast-client:${Version.hazelcast}")
-      }
-    }
-    val frontendMain by getting {
-      resources.srcDir(webDir)
-      dependencies {
-        implementation("io.ktor:ktor-client-serialization-js:${Version.ktor}")
-        implementation("org.jetbrains:kotlin-react-redux:5.0.7-pre.89-kotlin-1.3.60")
-        implementation("org.jetbrains:kotlin-react-dom:16.9.0-pre.89-kotlin-1.3.60")
-        implementation("org.jetbrains:kotlin-styled:1.0.0-pre.89-kotlin-1.3.60")
-        implementation(npm("core-js"))
-        implementation(npm("react"))
-        implementation(npm("react-dom"))
-        implementation(npm("redux"))
-        implementation(npm("react-redux"))
-        implementation(npm("styled-components"))
-        implementation(npm("inline-style-prefixer"))
-        implementation(npm("react-json-editor-ajrm"))
-        implementation(npm("text-encoding"))
-        implementation(npm("jquery"))
-        implementation(npm("bootstrap"))
-        implementation(npm("popper.js"))
-        implementation(npm("bootstrap-switch-button-react"))
-        implementation(npm("bootstrap-notify"))
-        implementation(npm("animate.css"))
-        implementation(npm("abort-controller"))
-        
-        //Dev
-        implementation(npm("style-loader"))
-        implementation(npm("css-loader"))
-        implementation(npm("file-loader"))
-      }
-    }
-    all {
-      languageSettings.apply {
-        useExperimentalAnnotation("kotlinx.coroutines.ExperimentalCoroutinesApi")
-        useExperimentalAnnotation("kotlinx.serialization.UnstableDefault")
-        useExperimentalAnnotation("kotlinx.serialization.ImplicitReflectionSerializer")
-        useExperimentalAnnotation("io.ktor.util.KtorExperimentalAPI")
-      }
-    }
-  }
 }
 
 publishing {
-  publications.removeIf { !it.name.endsWith("backend") }
-  publications.withType<MavenPublication> {
-    pom {
-      val repoHost = "gitlab.com"
-      val repoPath = "${project.group}/${project.name}"
-      val repo = "$repoHost/$repoPath"
-      name.set(project.name)
-      url.set("https://$repo")
-      licenses {
-        license {
-          name.set("The Apache License, Version 2.0")
-          url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
-          distribution.set("repo")
+    fun checkAnyTrue(vararg props: String) = props.any {
+        "true".equals(project.properties[it] as String?, true)
+    }
+
+    fun checkNone(vararg props: String) = props.none {
+        project.hasProperty(it)
+    }
+    publications {
+        repositories {
+            fun repository(name: String, config: MavenArtifactRepository.() -> Unit) {
+                if (checkAnyTrue("publish.all", "publish.$name") || checkNone("publish.$name.skip")) {
+                    maven {
+                        this.name = name
+                        config()
+                    }
+                }
+            }
+            repository("GitLab") {
+                url = uri(
+                    "https://gitlab.com/api/v4/projects/${System.getenv("CI_PROJECT_ID")}/packages/maven"
+                )
+                credentials(HttpHeaderCredentials::class) {
+                    val jobToken = System.getenv("CI_JOB_TOKEN")
+                    if (jobToken != null) {
+                        // GitLab CI
+                        name = "Job-Token"
+                        value = jobToken
+                    } else {
+                        name = "Private-Token"
+                        value = System.getenv("PRIVATE_TOKEN")
+                    }
+                }
+                authentication {
+                    create<HttpHeaderAuthentication>("header")
+                }
+            }
+            repository("Bintray") {
+                url = uri(
+                    "https://api.bintray.com/maven/${System.getenv("BINTRAY_USER")}/${project.group}/${project.name}/" +
+                        ";publish=${if ("true".equals(project.properties["publish"] as? String?, true)) 1 else 0}" +
+                        ";override=${if ("true".equals(project.properties["override"] as? String?, true)) 1 else 0}"
+                )
+                credentials {
+                    username = System.getenv("BINTRAY_USER")
+                    password = System.getenv("BINTRAY_KEY")
+                }
+            }
         }
-      }
-      developers {
-        developer {
-          id.set("mpetuska")
-          name.set("Martynas Petuška")
-          email.set("martynas.petuska@gmail.com")
-        }
-      }
-      scm {
-        url.set("https://$repo")
-        connection.set("scm:git:https://$repo.git")
-        developerConnection.set("scm:git:git@$repoHost:$repoPath.git")
-      }
     }
-  
-    tasks.create("${name}PostPublish", HttpTask::class) {
-      val publish by tasks.getting
-      group = publish.group!!
-      publish.dependsOn(this)
-      dependsOn("publish${this@withType.name[0].toUpperCase() + this@withType.name.substring(1)}PublicationToBintrayRepository")
-    
-      config {
-        it.request.setUri("https://api.bintray.com")
-      }
-      delete {
-        it.request.uri.setPath("/packages/${System.getenv("BINTRAY_USER")}/${project.group}/${project.name}/versions/$artifactId")
-        it.request.auth.basic(System.getenv("BINTRAY_USER"), System.getenv("BINTRAY_KEY"))
-      }
-    }
-  }
-  
-  repositories {
-    maven {
-      name = "bintray"
-      url = uri(
-        "https://api.bintray.com/maven/${System.getenv("BINTRAY_USER")}/${group}/${project.name}/" +
-            ";publish=${if ("true".equals(project.properties["publish"] as? String?, true)) 1 else 0}" +
-            ";override=${if ("true".equals(project.properties["override"] as? String?, true)) 1 else 0}"
-      )
-      credentials {
-        username = System.getenv("BINTRAY_USER")
-        password = System.getenv("BINTRAY_KEY")
-      }
-    }
-  }
 }
 
-afterEvaluate {
-  tasks {
-    val runDceFrontendKotlin by getting(KotlinJsDce::class)
-    val frontendProcessResources by getting(Copy::class) {
-      dependsOn(runDceFrontendKotlin)
-      from("$webDir/index.html") {
-        expand(project.properties)
-      }
+tasks {
+    val jvmJar = getByPath("${project.path}:client:jvmJar").cast<Jar>()
+    getByName<Jar>("jar") {
+        dependsOn(jvmJar)
+        from(zipTree(jvmJar.archiveFile))
     }
-    withType<KotlinJsDce> {
-      dceOptions {
-        devMode = !isProductionBuild
-        keep("ktor-ktor-io.\$\$importsForInline\$\$.ktor-ktor-io.io.ktor.utils.io")
-      }
-      inputs.property("production", isProductionBuild)
-      doFirst {
-        classpath = classpath.filter { it.extension != "js" }
-        destinationDir.deleteRecursively()
-      }
-    }
-    val frontendBrowserWebpack by getting(KotlinWebpack::class) {
-      dependsOn(runDceFrontendKotlin, frontendProcessResources)
-      outputFileName = "${rootProject.name}-${project.name}-frontend.js"
-    }
-    val frontendBrowserRun by getting(KotlinWebpack::class) {
-      group = "run"
-    }
-    val backendJar by getting(Jar::class) {
-      dependsOn(frontendBrowserWebpack)
-      from(frontendBrowserWebpack.destinationDirectory!!) {
-        into("WEB-INF")
-      }
-    }
-    val publish by getting
-    val release by creating(HttpTask::class) {
-      group = publish.group!!
-      dependsOn(publish)
-      config {
-        it.request.setUri("https://gitlab.com")
-      }
-      post {
-        it.request.uri.setPath("/api/v4/projects/${System.getenv("CI_PROJECT_ID")}/releases")
-        it.request.headers["Authorization"] = "Bearer ${System.getenv("PRIVATE_TOKEN")}"
-        it.request.setContentType("application/json")
-        it.request.setBody(
-          """
-        {
-            "name": "Release v${project.version}",
-            "tag_name": "v${project.version}",
-            "ref": "master",
-            "assets": {
-                "links": [
-                    {
-                        "name": "${project.name}",
-                        "url": "https://bintray.com/${System.getenv("BINTRAY_USER")}/${project.group}/${project.name}/${project.version}"
-                    }
-                ]
-            },
-            "description": "## Changelog\n### Breaking Changes\nN/A\n\n### New Features\nN/A\n\n### Fixes\nN/A"
-        }
-      """.trimIndent()
-        )
-      }
-    }
-  }
 }

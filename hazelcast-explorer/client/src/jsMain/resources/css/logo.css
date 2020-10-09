@@ -1,0 +1,48 @@
+.Logo {
+    position: relative;
+    display: inline-block;
+    height: 35px;
+}
+
+.Logo img {
+    height: 100%;
+    position: absolute;
+    right: 50%;
+}
+
+.Logo-fritz {
+    animation: Logo-spin infinite 15s 0s linear;
+}
+
+.Logo-kotlin {
+    opacity: 0;
+    animation: Logo-spin infinite 15s 5s linear;
+}
+
+.Logo-ktor {
+    opacity: 0;
+    animation: Logo-spin infinite 15s 10s linear;
+}
+
+@keyframes Logo-spin {
+    from {
+        transform: rotateY(-90deg);
+        opacity: 1
+    }
+    33% {
+        transform: rotateY(90deg);
+        opacity: 1
+    }
+    34% {
+        transform: rotateY(90deg);
+        opacity: 0
+    }
+    66% {
+        transform: rotateY(-90deg);
+        opacity: 0
+    }
+    to {
+        transform: rotateY(-90deg);
+        opacity: 0
+    }
+}
