@@ -117,7 +117,7 @@ afterEvaluate {
                     .replace("\n", "\\n")
                 con.outputStream.use {
                     it.write(
-                      """
+                        """
 {
   "name": "Release v${lib.version}",
   "tag_name": "v${lib.version}",
